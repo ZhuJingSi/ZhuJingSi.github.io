@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="rwx,linux," />
+  <meta name="keywords" content="Cookie,localStorage,sessionStorage," />
 
 
 
@@ -57,16 +57,22 @@
 
 
 
-<meta name="description" content="今天自己手工起了一个 wordpress，发现在上传图片的时候报了一个错：Unable to create directory wp-content/uploads/2016/03. It its parent directory writable by the server? 原因在报错中已经比较清楚了，就是上级目录没有被写的权限，因此不能创建 uploads 目录存放图片。">
+<meta name="description" content="localStorage 和 sessionStorage 是什么localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。
+Cookie 是什么
+Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于rwx（读、写、执行）的理解">
-<meta property="og:url" content="http://cisy.me/2016/03/01/Cisy/index.html">
+<meta property="og:title" content="Cookie、localStorage、sessionStorage">
+<meta property="og:url" content="http://cisy.me/Cookie&localStorage&sessionStorage/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
-<meta property="og:description" content="今天自己手工起了一个 wordpress，发现在上传图片的时候报了一个错：Unable to create directory wp-content/uploads/2016/03. It its parent directory writable by the server? 原因在报错中已经比较清楚了，就是上级目录没有被写的权限，因此不能创建 uploads 目录存放图片。">
-<meta property="og:updated_time" content="2016-03-19T17:26:24.000Z">
+<meta property="og:description" content="localStorage 和 sessionStorage 是什么localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。
+Cookie 是什么
+Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过">
+<meta property="og:updated_time" content="2016-03-20T05:07:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于rwx（读、写、执行）的理解">
-<meta name="twitter:description" content="今天自己手工起了一个 wordpress，发现在上传图片的时候报了一个错：Unable to create directory wp-content/uploads/2016/03. It its parent directory writable by the server? 原因在报错中已经比较清楚了，就是上级目录没有被写的权限，因此不能创建 uploads 目录存放图片。">
+<meta name="twitter:title" content="Cookie、localStorage、sessionStorage">
+<meta name="twitter:description" content="localStorage 和 sessionStorage 是什么localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。
+Cookie 是什么
+Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过">
 
 
 
@@ -84,7 +90,7 @@
   };
 </script>
 
-  <title> 关于rwx（读、写、执行）的理解 | Cisy 的博客 </title>
+  <title> Cookie、localStorage、sessionStorage | Cisy 的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -233,7 +239,7 @@
             
             
               
-                关于rwx（读、写、执行）的理解
+                Cookie、localStorage、sessionStorage
               
             
           </h1>
@@ -245,8 +251,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-01T00:46:42+08:00" content="2016-03-01">
-              2016-03-01
+            <time itemprop="dateCreated" datetime="2016-03-09T22:44:00+08:00" content="2016-03-09">
+              2016-03-09
             </time>
           </span>
 
@@ -259,8 +265,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -275,8 +281,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/01/Cisy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/01/Cisy/" itemprop="commentsCount"></span>
+                <a href="/Cookie&localStorage&sessionStorage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="Cookie&localStorage&sessionStorage/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -298,57 +304,47 @@
       
 
       
-        <p>今天自己手工起了一个 wordpress，发现在上传图片的时候报了一个错：Unable to create directory wp-content/uploads/2016/03. It its parent directory writable by the server? 原因在报错中已经比较清楚了，就是上级目录没有被写的权限，因此不能创建 uploads 目录存放图片。</p>
+        <h3 id="localStorage-和-sessionStorage-是什么"><a href="#localStorage-和-sessionStorage-是什么" class="headerlink" title="localStorage 和 sessionStorage 是什么"></a>localStorage 和 sessionStorage 是什么</h3><p><strong>localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。</strong></p>
+<h3 id="Cookie-是什么"><a href="#Cookie-是什么" class="headerlink" title="Cookie 是什么"></a>Cookie 是什么</h3><blockquote>
+<p>Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过加密）。</p>
+<p>-wikipedia  </p>
+</blockquote>
 <a id="more"></a>
-<h4 id="查找资料后有人给出了解决方案："><a href="#查找资料后有人给出了解决方案：" class="headerlink" title="查找资料后有人给出了解决方案："></a>查找资料后有人给出了解决方案：</h4><ol>
-<li><p>将 wordpress 目录的权限改为 777 （ 所有人可读可写可执行 ）；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 777 wordpress</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<h3 id="Web-Storage-为何产生-Cookie-的缺陷"><a href="#Web-Storage-为何产生-Cookie-的缺陷" class="headerlink" title="Web Storage 为何产生(Cookie 的缺陷)"></a>Web Storage 为何产生(Cookie 的缺陷)</h3><p>Cookie 在 1993 年就有了，那么为什么还要弄出个 Web Storage 来呢？因为 Cookie 在某些情况的使用上并不适用或者说有极大的不便：</p>
 <ol>
-<li><p>上传一次图片，uploads 目录被创建，因此可以获知 uploads 目录的属主（ ls -l，假设是 a ）；</p>
-</li>
-<li><p>将整个 wordpress 目录的属主和组（ EUID 和 EGID ）改为 a;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown a:a wordpress</span><br></pre></td></tr></table></figure>
-</li>
+<li>Cookie 会被附加在每个 HTTP 请求中，所以无形中增加了流量。</li>
+<li>由于在 HTTP 请求中的 Cookie 是明文传递的，所以安全性成问题。（除非用HTTPS）</li>
+<li>Cookie 的大小限制在4KB左右。对于复杂的存储需求来说是不够用的。</li>
 </ol>
-<ol>
-<li><p>再将 wordpress 目录的权限改为 755 （ 对属主：可读可写可执行，对组和其它：可读可执行）；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 755 wordpress</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p> 这种做法当然是可行的，但是在原理上绕了一个不必要的弯。首先，要弄懂是谁去创建这个 uploads 文件的，这并不需要先让它创建了我们再看是谁。</p>
-</blockquote>
-<p>我们都知道，客户端请求是发给服务器的，服务器又是通过 Web服务器软件来负责接受并转发给某个服务器端程序去分析和处理的。在这里，是通过 Apache 将请求转发给了 php 处理，那么我们先认为是 php 的进程创建了这个 uploads，这个 php 进程的属主也就自然而然是 uploads 的属主了。</p>
-<p><strong>现在试着查看 php 进程：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux|grep php</span><br></pre></td></tr></table></figure>
-<p><strong>居然没有找到一个 php 的进程！</strong>那我们再看看 apache：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux|grep apache</span><br></pre></td></tr></table></figure>
-<p>这次拿到了一大堆：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root      7834  0.0  1.5 180868 13840 ?   Ss   Mar05   0:00 /usr/sbin/apache2 -k start</span><br><span class="line">www-data 21707  0.0  5.3 218080 48152 ?  S    Mar05   0:06 /usr/sbin/apache2 -k start</span><br><span class="line">www-data 21708  0.0  3.5 201880 32244 ?  S    Mar05   0:02 /usr/sbin/apache2 -k start</span><br><span class="line">www-data 21709  0.0  3.4 200280 30504 ?  S    Mar05   0:03 /usr/sbin/apache2 -k start</span><br><span class="line">www-data 21722  0.0  3.6 202872 33140 ?  S    Mar05   0:02 /usr/sbin/apache2 -k start</span><br></pre></td></tr></table></figure>
-<p>这就说明了，是 Apache 在启动后将请求派发给了它的各个进程处理，这些进程的属主叫 “<strong>www-data</strong>”，就是它了！</p>
-<p>接下来进行最后一步：将 wordpress 目录的属主和组（ UID 和 GID ）改为 “www-data”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown www-data:www-data wordpress</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>总结下来只需要两步就可到位，也不用将权限改来改去。</p>
-</blockquote>
-<h4 id="这里有个思路，当-a-进程想写-b-文件-而却没有权限的时候要怎么做才能成功？"><a href="#这里有个思路，当-a-进程想写-b-文件-而却没有权限的时候要怎么做才能成功？" class="headerlink" title="这里有个思路，当 a 进程想写 b 文件 而却没有权限的时候要怎么做才能成功？"></a>这里有个思路，当 a 进程想写 b 文件 而却没有权限的时候要怎么做才能成功？</h4><p> 有三个办法：</p>
-<ol>
-<li>改 b 的权限，使 b 可以让所有人可读可写； </li>
-<li>改 a 的属主，将 a 的属主改成和 b 一样；</li>
-<li>改 b 的属主，将 b 的属主改成歌 a 一样；</li>
-</ol>
-<p>那么哪一种比较好呢？答案是<strong>第三种</strong>。</p>
-<p><strong>第一种</strong>，让 b 可以被所有人读写会带来潜在的安全隐患，指不定就被哪个恶意程序篡改导致不可使用；</p>
-<p><strong>第二种</strong>，若 b 文件的权限是 root，a 也要改成 root，这时候 a 就可以去篡改系统中任意一个文件，若 a 被黑客劫持，后果不堪设想，这种更加危险；</p>
-<p><strong>第三种</strong>，b 的属主改成 a 的，虽然这可能导致其它应用的进程没法写它，但一般这个文件只要不是公共的而是属于某一个应用独享的，那么也就只有这个应用会用到它，且不用担心安全问题；</p>
-<h4 id="ps-小知识点："><a href="#ps-小知识点：" class="headerlink" title="ps.小知识点："></a>ps.小知识点：</h4><p>r、w、x 这三种权限，若为文件的属性就是字面意思。若是一个目录的属性则：</p>
-<p><strong>r</strong>：该目录下的文件或目录是否可列出来看到；</p>
-<p><strong>w</strong>：该目录下是否可以添加或删除文件或目录；</p>
-<p><strong>x</strong>：该目录下的文件或目录是否可以被 access；</p>
-<p>example:</p>
-<p>目录 a 的权限为 drwxr-x–x（ 751，属主：可读可写可执行、组：可读可执行、其它：可执行）属主不必说，什么操作都可以；同组的可以通过 ls a  命令查看目录，也可以进入或切换到这个目录；其它人只可以切换到这个目录但看不到目录下的东西，也不能在其中创建或删除东西；</p>
+<h3 id="三者区别"><a href="#三者区别" class="headerlink" title="三者区别"></a>三者区别</h3><h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p><strong>Cookie</strong>:  分为非持久 Cookie 和持久 Cookie 两种，非持久 Cookie 由浏览器维护，保存在内存中，浏览器关闭后就消失；持久 Cookie 保存在硬盘中，除非到了设置的过期时间或用户手动清除数据，将会一直保存。默认为非持久 Cookie。</p>
+<p><strong>localStorage</strong>:  没有时间限制，直到 js 中调用接口清除或用户手动清除。</p>
+<p><strong>sessionStorage</strong>:  在用户关闭浏览器窗口或关闭浏览器时就会清空。</p>
+<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><p><strong>Cookie</strong>:  同源。</p>
+<p><strong>localStorage</strong>:  同源。</p>
+<p><strong>sessionStorage</strong>:  只在当前窗口共享，即使是同网址的另一个 tab 中都是不能共享的。</p>
+<h4 id="存储大小"><a href="#存储大小" class="headerlink" title="存储大小"></a>存储大小</h4><p><strong>Cookie</strong>:  4k左右。</p>
+<p><strong>localStorage</strong>:  5MB 或更大。</p>
+<p><strong>sessionStorage</strong>:  5MB 或更大。</p>
+<h4 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h4><p>Web Storage 支持事件通知机制，api 接口使用更方便。</p>
+<p>sessionStorage 与页面 js 数据对象相比：js 数据对象在页面刷新后就不存在了，但 sessionStorage 还在。</p>
+<h3 id="浏览器支持情况"><a href="#浏览器支持情况" class="headerlink" title="浏览器支持情况"></a>浏览器支持情况</h3><p>要判断浏览器是否支持localStorage可以使用下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">window</span>.localStorage) &#123;</span><br><span class="line">    alert(<span class="string">"浏览支持localStorage"</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    alert(<span class="string">"浏览暂不支持localStorage"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">window</span>.localStorage == <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    alert(<span class="string">"浏览暂不支持localStorage"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="localStorage-和sessionStorage-的操作"><a href="#localStorage-和sessionStorage-的操作" class="headerlink" title="localStorage 和sessionStorage 的操作"></a>localStorage 和sessionStorage 的操作</h3><p>localStorage 和sessionStorage 都具有相同的操作方法，例如 setItem、getItem 和 removeItem 等。</p>
+<h4 id="setItem-存储-value"><a href="#setItem-存储-value" class="headerlink" title="setItem 存储 value"></a>setItem 存储 value</h4><p>用途：将 value 存储到 key 字段</p>
+<p>用法：.setItem( key, value)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessionStorage.setItem(<span class="string">"name"</span>, <span class="string">"cisy"</span>);</span><br><span class="line">localStorage.setItem(<span class="string">"sex"</span>, <span class="string">"female"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="getItem-获取-value"><a href="#getItem-获取-value" class="headerlink" title="getItem 获取 value"></a>getItem 获取 value</h4><p>用途：获取指定 key 本地存储的值</p>
+<p>用法：.getItem(key)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = sessionStorage.getItem(<span class="string">"name"</span>);</span><br><span class="line"><span class="keyword">var</span> sex = localStorage.getItem(<span class="string">"sex"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="removeItem-删除-key"><a href="#removeItem-删除-key" class="headerlink" title="removeItem 删除 key"></a>removeItem 删除 key</h4><p>用途：删除指定 key 本地存储的值</p>
+<p>用法：.removeItem(key)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessionStorage.removeItem(<span class="string">"name"</span>);</span><br><span class="line">localStorage.removeItem(<span class="string">"sex"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="clear-清除所有的-key-value"><a href="#clear-清除所有的-key-value" class="headerlink" title="clear 清除所有的 key/value"></a>clear 清除所有的 key/value</h4><p>用途：清除所有的 key/value</p>
+<p>用法：.clear()</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessionStorage.clear();</span><br><span class="line">localStorage.clear();</span><br></pre></td></tr></table></figure>
+<h4 id="点操作和"><a href="#点操作和" class="headerlink" title="点操作和[]"></a>点操作和[]</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> storage = <span class="built_in">window</span>.localStorage;</span><br><span class="line">storage.key1 = <span class="string">"hello"</span>;</span><br><span class="line">storage[<span class="string">"key2"</span>] = <span class="string">"world"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(storage.key1); <span class="comment">//hello</span></span><br><span class="line"><span class="built_in">console</span>.log(storage[<span class="string">"key2"</span>]); <span class="comment">//world</span></span><br></pre></td></tr></table></figure>
+<h4 id="storage-事件"><a href="#storage-事件" class="headerlink" title="storage 事件"></a>storage 事件</h4><p>storage 还提供了 storage 事件，当键值改变或者clear 的时候，就可以触发 storage 事件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">window</span>.addEventListener)&#123;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">"storage"</span>,handle_storage,<span class="literal">false</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">window</span>.attachEvent)&#123;</span><br><span class="line">    <span class="built_in">window</span>.attachEvent(<span class="string">"onstorage"</span>,handle_storage);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handle_storage</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!e)&#123;e=<span class="built_in">window</span>.event;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -363,9 +359,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/rwx/" rel="tag">#rwx</a>
+            <a href="/tags/Cookie/" rel="tag">#Cookie</a>
           
-            <a href="/tags/linux/" rel="tag">#linux</a>
+            <a href="/tags/localStorage/" rel="tag">#localStorage</a>
+          
+            <a href="/tags/sessionStorage/" rel="tag">#sessionStorage</a>
           
         </div>
       
@@ -374,13 +372,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/rwx/" rel="next" title="关于rwx（读、写、执行）的理解">
+                <i class="fa fa-chevron-left"></i> 关于rwx（读、写、执行）的理解
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/01/Cisy/" rel="prev" title="Cookie、localStorage、sessionStorage">
-                Cookie、localStorage、sessionStorage <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -429,8 +427,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/01/Cisy/"
-           data-title="关于rwx（读、写、执行）的理解" data-url="http://cisy.me/2016/03/01/Cisy/">
+      <div class="ds-thread" data-thread-key="Cookie&localStorage&sessionStorage/"
+           data-title="Cookie、localStorage、sessionStorage" data-url="http://cisy.me/Cookie&localStorage&sessionStorage/">
       </div>
     
   </div>
@@ -526,7 +524,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#查找资料后有人给出了解决方案："><span class="nav-number">1.</span> <span class="nav-text">查找资料后有人给出了解决方案：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#这里有个思路，当-a-进程想写-b-文件-而却没有权限的时候要怎么做才能成功？"><span class="nav-number">2.</span> <span class="nav-text">这里有个思路，当 a 进程想写 b 文件 而却没有权限的时候要怎么做才能成功？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ps-小知识点："><span class="nav-number">3.</span> <span class="nav-text">ps.小知识点：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#localStorage-和-sessionStorage-是什么"><span class="nav-number">1.</span> <span class="nav-text">localStorage 和 sessionStorage 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie-是什么"><span class="nav-number">2.</span> <span class="nav-text">Cookie 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-Storage-为何产生-Cookie-的缺陷"><span class="nav-number">3.</span> <span class="nav-text">Web Storage 为何产生(Cookie 的缺陷)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三者区别"><span class="nav-number">4.</span> <span class="nav-text">三者区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生命周期"><span class="nav-number">4.1.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#作用域"><span class="nav-number">4.2.</span> <span class="nav-text">作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储大小"><span class="nav-number">4.3.</span> <span class="nav-text">存储大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它"><span class="nav-number">4.4.</span> <span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器支持情况"><span class="nav-number">5.</span> <span class="nav-text">浏览器支持情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#localStorage-和sessionStorage-的操作"><span class="nav-number">6.</span> <span class="nav-text">localStorage 和sessionStorage 的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#setItem-存储-value"><span class="nav-number">6.1.</span> <span class="nav-text">setItem 存储 value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getItem-获取-value"><span class="nav-number">6.2.</span> <span class="nav-text">getItem 获取 value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#removeItem-删除-key"><span class="nav-number">6.3.</span> <span class="nav-text">removeItem 删除 key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clear-清除所有的-key-value"><span class="nav-number">6.4.</span> <span class="nav-text">clear 清除所有的 key/value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#点操作和"><span class="nav-number">6.5.</span> <span class="nav-text">点操作和[]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#storage-事件"><span class="nav-number">6.6.</span> <span class="nav-text">storage 事件</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
