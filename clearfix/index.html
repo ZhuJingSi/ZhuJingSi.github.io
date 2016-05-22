@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="模块化,组件化,UI框架," />
+  <meta name="keywords" content="clearfix," />
 
 
 
@@ -57,18 +57,21 @@
 
 
 
-<meta name="description" content="2016 年 TopGeek 前端开发者大会很荣幸能作为演讲嘉宾之一参加这个大会，能与 Hax、寸志等前端大拿同台也让我很兴奋和紧张。这是我在这次大会上的演讲内容，时间只有20分钟左右，所以关于模块化、组件化等只是简单带过，可以说是极其入门级的一场演讲，但毕竟是一次特殊的人生经历，还是有必要记录下来。">
+<meta name="description" content="前端样式看起来简单，但真正做前端的同僚都知道，水不是一般的深！今天先从最浅的部分记起－清除浮动的几种方法。
+时隔这么久，终于提起兴致再写一篇博客，因为有些东西不写一遍真的记不住。。。:(´ཀ`」 ∠):">
 <meta property="og:type" content="article">
-<meta property="og:title" content="前端组件化及自制UI框架概述">
-<meta property="og:url" content="http://cisy.me/componentization/index.html">
+<meta property="og:title" content="clearfix 清除浮动">
+<meta property="og:url" content="http://cisy.me/clearfix/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
-<meta property="og:description" content="2016 年 TopGeek 前端开发者大会很荣幸能作为演讲嘉宾之一参加这个大会，能与 Hax、寸志等前端大拿同台也让我很兴奋和紧张。这是我在这次大会上的演讲内容，时间只有20分钟左右，所以关于模块化、组件化等只是简单带过，可以说是极其入门级的一场演讲，但毕竟是一次特殊的人生经历，还是有必要记录下来。">
-<meta property="og:image" content="http://cisy.me/componentization/componentization.png">
-<meta property="og:updated_time" content="2016-05-09T15:03:16.000Z">
+<meta property="og:description" content="前端样式看起来简单，但真正做前端的同僚都知道，水不是一般的深！今天先从最浅的部分记起－清除浮动的几种方法。
+时隔这么久，终于提起兴致再写一篇博客，因为有些东西不写一遍真的记不住。。。:(´ཀ`」 ∠):">
+<meta property="og:image" content="http://cisy.me/clearfix/clearfix.png">
+<meta property="og:updated_time" content="2016-05-22T13:10:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端组件化及自制UI框架概述">
-<meta name="twitter:description" content="2016 年 TopGeek 前端开发者大会很荣幸能作为演讲嘉宾之一参加这个大会，能与 Hax、寸志等前端大拿同台也让我很兴奋和紧张。这是我在这次大会上的演讲内容，时间只有20分钟左右，所以关于模块化、组件化等只是简单带过，可以说是极其入门级的一场演讲，但毕竟是一次特殊的人生经历，还是有必要记录下来。">
-<meta name="twitter:image" content="http://cisy.me/componentization/componentization.png">
+<meta name="twitter:title" content="clearfix 清除浮动">
+<meta name="twitter:description" content="前端样式看起来简单，但真正做前端的同僚都知道，水不是一般的深！今天先从最浅的部分记起－清除浮动的几种方法。
+时隔这么久，终于提起兴致再写一篇博客，因为有些东西不写一遍真的记不住。。。:(´ཀ`」 ∠):">
+<meta name="twitter:image" content="http://cisy.me/clearfix/clearfix.png">
 
 
 
@@ -86,7 +89,7 @@
   };
 </script>
 
-  <title> 前端组件化及自制UI框架概述 | Cisy 的博客 </title>
+  <title> clearfix 清除浮动 | Cisy 的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +238,7 @@
             
             
               
-                前端组件化及自制UI框架概述
+                clearfix 清除浮动
               
             
           </h1>
@@ -247,8 +250,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-28T18:45:57+08:00" content="2016-03-28">
-              2016-03-28
+            <time itemprop="dateCreated" datetime="2016-04-22T19:37:45+08:00" content="2016-04-22">
+              2016-04-22
             </time>
           </span>
 
@@ -277,8 +280,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/componentization/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="componentization/" itemprop="commentsCount"></span>
+                <a href="/clearfix/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="clearfix/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -300,68 +303,40 @@
       
 
       
-        <h4 id="2016-年-TopGeek-前端开发者大会"><a href="#2016-年-TopGeek-前端开发者大会" class="headerlink" title="2016 年 TopGeek 前端开发者大会"></a>2016 年 TopGeek 前端开发者大会</h4><p>很荣幸能作为演讲嘉宾之一参加这个大会，能与 Hax、寸志等前端大拿同台也让我很兴奋和紧张。这是我在这次大会上的演讲内容，时间只有20分钟左右，所以关于模块化、组件化等只是简单带过，可以说是极其入门级的一场演讲，但毕竟是一次特殊的人生经历，还是有必要记录下来。</p>
+        <p>前端样式看起来简单，但真正做前端的同僚都知道，水不是一般的深！今天先从最浅的部分记起－清除浮动的几种方法。</p>
+<p>时隔这么久，终于提起兴致再写一篇博客，因为有些东西不写一遍真的记不住。。。<em>:(´ཀ`」 ∠):</em> </p>
 <a id="more"></a>
-<h4 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a>主要内容</h4><p>大家好，我是来自 DaoCloud 的前端开发工程师朱静思。</p>
-<p>我们 DaoCloud 是一家技术驱动型的公司，虽然核心技术是基于 Docker 的，但公司非常重视前端，我们在前端开发方面也在不断探索最适合我们的实践方式，今天我就来向大家分享一点我们在模块化、组件化、UI 设计方面的一些心得。</p>
-<p>我们公司在过去的时间里先后推出了 Daocloud 云平台、Daovoice、Daocloud Enterprise 等一系列的产品，这样高速的迭代给前端开发带来了巨大的压力，同时也推动着我们不断革新。</p>
-<p>我们的产品大多使用 AngularJs 作为框架，一开始并没有考虑组件化，直到有一天我们发现页面的业务逻辑都堆在了一起，所有控件都互相牵扯，冗长的代码看起来特别累，相似的功能点都需要重复写，一旦需要更改某个功能点时需要人工遍历所有涉及到的地方再一一修改，效率极低，并且还有极高的风险出 BUG，这才意识到仅仅靠框架的一部分约束还不够，随着越来越多的业务逻辑往前端堆积，模块化和组件化的脚步迫在眉睫了。</p>
-<h5 id="关于模块化："><a href="#关于模块化：" class="headerlink" title="关于模块化："></a>关于模块化：</h5><p><strong>分而治之</strong> 是软件工程中的重要思想，是复杂系统开发和维护的基石，这点放在前端开发中同样适用。在解决了基本开发效率、运行效率问题之后，前端团队开始思考维护效率，模块化是目前前端最流行的分治手段，简单来说，少量的代码总比一大坨代码好维护。</p>
-<p>JS 模块化方案有很多：<strong>AMD/CommonJS/CMD</strong> 等等，但在去年我们迎来了 <strong>ES6</strong> 的到来，帮助我们从语言的层面解决了这一难题，我们也极力地推崇使用 ES6 规范进行开发，这标志着前端模块化成为了规范，是模块化大一统的趋势，我们在新的产品线中也都统一使用 ES6。</p>
-<blockquote>
-<p>ES6 的优势：</p>
-<p>AMD/CommonJS/CMD：“运行时加载”</p>
-<p>ES6：“编译时加载”（效率高）</p>
-<p>ES6模块的设计思想，是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。CommonJS和AMD模块，都只能在运行时确定这些东西。比如，CommonJS模块就是对象，输入时必须查找对象属性。</p>
-<p>由于ES6模块是编译时加载，使得静态分析成为可能。有了它，就能进一步拓宽JavaScript的语法，比如引入宏（macro）和类型检验（type system）这些只能靠静态分析实现的功能。</p>
-<p>除了静态加载带来的各种好处，ES6模块还有以下好处。</p>
+<h4 id="不在掌控中的-float"><a href="#不在掌控中的-float" class="headerlink" title="不在掌控中的 float"></a>不在掌控中的 float</h4><p>在写页面的时候 float 属性出现的概率是很高的，我们总要指挥一个元素：“你！呆到右边去！”这时候一个 float: right; 就解决了，So easy~但有时候却有它不听话的时候，举个例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrap"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">color</span>: white;</span><br><span class="line">  <span class="attribute">background-color</span>: black;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.float1</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">40%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.float2</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">40%</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码很简单，预想中应该是一红一蓝两个块被包在一个黑块里，然而事实上是这样的： <img src="/clearfix/clearfix.png" alt="clearfix.png" title=""></p>
+<p>跟预想的不一样啊啊啊 (╯°Д°）╯︵ /(.□ . )</p>
+<p>这是为啥呢？因为 .float1 和 .float2 它俩已经跟爸爸元素 .wrap 不在一个层了，它俩。。。上天了。。。</p>
+<p>废话不多说，直接讨论解决办法，让它们重回爸爸的怀抱 (๑&gt;◡&lt;๑) </p>
+<h4 id="planA"><a href="#planA" class="headerlink" title="planA"></a>planA</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrap"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clear"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clear</span> &#123;</span><br><span class="line">  <span class="attribute">clear</span>:both;</span><br><span class="line">  <span class="attribute">line-height</span>:<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 .wrap 的最后创建一个空子元素 .clear ，然后赋予以上样式。</p>
+<p>这是最早出现的清除浮动的方法，但用下来会发现，页面上到处都是 .clear 这个空标签。显然看起来非常不！优！雅！</p>
+<h4 id="planB"><a href="#planB" class="headerlink" title="planB"></a>planB</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">visibility</span>: hidden; </span><br><span class="line">  <span class="attribute">display</span>: block; </span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0</span>; </span><br><span class="line">  <span class="attribute">content</span>: <span class="string">" "</span>; </span><br><span class="line">  <span class="attribute">clear</span>: both; </span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这次清爽多了，html 不用改，利用伪元素 :after 代替之前的空标签，但还是太长了。</p>
+<h4 id="planC"><a href="#planC" class="headerlink" title="planC"></a>planC</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrap"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float1"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float2"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">br</span> <span class="attr">clear</span>=<span class="string">"all"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这个方法比较小众，br 有 clear=“all | left | right | none” 属性</p>
+<p>比空标签方式语义稍强，代码量较少，但还是多了个标签，不能忍。。。</p>
+<h4 id="planD"><a href="#planD" class="headerlink" title="planD"></a>planD</h4><p>现在我们把主意打到爸爸元素 .wrap 身上，经过试验，以下属性都会有清除浮动的效果：</p>
 <ul>
-<li><p>不再需要UMD模块格式了，将来服务器和浏览器都会支持ES6模块格式。目前，通过各种工具库，其实已经做到了这一点。</p>
-</li>
-<li><p>将来浏览器的新API就能用模块格式提供，不再必要做成全局变量或者navigator对象的属性。</p>
-</li>
-<li><p>不再需要对象作为命名空间（比如Math对象），未来这些功能可以通过模块提供。</p>
-</li>
+<li>overflow 除了visible 以外的值（hidden，auto，scroll ）</li>
+<li>display (table-cell，table-caption，inline-block)</li>
+<li>position（absolute，fixed） </li>
+<li>float 除了none以外的值 </li>
+<li>div 改为 fieldset</li>
 </ul>
+<p>原理：这些都能触发 <a href="http://www.w3.org/TR/CSS21/visuren.html#block-formatting" target="_blank" rel="external"> Block formatting contexts</a>（块级格式化上下文），以下简称 BFC。CSS3里面对这个规范做了改动，称之为：<a href="http://www.w3.org/TR/css3-box/#block-level0" target="_blank" rel="external">flow root</a>。</p>
+<blockquote>
+<p>display:table 本身并不会创建BFC，但是它会产生 <a href="http://www.w3.org/TR/CSS21/tables.html#anonymous-boxes" target="_blank" rel="external">匿名框</a> (anonymous boxes)，而匿名框中的 display:table-cell 可以创建新的 BFC。换句话说，触发块级格式化上下文的是匿名框，而不是 display:table。所以通过 display:table 和 display:table-cell 创建的 BFC 效果是不一样的。</p>
 </blockquote>
-<h5 id="关于组件化："><a href="#关于组件化：" class="headerlink" title="关于组件化："></a>关于组件化：</h5><p>光有JS/CSS的模块化还不够，对于UI组件的分治也有着同样迫切的需求。</p>
- <img src="/componentization/componentization.png" alt="componentization.png" title="">
-<p>这张图基本可以描述我们产品组件化的一个基本架构。</p>
-<ol>
-<li>页面上的每个 <strong>独立的</strong> 可视/可交互区域视为一个组件；</li>
-<li><strong>每个组件对应一个工程目录</strong>，组件所需的各种资源都在这个目录下<strong>就近维护</strong>；</li>
-<li>由于组件具有独立性，因此组件与组件之间可以 <strong>自由组合</strong>；</li>
-<li>页面只不过是组件的容器，负责组合组件形成功能完整的界面；</li>
-<li>当不需要某个组件，或者想要替换组件时，可以整个目录删除/替换。</li>
-</ol>
-<p>我一开始认为，组件化的意义就在于复用，如果一个功能块不能被复用，那就没必要将它组件化，但在实践中我发现这种想法是很局限的，我们应该将分治的理念贯彻到底。我认为在组件化的过程中，复用和分治要一起综合考虑，最终能够达到：页面中所有可复用的功能块都完成组件化，剩下的功能块是为了分治而组件化。</p>
-<p>这样我们的项目一目了然，各个模块职责清晰，各个组件功能独立。</p>
-<h5 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h5><p>接下来问题来了，我们是怎样做到组件之间的通信呢？在Angular中有两种通知机制：基于事件系统的广播和基于脏检查的数据监听，在我们的前端业务场景中，更多的是考虑数据的一致性，再加上事件系统后期维护成本比较高，于是我们最终选择了数据共享和监听。我们在Service层做了一个数据池，所有组件都到这里拿取数据，由于引用类型都是传递地址，它们也就指向了同一个源，源头改了，各个组件的数据当然也就跟着变了。</p>
-<h5 id="与设计师的磨合之路"><a href="#与设计师的磨合之路" class="headerlink" title="与设计师的磨合之路"></a>与设计师的磨合之路</h5><p>在前端组件化开展得如火如荼的时候，我们可能忘了还有一个角色能够很大程度上地影响组件化的步伐，那个人就是设计师。</p>
-<p>一般而言，设计师们在设计产品的时候是直接设计一整张页面再交给工程师实现的，工程师同学将参考设计稿设计页面布局，实现业务逻辑后套上这张样式大皮，完成。</p>
-<p>但我们的 Web 应用通常体量很大：多功能、多页面、多状态、多系统。这样设计师一张张出设计稿，程序员一页页实现，多累呀，而且同时在设计和实现的过程中两方还得同时面临需求的修改、用户操作产生的页面变动等等伤脑筋的问题。有时在前端看来是同一功能的组件，设计师在设计两张页面的时候却采用了不同的样式，给组件在前端的复用带来了麻烦；前端在写样式的时候没有达到像素级的完成度，设计师又不满意。这一件件破事儿堆积起来就造成了设计师与前端程序员之间巨大的鸿沟，不仅影响工作效率还可能影响同事关系。</p>
-<h5 id="DaoStyle"><a href="#DaoStyle" class="headerlink" title="DaoStyle"></a>DaoStyle</h5><p>针对这样的问题，我们做了很多的思考，既然前端可以组件化，那么为什么设计不能原子化呢？</p>
-<p>我们将能够复用的前端控件和公共样式都拆了出来，独立成一个我们 DaoCloud 自己的 UI 框架，一些基础逻辑功能和稳定的业务逻辑我们就都留在了产品自身作为公共模块调用。这样设计师只要专注于这些控件的设计就好了。</p>
-<p>有朋友又要说，这有什么卵用呢？我们可以直接用 BootStrap、semantic、Flat UI 这些有名气的 UI 框架啊！但是这对我们来说是很有必要的！</p>
-<p>我们也不是一上来就喊口号要做自己的UI框架的，我们一开始也是用Bootstrap的，但是在使用的过程中，总会遇到这样那样的问题让人头疼。</p>
-<p>首先，这些 UI 框架里包含的都是最常见和通用的控件，当你的业务功能非常复杂时就需要对这些控件修修改改再堆砌一大堆的业务逻辑使得这个组件跟需求完美契合，这是需要花巨大的精力和时间的，而且这种情况出现的频率太高了。</p>
-<p>其次，由于我们的产品是高度定制的，这些 UI 框架中不一定有我们需要的控件，这时候为了省事就要去引进各种第三方库啊、组件啊，越引越多后就导致项目变得很臃肿。</p>
-<p>还有，对一个品牌来说，风格的统一是无比重要的，否则就会有很山寨的感觉，界面风格统一对提升品牌气质和影响力有着莫大的作用。而如果你完全使用以上 UI 框架给你设计好的样式，确实是达到风格统一了，但却失去了品牌特色，品牌特色能极大地提升你的品牌认知度。</p>
-<p>最后，虽然我们的 Web 应用体量大，但实际上那些 UI 框架中的控件和样式我们只会用到极小的一部分，然而我们为此却要引入它一整套的库，很不划算啊。</p>
-<p>于是现在还有人觉得这是件没有必要的事吗？但可能又有人会说，自己开发 UI 框架多费时间啊，我们还要赶项目进度呢！但这其实是个一劳永逸的事儿，当你在这个 UI 框架中添加完成一个控件，完美达到了设计师和老板的审美要求之后，你就可以拿着它在你的项目里到处用，甚至在多个项目里到处用啦。并且控制权在你手中，实现代码也熟悉，将来想怎么改就怎么改。</p>
-<p>那么有哪些可以作为 UI 框架的一部分呢？我们觉得应该是那些复用性高、可脱离业务逻辑存在且设计师拍版说样式基本固定了的控件。</p>
-<p>接下来，怎么去写控件呢？我们认为，在写控件之前，我们需要对业务需求、复用情况做综合考虑，决定暴露哪些接口，在设计的时候一定要尽量简化未来这个控件的使用方式，同时，如果市面上已经有很多类似的控件，就需要去参考它们的实现方式，往往能够弥补很多我们考虑不周全的地方。控件的功能是根据业务需求来定，但不能依赖业务逻辑，更不能把特定的业务逻辑集成到控件里，虽然我们的 UI 框架是为我们的产品量身打造的，但也要保持一定的通用性。</p>
-<p>我们的 UI 框架是由我们的产品来推动的，往往这样写控件的效率是最高的，很多控件都是当我们需要用到时才去做，这样做完了还可以即刻使用上，再进行进一步的雕琢。原则上，我们推荐控件谁用谁写，因为在使用过程中可能发现控件写得不完善的地方，由于是自己写的，改起来也方便。</p>
-<p>于是我们就做到了产品推动着 UI 框架的发展，UI 框架又促进了产品的发展，这样一个良性循环。同时设计师、程序员也握手言和，共同朝着一个目标迈进，达到了你好我好大家好的 Happy Ending。</p>
-<p>说到现在还是着力在前端实现上，接下来请我们的设计总监介绍从设计的角度该如何实现原子化。</p>
-<h4 id="演讲-pdf"><a href="#演讲-pdf" class="headerlink" title="演讲 pdf"></a>演讲 pdf</h4>
-
-	<div class="row">
-	  <iframe src="http://nagland.github.io/viewer/web/viewer.html?val=http://cisy.me/componentization/componentization.pdf" style="width:100%; height:550px"></iframe>
-	</div>
-
-
-
+<p>缺点：这将导致其布局和相对于浮动的行为等发生一系列的变化，闭合浮动只不过是一系列变化中的一个作用而已。所以为了闭合浮动去改变全局特性，这是不明智的，带来的风险就是一系列的bug。</p>
+<h4 id="planE"><a href="#planE" class="headerlink" title="planE"></a>planE</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrap</span><span class="selector-pseudo">:before</span>,</span><br><span class="line"><span class="selector-class">.wrap</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">  <span class="attribute">content</span>:<span class="string">""</span>;</span><br><span class="line">  <span class="attribute">display</span>:table;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrap</span><span class="selector-pseudo">:after</span> &#123; <span class="attribute">clear</span>:both; &#125;</span><br></pre></td></tr></table></figure>
+<p>:before 是用来处理 margin 边距重叠的，由于内部元素 float 创建了BFC，导致内部元素的 margin-top 和 上一个盒子的 margin-bottom 发生叠加。如果这不是你所希望的，那么就可以加上 :before，如果只是单纯的闭合浮动，:after 就够了。</p>
 
       
     </div>
@@ -376,11 +351,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/模块化/" rel="tag">#模块化</a>
-          
-            <a href="/tags/组件化/" rel="tag">#组件化</a>
-          
-            <a href="/tags/UI框架/" rel="tag">#UI框架</a>
+            <a href="/tags/clearfix/" rel="tag">#clearfix</a>
           
         </div>
       
@@ -389,17 +360,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Cookie&localStorage&sessionStorage/" rel="next" title="Cookie、localStorage、sessionStorage">
-                <i class="fa fa-chevron-left"></i> Cookie、localStorage、sessionStorage
+              <a href="/componentization/" rel="next" title="前端组件化及自制UI框架概述">
+                <i class="fa fa-chevron-left"></i> 前端组件化及自制UI框架概述
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/clearfix/" rel="prev" title="clearfix 清除浮动">
-                clearfix 清除浮动 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -448,8 +415,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="componentization/"
-           data-title="前端组件化及自制UI框架概述" data-url="http://cisy.me/componentization/">
+      <div class="ds-thread" data-thread-key="clearfix/"
+           data-title="clearfix 清除浮动" data-url="http://cisy.me/clearfix/">
       </div>
     
   </div>
@@ -545,7 +512,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#2016-年-TopGeek-前端开发者大会"><span class="nav-number">1.</span> <span class="nav-text">2016 年 TopGeek 前端开发者大会</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要内容"><span class="nav-number">2.</span> <span class="nav-text">主要内容</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#关于模块化："><span class="nav-number">2.1.</span> <span class="nav-text">关于模块化：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关于组件化："><span class="nav-number">2.2.</span> <span class="nav-text">关于组件化：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#组件通信"><span class="nav-number">2.3.</span> <span class="nav-text">组件通信</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#与设计师的磨合之路"><span class="nav-number">2.4.</span> <span class="nav-text">与设计师的磨合之路</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DaoStyle"><span class="nav-number">2.5.</span> <span class="nav-text">DaoStyle</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#演讲-pdf"><span class="nav-number">3.</span> <span class="nav-text">演讲 pdf</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#不在掌控中的-float"><span class="nav-number">1.</span> <span class="nav-text">不在掌控中的 float</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#planA"><span class="nav-number">2.</span> <span class="nav-text">planA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#planB"><span class="nav-number">3.</span> <span class="nav-text">planB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#planC"><span class="nav-number">4.</span> <span class="nav-text">planC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#planD"><span class="nav-number">5.</span> <span class="nav-text">planD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#planE"><span class="nav-number">6.</span> <span class="nav-text">planE</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
