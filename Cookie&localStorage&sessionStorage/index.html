@@ -282,7 +282,7 @@ Cookie（复数形态Cookies），中文名称为“小型文本文件”或“�
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
                 <a href="/Cookie&localStorage&sessionStorage/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="Cookie&localStorage&sessionStorage/" itemprop="commentsCount"></span>
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Cookie&localStorage&sessionStorage/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -430,8 +430,11 @@ Cookie（复数形态Cookies），中文名称为“小型文本文件”或“�
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="Cookie&localStorage&sessionStorage/"
-           data-title="Cookie、localStorage、sessionStorage" data-url="http://cisy.me/Cookie&localStorage&sessionStorage/">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
@@ -796,31 +799,30 @@ Cookie（复数形态Cookies），中文名称为“小型文本文件”或“�
 
   
 
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"cisy"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-      <script src="/vendors/ua-parser-js/dist/ua-parser.min.js"></script>
-      <script src="/js/src/hook-duoshuo.js"></script>
-    
-  
 
 
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'cisy';
+      var disqus_identifier = 'Cookie&localStorage&sessionStorage/';
+      var disqus_title = 'Cookie、localStorage、sessionStorage';
+      var disqus_url = 'http://cisy.me/Cookie&localStorage&sessionStorage/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
 
 
 
