@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="正则表达式," />
+  <meta name="keywords" content="webpack," />
 
 
 
@@ -57,16 +57,32 @@
 
 
 
-<meta name="description" content="正则表达式 大家都很熟悉了，零宽断言 是正则表达式中比较高级的用法了。">
+<meta name="description" content="最近开始看 Vue 了，首先用官方的模版把项目快速搭建起来：
+
+Vue.js 提供一个官方命令行工具，可用于快速搭建大型单页应用。该工具提供开箱即用的构建工具配置，带来现代化的前端开发流程。只需几分钟即可创建并启动一个带热重载、保存时静态检查以及可用于生产环境的构建配置的项目。
+
+现在的项目 webpack 几乎是标配了，各种插件好用到爆。现在我们要接触的是一个叫 svg-sprite-loade">
 <meta property="og:type" content="article">
-<meta property="og:title" content="零宽断言">
-<meta property="og:url" content="http://cisy.me/zero-width-assertions/index.html">
+<meta property="og:title" content="webpack 插件 svg-sprite-loader">
+<meta property="og:url" content="http://cisy.me/webpack-svg-sprite/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
-<meta property="og:description" content="正则表达式 大家都很熟悉了，零宽断言 是正则表达式中比较高级的用法了。">
-<meta property="og:updated_time" content="2016-12-06T06:49:11.000Z">
+<meta property="og:description" content="最近开始看 Vue 了，首先用官方的模版把项目快速搭建起来：
+
+Vue.js 提供一个官方命令行工具，可用于快速搭建大型单页应用。该工具提供开箱即用的构建工具配置，带来现代化的前端开发流程。只需几分钟即可创建并启动一个带热重载、保存时静态检查以及可用于生产环境的构建配置的项目。
+
+现在的项目 webpack 几乎是标配了，各种插件好用到爆。现在我们要接触的是一个叫 svg-sprite-loade">
+<meta property="og:image" content="http://cisy.me/webpack-svg-sprite/webpack-svg-sprite01.png">
+<meta property="og:image" content="http://cisy.me/webpack-svg-sprite/webpack-svg-sprite02.png">
+<meta property="og:image" content="http://cisy.me/webpack-svg-sprite/webpack-svg-sprite03.png">
+<meta property="og:updated_time" content="2017-02-13T07:27:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="零宽断言">
-<meta name="twitter:description" content="正则表达式 大家都很熟悉了，零宽断言 是正则表达式中比较高级的用法了。">
+<meta name="twitter:title" content="webpack 插件 svg-sprite-loader">
+<meta name="twitter:description" content="最近开始看 Vue 了，首先用官方的模版把项目快速搭建起来：
+
+Vue.js 提供一个官方命令行工具，可用于快速搭建大型单页应用。该工具提供开箱即用的构建工具配置，带来现代化的前端开发流程。只需几分钟即可创建并启动一个带热重载、保存时静态检查以及可用于生产环境的构建配置的项目。
+
+现在的项目 webpack 几乎是标配了，各种插件好用到爆。现在我们要接触的是一个叫 svg-sprite-loade">
+<meta name="twitter:image" content="http://cisy.me/webpack-svg-sprite/webpack-svg-sprite01.png">
 
 
 
@@ -84,7 +100,7 @@
   };
 </script>
 
-  <title> 零宽断言 | Cisy 的博客 </title>
+  <title> webpack 插件 svg-sprite-loader | Cisy 的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -233,7 +249,7 @@
             
             
               
-                零宽断言
+                webpack 插件 svg-sprite-loader
               
             
           </h1>
@@ -245,8 +261,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-06T11:47:57+08:00" content="2016-12-06">
-              2016-12-06
+            <time itemprop="dateCreated" datetime="2017-02-13T13:33:17+08:00" content="2017-02-13">
+              2017-02-13
             </time>
           </span>
 
@@ -275,8 +291,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/zero-width-assertions/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="zero-width-assertions/" itemprop="commentsCount"></span>
+                <a href="/webpack-svg-sprite/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="webpack-svg-sprite/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -298,17 +314,43 @@
       
 
       
-        <p><a href="https://msdn.microsoft.com/zh-cn/library/ae5bf541" target="_blank" rel="external">正则表达式</a> 大家都很熟悉了，<strong>零宽断言</strong> 是正则表达式中比较高级的用法了。</p>
+        <p>最近开始看 Vue 了，首先用官方的模版把项目快速搭建起来：</p>
+<blockquote>
+<p>Vue.js 提供一个<a href="https://github.com/vuejs/vue-cli" target="_blank" rel="external">官方命令行工具</a>，可用于快速搭建大型单页应用。该工具提供开箱即用的构建工具配置，带来现代化的前端开发流程。只需几分钟即可创建并启动一个带热重载、保存时静态检查以及可用于生产环境的构建配置的项目。</p>
+</blockquote>
+<p>现在的项目 webpack 几乎是标配了，各种插件好用到爆。现在我们要接触的是一个叫 <a href="https://github.com/kisenka/svg-sprite-loader" target="_blank" rel="external"><strong>svg-sprite-loader</strong></a> 的插件，用来根据导入的 svg 文件自动生成 <code>symbol</code> 标签并插入 html，接下来就可以在模版中方便地使用 svg-sprite 技术了。</p>
 <a id="more"></a>
-<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>断言（assertion）通常情况下指的是在目标字符串的当前位置进行的一种判断测试，但这种测试不会占用目标字符串，这意味着不会移动目标字符串在当前匹配中的位置。</p>
-<h3 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h3><p>一般的正则表达式匹配，都是有 <strong>宽度</strong> 的，如：<code>\w+。</code> 会将 <code>。</code> 一同匹配到。</p>
-<p>如果像 <code>。</code> 这样的内容只是一种判断条件，即不想被正则匹配到，就要使用到 <strong>零宽断言</strong> 了。</p>
-<h3 id="零宽正向预测先行"><a href="#零宽正向预测先行" class="headerlink" title="零宽正向预测先行"></a>零宽正向预测先行</h3><p>（positive lookahead） <code>(?=exp)</code> 断言 <strong>指定位置的后面</strong> 能够匹配表达式 <em>exp</em>。如 <code>x(?=y)</code>，当 <em>x</em> 后面跟着 <em>y</em> 时，匹配该 <em>x</em>，但不将 <em>y</em> 作为匹配的一部分。</p>
-<h3 id="零宽负向预测先行"><a href="#零宽负向预测先行" class="headerlink" title="零宽负向预测先行"></a>零宽<strong>负向预测先行</strong></h3><p>（negative lookahead） <code>(?!exp)</code> 断言 <strong>指定位置的后面</strong> 不满足表达式 <em>exp</em>。如 <code>x(?!y)</code>，只有当 <em>x</em> 后面跟着的不是 <em>y</em> 时，才匹配该 <em>x</em>。</p>
-<h3 id="零宽正向回顾后发"><a href="#零宽正向回顾后发" class="headerlink" title="零宽正向回顾后发"></a>零宽<strong>正向回顾后发</strong></h3><p>（positive lookbehind） <code>(?&lt;=exp)</code> 断言 <strong>指定位置的前面</strong> 能够匹配表达式 <em>exp</em>。如 <code>(?&lt;=x)y</code>，只有当 <em>y</em> 的前面是 <em>x</em> 时，才匹配该 <em>y</em>。</p>
-<h3 id="零宽负向回顾后发"><a href="#零宽负向回顾后发" class="headerlink" title="零宽负向回顾后发"></a>零宽<strong>负向回顾后发</strong></h3><p>（negative lookbehind）<code>(?&lt;!exp)</code> 断言 <strong>指定位置的前面</strong> 不满足表达式 <em>exp</em> ，如 <code>(?&lt;!x)y</code>，只有当 <em>y</em> 的前面不是 <em>x</em> 时，才匹配该 <em>y</em>。</p>
-<h3 id="JS-中对零宽断言的支持"><a href="#JS-中对零宽断言的支持" class="headerlink" title="JS 中对零宽断言的支持"></a>JS 中对零宽断言的支持</h3><p>正则表达式有多种引擎实现，根据正则引擎的语法和行为，可以分为多种 <a href="http://www.infoq.com/cn/news/2011/07/regular-expressions-6-POSIX" target="_blank" rel="external"><strong>正则表达式流派</strong></a>（<code>regular expression flavor</code>）。</p>
-<p>不同的正则引擎之间并不完全兼容，比如：回顾后发断言（lookbehind）由于存在回溯情况，<code>JavaScript</code> <a href="https://www.zhihu.com/question/20154937" target="_blank" rel="external"><strong>没有对其进行实现</strong></a>。</p>
+<h3 id="使用-svg-sprite-的好处"><a href="#使用-svg-sprite-的好处" class="headerlink" title="使用 svg-sprite 的好处"></a>使用 svg-sprite 的好处</h3><p>如果不知道 svg-sprite 是什么，可以参考大神张鑫旭的文章：<a href="http://www.zhangxinxu.com/wordpress/2014/07/introduce-svg-sprite-technology/" target="_blank" rel="external">未来必热：SVG Sprite技术介绍</a></p>
+<ul>
+<li>页面代码清爽</li>
+<li>可使用 ID 随处重复调用</li>
+<li>每个 SVG 图标都可以更改大小颜色</li>
+</ul>
+<h3 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install svg-sprite-loader --save-dev</div></pre></td></tr></table></figure>
+<h3 id="webpack-配置"><a href="#webpack-配置" class="headerlink" title="webpack 配置"></a>webpack 配置</h3><p>装好插件之后，配置 webpack，加入处理 svg 的 loader：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">test</span>: <span class="regexp">/\.svg$/</span>,</div><div class="line">  <span class="attr">loader</span>: <span class="string">'svg-sprite?'</span> + <span class="built_in">JSON</span>.stringify(&#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'[name]'</span>,</div><div class="line">    <span class="attr">prefixize</span>: <span class="literal">true</span>,</div><div class="line">  &#125;),</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这时候发现还是不行啊，<code>body</code> 中并没有看到 <code>symbol</code> 标签。</p>
+<p>细看发现，还有一个loader 中也处理了 svg 文件：</p>
+<img src="/webpack-svg-sprite/webpack-svg-sprite01.png" alt="webpack-svg-sprite01.png" title="">
+<p>那么就把那个 svg 去掉吧，不然下面的 svg-sprite-loader 无法起效… OK，又报错了：</p>
+<img src="/webpack-svg-sprite/webpack-svg-sprite02.png" alt="webpack-svg-sprite02.png" title="">
+<p>由于我用了 element.js 作为 UI 框架，它的包里有个 svg 文件需要刚才的 loader 处理，我们把所有的 svg 文件都交由  svg-sprite-loader 处理了，所以这里报了错。</p>
+<p>也就是说只有我们自己引入的 svg 文件需要经过 svg-sprite-loader，那么就将这些 svg 统一放到一个目录下，我这里放到了 src/assets/svg/ ，再修改 loader 配置。</p>
+<p>上面 loader 匹配正则中的 svg 不用去掉了，给它加上 <code>exclude</code> ，不去处理 src/assets/svg/ 路径下的 svg 文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">test</span>: <span class="regexp">/\.(png|jpe?g|gif)(\?.*)?$/</span>,</div><div class="line">  <span class="attr">exclude</span>: [</div><div class="line">  	path.resolve(__dirname, <span class="string">'../src/assets'</span>),</div><div class="line">  ],</div><div class="line">  <span class="attr">loader</span>: <span class="string">'url'</span>,</div><div class="line">  <span class="attr">query</span>: &#123;</div><div class="line">    <span class="attr">limit</span>: <span class="number">10000</span>,</div><div class="line">    <span class="attr">name</span>: utils.assetsPath(<span class="string">'img/[name].[hash:7].[ext]'</span>),</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面 svg-sprite-loader 的配置中加上 <code>include</code>，只处理 src/assets/svg/ 路径下的 svg 文件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">test</span>: <span class="regexp">/\.svg$/</span>,</div><div class="line">  <span class="attr">include</span>: [</div><div class="line">  	path.resolve(__dirname, <span class="string">'../src/assets'</span>),</div><div class="line">  ],</div><div class="line">  <span class="attr">loader</span>: <span class="string">'svg-sprite?'</span> + <span class="built_in">JSON</span>.stringify(&#123;</div><div class="line">    <span class="attr">name</span>: <span class="string">'[name]'</span>,</div><div class="line">    <span class="attr">prefixize</span>: <span class="literal">true</span>,</div><div class="line">  &#125;),</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>重新启动项目，终于在 html 中看到了 <code>symbol</code> 标签！</p>
+<img src="/webpack-svg-sprite/webpack-svg-sprite03.png" alt="webpack-svg-sprite03.png" title="">
+<h3 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h3><p>配置好了，就可以用了。使用方法很简单，相较于原来插入 svg 图标的方法（img src 或将 svg 整个写入 html），用 svg-sprite 更加简单且清爽：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">'./assets/svg/target.svg'</span>;</div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">use</span> <span class="attr">xlink:href</span>=<span class="string">"#target"</span> /&gt;</span><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>嗯，就这样短短一行。<code>xlink:href</code> 中传入 svg ID 就好了，由于在上面的配置文件中我们直接使用文件名作为  <code>symbol</code> 的 ID，所以这里传入的 ID 即为你想显示的图标的 svg 文件名，记得加上 <code>#</code>。</p>
+<h3 id="自动导入"><a href="#自动导入" class="headerlink" title="自动导入"></a>自动导入</h3><p>你会发现，这里要想插入某个图标，都得 <code>import</code>，每用一个都要重复一遍这个流程，太麻烦，那么我们就让 src/assets/svg/ 下的 svg 文件都自动导入吧。</p>
+<p>webpack 可以帮我们做到：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// requires and returns all modules that match</span></div><div class="line"><span class="keyword">const</span> requireAll = <span class="function"><span class="params">requireContext</span> =&gt;</span> requireContext.keys().map(requireContext);</div><div class="line"></div><div class="line"><span class="comment">// import all svg</span></div><div class="line"><span class="keyword">const</span> req = <span class="built_in">require</span>.context(<span class="string">'./assets/svg'</span>, <span class="literal">true</span>, /\.svg$/);</div><div class="line">requireAll(req);</div></pre></td></tr></table></figure>
+<p>关于 <code>require.context</code> 的详细用法，可以参考 webpack 文档：<a href="https://webpack.github.io/docs/context.html" target="_blank" rel="external">dynamic requires</a></p>
+<p>这样一来，每当我们修改或增加新的 svg，只要将文件往这个目录下一扔，插件就会自动帮我们生成相应的 <code>symbol</code> 标签啦，接下来就只管用吧～♪(´ε｀ )</p>
 
       
     </div>
@@ -323,7 +365,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/正则表达式/" rel="tag">#正则表达式</a>
+            <a href="/tags/webpack/" rel="tag">#webpack</a>
           
         </div>
       
@@ -332,17 +374,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/async/" rel="next" title="JS 中与异步相关的概念整理">
-                <i class="fa fa-chevron-left"></i> JS 中与异步相关的概念整理
+              <a href="/zero-width-assertions/" rel="next" title="零宽断言">
+                <i class="fa fa-chevron-left"></i> 零宽断言
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/webpack-svg-sprite/" rel="prev" title="webpack 插件 svg-sprite-loader">
-                webpack 插件 svg-sprite-loader <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -491,7 +529,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#断言"><span class="nav-number">1.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽断言"><span class="nav-number">2.</span> <span class="nav-text">零宽断言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽正向预测先行"><span class="nav-number">3.</span> <span class="nav-text">零宽正向预测先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽负向预测先行"><span class="nav-number">4.</span> <span class="nav-text">零宽负向预测先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽正向回顾后发"><span class="nav-number">5.</span> <span class="nav-text">零宽正向回顾后发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽负向回顾后发"><span class="nav-number">6.</span> <span class="nav-text">零宽负向回顾后发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-中对零宽断言的支持"><span class="nav-number">7.</span> <span class="nav-text">JS 中对零宽断言的支持</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-svg-sprite-的好处"><span class="nav-number">1.</span> <span class="nav-text">使用 svg-sprite 的好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装插件"><span class="nav-number">2.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-配置"><span class="nav-number">3.</span> <span class="nav-text">webpack 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用"><span class="nav-number">4.</span> <span class="nav-text">如何使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动导入"><span class="nav-number">5.</span> <span class="nav-text">自动导入</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -766,9 +804,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'cisy';
-      var disqus_identifier = 'zero-width-assertions/';
-      var disqus_title = '零宽断言';
-      var disqus_url = 'http://cisy.me/zero-width-assertions/';
+      var disqus_identifier = 'webpack-svg-sprite/';
+      var disqus_title = 'webpack 插件 svg-sprite-loader';
+      var disqus_url = 'http://cisy.me/webpack-svg-sprite/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
