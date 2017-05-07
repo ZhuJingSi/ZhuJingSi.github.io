@@ -67,7 +67,7 @@ Cookie（复数形态Cookies），中文名称为“小型文本文件”或“�
 <meta property="og:description" content="localStorage 和 sessionStorage 是什么localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。
 Cookie 是什么
 Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过">
-<meta property="og:updated_time" content="2016-04-22T07:01:32.000Z">
+<meta property="og:updated_time" content="2017-05-07T03:35:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cookie、localStorage、sessionStorage">
 <meta name="twitter:description" content="localStorage 和 sessionStorage 是什么localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。
@@ -345,6 +345,16 @@ Cookie（复数形态Cookies），中文名称为“小型文本文件”或“�
 <h4 id="点操作和"><a href="#点操作和" class="headerlink" title="点操作和[]"></a>点操作和[]</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> storage = <span class="built_in">window</span>.localStorage;</div><div class="line">storage.key1 = <span class="string">"hello"</span>;</div><div class="line">storage[<span class="string">"key2"</span>] = <span class="string">"world"</span>;</div><div class="line"><span class="built_in">console</span>.log(storage.key1); <span class="comment">//hello</span></div><div class="line"><span class="built_in">console</span>.log(storage[<span class="string">"key2"</span>]); <span class="comment">//world</span></div></pre></td></tr></table></figure>
 <h4 id="storage-事件"><a href="#storage-事件" class="headerlink" title="storage 事件"></a>storage 事件</h4><p>storage 还提供了 storage 事件，当键值改变或者clear 的时候，就可以触发 storage 事件。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="built_in">window</span>.addEventListener)&#123;</div><div class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">"storage"</span>,handle_storage,<span class="literal">false</span>);</div><div class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">window</span>.attachEvent)&#123;</div><div class="line">    <span class="built_in">window</span>.attachEvent(<span class="string">"onstorage"</span>,handle_storage);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handle_storage</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(!e)&#123;e=<span class="built_in">window</span>.event;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>触发事件的事件对象（e 参数值）有几个属性：</p>
+<ul>
+<li>key : 键值</li>
+<li>oldValue : 被修改前的值</li>
+<li>newValue : 被修改后的值</li>
+<li>url : 页面 url</li>
+<li>storageArea : 被修改的 storage 对象</li>
+</ul>
+<p><strong>注意</strong>：在谷歌浏览器中，需要在不同标签页中修改 storage 才会触发该事件，即 网页A 监听该事件，在 网页B 中修改 localStorage，则 网页A 会触发事件函数。但是在 IE 中，在同个网页修改 localStorage 都会触发该事件。</p>
+
       
     </div>
 
