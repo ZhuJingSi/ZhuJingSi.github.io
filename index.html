@@ -63,6 +63,7 @@
 <meta property="og:url" content="http://cisy.me/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
 <meta property="og:description" content="有感想就记一记">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cisy 的博客">
 <meta name="twitter:description" content="有感想就记一记">
@@ -479,9 +480,9 @@
         
           <p>最近开始看 Vue 了，首先用官方的模版把项目快速搭建起来：</p>
 <blockquote>
-<p>Vue.js 提供一个<a href="https://github.com/vuejs/vue-cli">官方命令行工具</a>，可用于快速搭建大型单页应用。该工具提供开箱即用的构建工具配置，带来现代化的前端开发流程。只需几分钟即可创建并启动一个带热重载、保存时静态检查以及可用于生产环境的构建配置的项目。</p>
+<p>Vue.js 提供一个<a href="https://github.com/vuejs/vue-cli" target="_blank" rel="noopener">官方命令行工具</a>，可用于快速搭建大型单页应用。该工具提供开箱即用的构建工具配置，带来现代化的前端开发流程。只需几分钟即可创建并启动一个带热重载、保存时静态检查以及可用于生产环境的构建配置的项目。</p>
 </blockquote>
-<p>现在的项目 webpack 几乎是标配了，各种插件好用到爆。现在我们要接触的是一个叫 <a href="https://github.com/kisenka/svg-sprite-loader"><strong>svg-sprite-loader</strong></a> 的插件，用来根据导入的 svg 文件自动生成 <code>symbol</code> 标签并插入 html，接下来就可以在模版中方便地使用 svg-sprite 技术了。</p>
+<p>现在的项目 webpack 几乎是标配了，各种插件好用到爆。现在我们要接触的是一个叫 <a href="https://github.com/kisenka/svg-sprite-loader" target="_blank" rel="noopener"><strong>svg-sprite-loader</strong></a> 的插件，用来根据导入的 svg 文件自动生成 <code>symbol</code> 标签并插入 html，接下来就可以在模版中方便地使用 svg-sprite 技术了。</p>
           <div class="post-more-link text-center">
             <a class="btn" href="/webpack-svg-sprite/" rel="contents">
               阅读全文 &raquo;
@@ -598,7 +599,7 @@
 
       
         
-          <p><a href="https://msdn.microsoft.com/zh-cn/library/ae5bf541">正则表达式</a> 大家都很熟悉了，<strong>零宽断言</strong> 是正则表达式中比较高级的用法了。</p>
+          <p><a href="https://msdn.microsoft.com/zh-cn/library/ae5bf541" target="_blank" rel="noopener">正则表达式</a> 大家都很熟悉了，<strong>零宽断言</strong> 是正则表达式中比较高级的用法了。</p>
           <div class="post-more-link text-center">
             <a class="btn" href="/zero-width-assertions/" rel="contents">
               阅读全文 &raquo;
@@ -835,8 +836,8 @@
       
         
           <p>最近趁着兴致优化了一下手上项目的前端构建流程，正好熟悉了一下 webpack，以下为我对 webpack 的一些浅显认识。</p>
-<h4 id="什么是-Webpack"><a href="#什么是-Webpack" class="headerlink" title="什么是 Webpack"></a>什么是 Webpack</h4><p><strong><a href="http://webpack.github.io/">Webpack</a> 是一个前端资源加载/打包工具。</strong></p>
-<p>与 <a href="http://gruntjs.com/">Grunt</a> 和 <a href="http://gulpjs.com/">Gulp</a> 这两个<strong>自动化工具</strong>不同，Webpack 是个<strong>打包工具</strong>。</p>
+<h4 id="什么是-Webpack"><a href="#什么是-Webpack" class="headerlink" title="什么是 Webpack"></a>什么是 Webpack</h4><p><strong><a href="http://webpack.github.io/" target="_blank" rel="noopener">Webpack</a> 是一个前端资源加载/打包工具。</strong></p>
+<p>与 <a href="http://gruntjs.com/" target="_blank" rel="noopener">Grunt</a> 和 <a href="http://gulpjs.com/" target="_blank" rel="noopener">Gulp</a> 这两个<strong>自动化工具</strong>不同，Webpack 是个<strong>打包工具</strong>。</p>
 <p>具体来说：</p>
 <p>Webpack 主要以 entry 文件为入口，对依赖链中的文件进行各种处理（包括 js、图片、css 等多种类型的文件），最终打成一个 js 包。它专注于打包。</p>
 <p>Gulp／Gulp 是作为一个 task runner 存在的，它们专注于整个构建流程的串联，必要时 Webpack 的工作可以作为其中一个 task 存在。</p>

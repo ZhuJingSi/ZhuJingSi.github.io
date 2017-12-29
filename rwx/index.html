@@ -58,11 +58,13 @@
 
 
 <meta name="description" content="问题今天自己手工起了一个 wordpress，发现在上传图片的时候报了一个错：Unable to create directory wp-content/uploads/2016/03. It its parent directory writable by the server? 原因在报错中已经比较清楚了，就是上级目录没有被写的权限，因此不能创建 uploads 目录存放图片。">
+<meta name="keywords" content="rwx,linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于rwx（读、写、执行）的理解">
 <meta property="og:url" content="http://cisy.me/rwx/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
 <meta property="og:description" content="问题今天自己手工起了一个 wordpress，发现在上传图片的时候报了一个错：Unable to create directory wp-content/uploads/2016/03. It its parent directory writable by the server? 原因在报错中已经比较清楚了，就是上级目录没有被写的权限，因此不能创建 uploads 目录存放图片。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-03-20T04:21:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于rwx（读、写、执行）的理解">
@@ -302,32 +304,32 @@
 <a id="more"></a>
 <h4 id="查找资料后有人给出了解决方案："><a href="#查找资料后有人给出了解决方案：" class="headerlink" title="查找资料后有人给出了解决方案："></a>查找资料后有人给出了解决方案：</h4><ol>
 <li><p>将 wordpress 目录的权限改为 777 （ 所有人可读可写可执行 ）；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod -R 777 wordpress</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 777 wordpress</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol>
 <li><p>上传一次图片，uploads 目录被创建，因此可以获知 uploads 目录的属主（ ls -l，假设是 a ）；</p>
 </li>
 <li><p>将整个 wordpress 目录的属主和组（ EUID 和 EGID ）改为 a;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown a:a wordpress</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown a:a wordpress</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <ol>
 <li><p>再将 wordpress 目录的权限改为 755 （ 对属主：可读可写可执行，对组和其它：可读可执行）；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod -R 755 wordpress</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 755 wordpress</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p><strong>这种做法当然是可行的，但是在原理上绕了一个不必要的弯。首先，要弄懂是谁去创建这个 uploads 文件的，这并不需要先让它创建了我们再看是谁。</strong></p>
 <h4 id="探索正确的解决方案"><a href="#探索正确的解决方案" class="headerlink" title="探索正确的解决方案"></a>探索正确的解决方案</h4><p>我们都知道，客户端请求是发给服务器的，服务器又是通过 Web服务器软件来负责接受并转发给某个服务器端程序去分析和处理的。在这里，是通过 Apache 将请求转发给了 php 处理，那么我们先认为是 php 的进程创建了这个 uploads，这个 php 进程的属主也就自然而然是 uploads 的属主了。</p>
 <p><strong>现在试着查看 php 进程：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep php</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux|grep php</span><br></pre></td></tr></table></figure>
 <p><strong>居然没有找到一个 php 的进程！</strong>那我们再看看 apache：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep apache</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux|grep apache</span><br></pre></td></tr></table></figure>
 <p>这次拿到了一大堆：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">root      7834  0.0  1.5 180868 13840 ?   Ss   Mar05   0:00 /usr/sbin/apache2 -k start</div><div class="line">www-data 21707  0.0  5.3 218080 48152 ?  S    Mar05   0:06 /usr/sbin/apache2 -k start</div><div class="line">www-data 21708  0.0  3.5 201880 32244 ?  S    Mar05   0:02 /usr/sbin/apache2 -k start</div><div class="line">www-data 21709  0.0  3.4 200280 30504 ?  S    Mar05   0:03 /usr/sbin/apache2 -k start</div><div class="line">www-data 21722  0.0  3.6 202872 33140 ?  S    Mar05   0:02 /usr/sbin/apache2 -k start</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root      7834  0.0  1.5 180868 13840 ?   Ss   Mar05   0:00 /usr/sbin/apache2 -k start</span><br><span class="line">www-data 21707  0.0  5.3 218080 48152 ?  S    Mar05   0:06 /usr/sbin/apache2 -k start</span><br><span class="line">www-data 21708  0.0  3.5 201880 32244 ?  S    Mar05   0:02 /usr/sbin/apache2 -k start</span><br><span class="line">www-data 21709  0.0  3.4 200280 30504 ?  S    Mar05   0:03 /usr/sbin/apache2 -k start</span><br><span class="line">www-data 21722  0.0  3.6 202872 33140 ?  S    Mar05   0:02 /usr/sbin/apache2 -k start</span><br></pre></td></tr></table></figure>
 <p>这就说明了，是 Apache 在启动后将请求派发给了它的各个进程处理，这些进程的属主叫 “<strong>www-data</strong>”，就是它了！</p>
 <p>接下来进行最后一步：将 wordpress 目录的属主和组（ UID 和 GID ）改为 “www-data”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown www-data:www-data wordpress</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown www-data:www-data wordpress</span><br></pre></td></tr></table></figure>
 <p><strong>总结下来只需要两步就可到位，也不用将权限改来改去。</strong></p>
 <h4 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h4><p><strong>这里有个思路，当 a 进程想写 b 文件 而却没有权限的时候要怎么做才能成功？</strong></p>
 <p> 有三个办法：</p>

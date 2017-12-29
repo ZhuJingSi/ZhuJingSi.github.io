@@ -58,11 +58,13 @@
 
 
 <meta name="description" content="正则表达式 大家都很熟悉了，零宽断言 是正则表达式中比较高级的用法了。">
+<meta name="keywords" content="正则表达式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="零宽断言">
 <meta property="og:url" content="http://cisy.me/zero-width-assertions/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
 <meta property="og:description" content="正则表达式 大家都很熟悉了，零宽断言 是正则表达式中比较高级的用法了。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-12-06T06:49:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="零宽断言">
@@ -298,7 +300,7 @@
       
 
       
-        <p><a href="https://msdn.microsoft.com/zh-cn/library/ae5bf541" target="_blank" rel="external">正则表达式</a> 大家都很熟悉了，<strong>零宽断言</strong> 是正则表达式中比较高级的用法了。</p>
+        <p><a href="https://msdn.microsoft.com/zh-cn/library/ae5bf541" target="_blank" rel="noopener">正则表达式</a> 大家都很熟悉了，<strong>零宽断言</strong> 是正则表达式中比较高级的用法了。</p>
 <a id="more"></a>
 <h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>断言（assertion）通常情况下指的是在目标字符串的当前位置进行的一种判断测试，但这种测试不会占用目标字符串，这意味着不会移动目标字符串在当前匹配中的位置。</p>
 <h3 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h3><p>一般的正则表达式匹配，都是有 <strong>宽度</strong> 的，如：<code>\w+。</code> 会将 <code>。</code> 一同匹配到。</p>
@@ -307,8 +309,8 @@
 <h3 id="零宽负向预测先行"><a href="#零宽负向预测先行" class="headerlink" title="零宽负向预测先行"></a>零宽<strong>负向预测先行</strong></h3><p>（negative lookahead） <code>(?!exp)</code> 断言 <strong>指定位置的后面</strong> 不满足表达式 <em>exp</em>。如 <code>x(?!y)</code>，只有当 <em>x</em> 后面跟着的不是 <em>y</em> 时，才匹配该 <em>x</em>。</p>
 <h3 id="零宽正向回顾后发"><a href="#零宽正向回顾后发" class="headerlink" title="零宽正向回顾后发"></a>零宽<strong>正向回顾后发</strong></h3><p>（positive lookbehind） <code>(?&lt;=exp)</code> 断言 <strong>指定位置的前面</strong> 能够匹配表达式 <em>exp</em>。如 <code>(?&lt;=x)y</code>，只有当 <em>y</em> 的前面是 <em>x</em> 时，才匹配该 <em>y</em>。</p>
 <h3 id="零宽负向回顾后发"><a href="#零宽负向回顾后发" class="headerlink" title="零宽负向回顾后发"></a>零宽<strong>负向回顾后发</strong></h3><p>（negative lookbehind）<code>(?&lt;!exp)</code> 断言 <strong>指定位置的前面</strong> 不满足表达式 <em>exp</em> ，如 <code>(?&lt;!x)y</code>，只有当 <em>y</em> 的前面不是 <em>x</em> 时，才匹配该 <em>y</em>。</p>
-<h3 id="JS-中对零宽断言的支持"><a href="#JS-中对零宽断言的支持" class="headerlink" title="JS 中对零宽断言的支持"></a>JS 中对零宽断言的支持</h3><p>正则表达式有多种引擎实现，根据正则引擎的语法和行为，可以分为多种 <a href="http://www.infoq.com/cn/news/2011/07/regular-expressions-6-POSIX" target="_blank" rel="external"><strong>正则表达式流派</strong></a>（<code>regular expression flavor</code>）。</p>
-<p>不同的正则引擎之间并不完全兼容，比如：回顾后发断言（lookbehind）由于存在回溯情况，<code>JavaScript</code> <a href="https://www.zhihu.com/question/20154937" target="_blank" rel="external"><strong>没有对其进行实现</strong></a>。</p>
+<h3 id="JS-中对零宽断言的支持"><a href="#JS-中对零宽断言的支持" class="headerlink" title="JS 中对零宽断言的支持"></a>JS 中对零宽断言的支持</h3><p>正则表达式有多种引擎实现，根据正则引擎的语法和行为，可以分为多种 <a href="http://www.infoq.com/cn/news/2011/07/regular-expressions-6-POSIX" target="_blank" rel="noopener"><strong>正则表达式流派</strong></a>（<code>regular expression flavor</code>）。</p>
+<p>不同的正则引擎之间并不完全兼容，比如：回顾后发断言（lookbehind）由于存在回溯情况，<code>JavaScript</code> <a href="https://www.zhihu.com/question/20154937" target="_blank" rel="noopener"><strong>没有对其进行实现</strong></a>。</p>
 
       
     </div>
