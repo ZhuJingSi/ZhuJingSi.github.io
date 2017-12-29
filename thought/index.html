@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="正则表达式," />
+  <meta name="keywords" content="想法," />
 
 
 
@@ -57,16 +57,19 @@
 
 
 
-<meta name="description" content="正则表达式 大家都很熟悉了，零宽断言 是正则表达式中比较高级的用法了。">
+<meta name="description" content="近一年没写博客了，原因一个是懒，还有就是确实写代码少了，跑去做项目管理了。
+我的职位从 “Web 前端开发工程师” 到 ”前端负责人“ 再到 “高级产品经理”，其实并不高级也不是产品经理，准确讲应该是 项目经理 或 版本经理，主要管理整个项目的成员工作、版本进度、与其它团队沟通以及其它各种杂七杂八的事儿。看起来是个 “中层干部”，但实际上特别累，在我自己看来可能主要是心累吧，毕竟与人打交道难度更大">
 <meta property="og:type" content="article">
-<meta property="og:title" content="零宽断言">
-<meta property="og:url" content="http://cisy.me/zero-width-assertions/index.html">
+<meta property="og:title" content="想法">
+<meta property="og:url" content="http://cisy.me/thought/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
-<meta property="og:description" content="正则表达式 大家都很熟悉了，零宽断言 是正则表达式中比较高级的用法了。">
-<meta property="og:updated_time" content="2016-12-06T06:49:11.000Z">
+<meta property="og:description" content="近一年没写博客了，原因一个是懒，还有就是确实写代码少了，跑去做项目管理了。
+我的职位从 “Web 前端开发工程师” 到 ”前端负责人“ 再到 “高级产品经理”，其实并不高级也不是产品经理，准确讲应该是 项目经理 或 版本经理，主要管理整个项目的成员工作、版本进度、与其它团队沟通以及其它各种杂七杂八的事儿。看起来是个 “中层干部”，但实际上特别累，在我自己看来可能主要是心累吧，毕竟与人打交道难度更大">
+<meta property="og:updated_time" content="2017-12-29T03:48:14.408Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="零宽断言">
-<meta name="twitter:description" content="正则表达式 大家都很熟悉了，零宽断言 是正则表达式中比较高级的用法了。">
+<meta name="twitter:title" content="想法">
+<meta name="twitter:description" content="近一年没写博客了，原因一个是懒，还有就是确实写代码少了，跑去做项目管理了。
+我的职位从 “Web 前端开发工程师” 到 ”前端负责人“ 再到 “高级产品经理”，其实并不高级也不是产品经理，准确讲应该是 项目经理 或 版本经理，主要管理整个项目的成员工作、版本进度、与其它团队沟通以及其它各种杂七杂八的事儿。看起来是个 “中层干部”，但实际上特别累，在我自己看来可能主要是心累吧，毕竟与人打交道难度更大">
 
 
 
@@ -84,7 +87,7 @@
   };
 </script>
 
-  <title> 零宽断言 | Cisy 的博客 </title>
+  <title> 想法 | Cisy 的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -233,7 +236,7 @@
             
             
               
-                零宽断言
+                想法
               
             
           </h1>
@@ -245,8 +248,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-06T11:47:57+08:00" content="2016-12-06">
-              2016-12-06
+            <time itemprop="dateCreated" datetime="2017-12-20T14:57:58+08:00" content="2017-12-20">
+              2017-12-20
             </time>
           </span>
 
@@ -259,8 +262,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
+                  <a href="/categories/项目管理/" itemprop="url" rel="index">
+                    <span itemprop="name">项目管理</span>
                   </a>
                 </span>
 
@@ -275,8 +278,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/zero-width-assertions/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="zero-width-assertions/" itemprop="commentsCount"></span>
+                <a href="/thought/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="thought/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -298,17 +301,66 @@
       
 
       
-        <p><a href="https://msdn.microsoft.com/zh-cn/library/ae5bf541" target="_blank" rel="external">正则表达式</a> 大家都很熟悉了，<strong>零宽断言</strong> 是正则表达式中比较高级的用法了。</p>
-<a id="more"></a>
-<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>断言（assertion）通常情况下指的是在目标字符串的当前位置进行的一种判断测试，但这种测试不会占用目标字符串，这意味着不会移动目标字符串在当前匹配中的位置。</p>
-<h3 id="零宽断言"><a href="#零宽断言" class="headerlink" title="零宽断言"></a>零宽断言</h3><p>一般的正则表达式匹配，都是有 <strong>宽度</strong> 的，如：<code>\w+。</code> 会将 <code>。</code> 一同匹配到。</p>
-<p>如果像 <code>。</code> 这样的内容只是一种判断条件，即不想被正则匹配到，就要使用到 <strong>零宽断言</strong> 了。</p>
-<h3 id="零宽正向预测先行"><a href="#零宽正向预测先行" class="headerlink" title="零宽正向预测先行"></a>零宽正向预测先行</h3><p>（positive lookahead） <code>(?=exp)</code> 断言 <strong>指定位置的后面</strong> 能够匹配表达式 <em>exp</em>。如 <code>x(?=y)</code>，当 <em>x</em> 后面跟着 <em>y</em> 时，匹配该 <em>x</em>，但不将 <em>y</em> 作为匹配的一部分。</p>
-<h3 id="零宽负向预测先行"><a href="#零宽负向预测先行" class="headerlink" title="零宽负向预测先行"></a>零宽<strong>负向预测先行</strong></h3><p>（negative lookahead） <code>(?!exp)</code> 断言 <strong>指定位置的后面</strong> 不满足表达式 <em>exp</em>。如 <code>x(?!y)</code>，只有当 <em>x</em> 后面跟着的不是 <em>y</em> 时，才匹配该 <em>x</em>。</p>
-<h3 id="零宽正向回顾后发"><a href="#零宽正向回顾后发" class="headerlink" title="零宽正向回顾后发"></a>零宽<strong>正向回顾后发</strong></h3><p>（positive lookbehind） <code>(?&lt;=exp)</code> 断言 <strong>指定位置的前面</strong> 能够匹配表达式 <em>exp</em>。如 <code>(?&lt;=x)y</code>，只有当 <em>y</em> 的前面是 <em>x</em> 时，才匹配该 <em>y</em>。</p>
-<h3 id="零宽负向回顾后发"><a href="#零宽负向回顾后发" class="headerlink" title="零宽负向回顾后发"></a>零宽<strong>负向回顾后发</strong></h3><p>（negative lookbehind）<code>(?&lt;!exp)</code> 断言 <strong>指定位置的前面</strong> 不满足表达式 <em>exp</em> ，如 <code>(?&lt;!x)y</code>，只有当 <em>y</em> 的前面不是 <em>x</em> 时，才匹配该 <em>y</em>。</p>
-<h3 id="JS-中对零宽断言的支持"><a href="#JS-中对零宽断言的支持" class="headerlink" title="JS 中对零宽断言的支持"></a>JS 中对零宽断言的支持</h3><p>正则表达式有多种引擎实现，根据正则引擎的语法和行为，可以分为多种 <a href="http://www.infoq.com/cn/news/2011/07/regular-expressions-6-POSIX" target="_blank" rel="external"><strong>正则表达式流派</strong></a>（<code>regular expression flavor</code>）。</p>
-<p>不同的正则引擎之间并不完全兼容，比如：回顾后发断言（lookbehind）由于存在回溯情况，<code>JavaScript</code> <a href="https://www.zhihu.com/question/20154937" target="_blank" rel="external"><strong>没有对其进行实现</strong></a>。</p>
+        <p>近一年没写博客了，原因一个是懒，还有就是确实写代码少了，跑去做项目管理了。</p>
+<p>我的职位从 <strong>“Web 前端开发工程师”</strong> 到 <strong>”前端负责人“</strong> 再到 <strong>“高级产品经理”</strong>，其实并不高级也不是产品经理，准确讲应该是 <strong>项目经理</strong> 或 <strong>版本经理</strong>，主要管理整个项目的成员工作、版本进度、与其它团队沟通以及其它各种杂七杂八的事儿。看起来是个 “中层干部”，但实际上特别累，在我自己看来可能主要是心累吧，毕竟与人打交道难度更大。</p>
+<p>做研发的时候感觉每天都挺有干劲，脚踏实地，整天脑子里都在想着代码、框架、打包、性能、优化，每天多多少少都能学到点啥，感受到自己有提升。现在就像是一台忙碌的中央服务器，不停地处理任务、下发任务，但内心并不充实。还有一些不开心的事我就不说了，总之老实人可能不太适合这个岗位。当初是想着 “不想当将军的士兵不是好士兵” 来转职的，但却发现我可能还是更喜欢专注于技术而非业务。</p>
+<p>我是从公司初创只有十几个人的时候进来的，直到现在公司规模扩大发展到一百多人，期间公司团队组织结构发生了很多次变化，整个过程本身也能体会到很多。</p>
+<p>做了这么久项目经理，还是有不少收获和感悟的，我把这些想法记录下来，虽然比较零碎，且不一定全对，也算是有些成果了。</p>
+<hr>
+<ul>
+<li><p><strong>性格决定事业发展</strong>。过于固执、不愿改变，横向技术上限就很低；过于内向、不善沟通、脱离群体，纵向事业路线无法走到管理层。</p>
+</li>
+<li><p><strong>跨团队</strong>。如果想对跨团队的事情有做作为，一定需要老板亲自关注、其它团队 leader 亲自合作推动，否则必将虎头蛇尾、不了了之。</p>
+</li>
+<li><p><strong>开会</strong>。</p>
+<ol>
+<li>会议目标明确</li>
+<li>会前所有人都有所准备</li>
+<li>开会时间不宜过长</li>
+<li>一定要有人记会议纪要</li>
+<li>会后结论/安排明确到人</li>
+</ol>
+</li>
+<li><p><strong>产品经理</strong>。客观来说，产品经理确实是女生来做更加合适，协调团队工作、沟通其它团队更加不容易制造矛盾，安排任务也更加不容易受到拒绝。耐心和细心程度并不能作为衡量标准，看个人。</p>
+</li>
+<li><p><strong>印象</strong>。给人好的印象很重要，而好印象最有效的建立方式就是做每一件事都要仔细认真，有始有终。比如：规划一个项目的各个方面、申请/文档尽量全面。</p>
+</li>
+<li><p><strong>领导力</strong>。领导力跟团队成员对你的认可程度成正比，需要培养所有人以你为中心的习惯。</p>
+<ol>
+<li>多以组织者的身份带领团队活动很重要，这可以让团队成员将你当成下意识里的管理者。</li>
+<li>平时分配任务时多考虑团队成员们的情绪，悉心听取他们的意见，逐渐建立信任感。</li>
+<li>同时私交也很重要，熟识的员工总能更加配合你的工作。</li>
+<li>被认可之后，你做出的决策就更容易得到大家的支持。</li>
+</ol>
+</li>
+<li><p><strong>主见</strong>。在带领团队的过程中，会遇到很多你的决策受到团队中其他成员质疑的情况，这时候既不能太固执也不能太软弱，做什么决定都要有主线目标，执行方式可以有所调整，但目标一定要达成。</p>
+</li>
+<li><p><strong>文档</strong>。</p>
+<ol>
+<li>代码层面：组件文档、项目文档</li>
+<li>产品层面：用户手册、产品 release note</li>
+<li>业务层面：事故处理、竞品分析</li>
+<li>文化层面：产品相关知识库（在技术产品中尤为重要）</li>
+</ol>
+</li>
+<li><p><strong>对接</strong>。不管是团队内部还是团队间的任何对接工作，沟通一定要充分，输出信息要足够全面，避免出现糊涂账或者造成事后过多的沟通成本。</p>
+</li>
+<li><p><strong>信任</strong>。讨论问题、分配任务，不要一会儿给A一会儿给B，也不要动不动指手画脚，这样会给别人你不信任他的感觉。</p>
+</li>
+<li><p><strong>汇报</strong>。积极发汇报邮件（or 任何其它沟通方式）能够有效自己的存在感和影响力，同时能给人可靠的感觉。</p>
+</li>
+<li><p><strong>成果</strong>。从领导那里听来一句话：</p>
+<ol>
+<li><p>把领导交给你的任务做完，可以拿 70 分；</p>
+</li>
+<li><p>把任务做完并汇报给领导可以拿 90 分；</p>
+</li>
+<li><p>但如果把做这项任务的成果跟所有人分享，那你可以拿 100 分；</p>
+<p>可见，该高调的时候必须高调，不用不好意思，自己作出的成果如果不大声告诉别人，没有人会把你当回事，你的成果也不能发挥积极的带动作用。</p>
+</li>
+</ol>
+</li>
+</ul>
 
       
     </div>
@@ -323,7 +375,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/正则表达式/" rel="tag">#正则表达式</a>
+            <a href="/tags/想法/" rel="tag">#想法</a>
           
         </div>
       
@@ -332,17 +384,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/async/" rel="next" title="JS 中与异步相关的概念整理">
-                <i class="fa fa-chevron-left"></i> JS 中与异步相关的概念整理
+              <a href="/webpack-svg-sprite/" rel="next" title="webpack 插件 svg-sprite-loader">
+                <i class="fa fa-chevron-left"></i> webpack 插件 svg-sprite-loader
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/webpack-svg-sprite/" rel="prev" title="webpack 插件 svg-sprite-loader">
-                webpack 插件 svg-sprite-loader <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -491,7 +539,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#断言"><span class="nav-number">1.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽断言"><span class="nav-number">2.</span> <span class="nav-text">零宽断言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽正向预测先行"><span class="nav-number">3.</span> <span class="nav-text">零宽正向预测先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽负向预测先行"><span class="nav-number">4.</span> <span class="nav-text">零宽负向预测先行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽正向回顾后发"><span class="nav-number">5.</span> <span class="nav-text">零宽正向回顾后发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#零宽负向回顾后发"><span class="nav-number">6.</span> <span class="nav-text">零宽负向回顾后发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-中对零宽断言的支持"><span class="nav-number">7.</span> <span class="nav-text">JS 中对零宽断言的支持</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -766,9 +814,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'cisy';
-      var disqus_identifier = 'zero-width-assertions/';
-      var disqus_title = '零宽断言';
-      var disqus_url = 'http://cisy.me/zero-width-assertions/';
+      var disqus_identifier = 'thought/';
+      var disqus_title = '想法';
+      var disqus_url = 'http://cisy.me/thought/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
