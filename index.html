@@ -236,6 +236,125 @@
             
               
                 
+                <a class="post-title-link" href="/redux/" itemprop="url">
+                  redux 源码分析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-04-06T17:32:18+08:00" content="2018-04-06">
+              2018-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/redux/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="redux/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="Redux-是啥"><a href="#Redux-是啥" class="headerlink" title="Redux 是啥"></a>Redux 是啥</h3><p>Redux 是对 <a href="https://www.zhihu.com/question/33864532" target="_blank" rel="noopener">Flux 应用架构</a> 的一种实现，并且引入了大量函数式编程的实现。</p>
+<p>简单来讲，<strong>Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取</strong>。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 <strong><code>dipatch</code></strong> 分发 <strong><code>action</code></strong> 来触发对应的 <strong><code>reducer</code></strong> 进而更新数据池。这样遵循这套规则：1) View 层和 Model 层不会耦合得很紧 2) Store 里可能发生的变化是可预测的（看注册了哪些 <code>action</code>） 3) 所有状态变化都可监控、可回溯。</p>
+<p>这里有一个误区，很多人看到 Redux 就想到 React，觉得它们应该在一起用，甚至觉得 Redux 只能在 React 中用。但其实他俩并没有互相牵扯的关系，Redux 是一种管理数据状态的方法，可以和很多不同框架搭配使用。React 也不是一定要用 Redux，如果没有很复杂的状态变更，用上 Redux 反而麻烦。如果要将他俩结合使用，通常会使用一个叫 <strong>react-redux</strong> 的库来牵线搭桥，后面会有文章详细介绍。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/redux/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/this/" itemprop="url">
                   this
                 </a>
@@ -1287,126 +1406,13 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/rwx/" itemprop="url">
-                  关于rwx（读、写、执行）的理解
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-01T00:46:42+08:00" content="2016-03-01">
-              2016-03-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/rwx/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="rwx/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><p>今天自己手工起了一个 wordpress，发现在上传图片的时候报了一个错：Unable to create directory wp-content/uploads/2016/03. It its parent directory writable by the server? 原因在报错中已经比较清楚了，就是上级目录没有被写的权限，因此不能创建 uploads 目录存放图片。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/rwx/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1445,7 +1451,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1462,7 +1468,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
