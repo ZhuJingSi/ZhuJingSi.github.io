@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="redux,react," />
+  <meta name="keywords" content="react,redux," />
 
 
 
@@ -58,7 +58,7 @@
 
 
 <meta name="description" content="Redux 是啥Redux 是对 Flux 应用架构 的一种实现，并且引入了大量函数式编程的实现。 简单来讲，Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 dipatch 分发 action 来触发对应的 reducer 进而更新数据池。这样遵">
-<meta name="keywords" content="redux,react">
+<meta name="keywords" content="react,redux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="redux 源码分析">
 <meta property="og:url" content="http://cisy.me/redux/index.html">
@@ -69,7 +69,7 @@
 <meta property="og:image" content="http://cisy.me/redux/redux02.png">
 <meta property="og:image" content="http://cisy.me/redux/redux03.png">
 <meta property="og:image" content="http://cisy.me/redux/redux04.png">
-<meta property="og:updated_time" content="2018-04-06T20:18:30.077Z">
+<meta property="og:updated_time" content="2018-04-07T06:29:16.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redux 源码分析">
 <meta name="twitter:description" content="Redux 是啥Redux 是对 Flux 应用架构 的一种实现，并且引入了大量函数式编程的实现。 简单来讲，Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 dipatch 分发 action 来触发对应的 reducer 进而更新数据池。这样遵">
@@ -307,7 +307,7 @@
       
         <h3 id="Redux-是啥"><a href="#Redux-是啥" class="headerlink" title="Redux 是啥"></a>Redux 是啥</h3><p>Redux 是对 <a href="https://www.zhihu.com/question/33864532" target="_blank" rel="noopener">Flux 应用架构</a> 的一种实现，并且引入了大量函数式编程的实现。</p>
 <p>简单来讲，<strong>Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取</strong>。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 <strong><code>dipatch</code></strong> 分发 <strong><code>action</code></strong> 来触发对应的 <strong><code>reducer</code></strong> 进而更新数据池。这样遵循这套规则：1) View 层和 Model 层不会耦合得很紧 2) Store 里可能发生的变化是可预测的（看注册了哪些 <code>action</code>） 3) 所有状态变化都可监控、可回溯。</p>
-<p>这里有一个误区，很多人看到 Redux 就想到 React，觉得它们应该在一起用，甚至觉得 Redux 只能在 React 中用。但其实他俩并没有互相牵扯的关系，Redux 是一种管理数据状态的方法，可以和很多不同框架搭配使用。React 也不是一定要用 Redux，如果没有很复杂的状态变更，用上 Redux 反而麻烦。如果要将他俩结合使用，通常会使用一个叫 <strong>react-redux</strong> 的库来牵线搭桥，后面会有文章详细介绍。</p>
+<p>这里有一个误区，很多人看到 Redux 就想到 React，觉得它们应该在一起用，甚至觉得 Redux 只能在 React 中用。但其实他俩并没有互相牵扯的关系，Redux 是一种管理数据状态的方法，可以和很多不同框架搭配使用，支持 React、Angular、Ember、jQuery 甚至纯 JavaScript。（当然，Redux 还是和 <a href="http://facebook.github.io/react/" target="_blank" rel="noopener">React</a> 和 <a href="https://github.com/dekujs/deku" target="_blank" rel="noopener">Deku</a> 这类库搭配起来用最好，因为这类库允许你以 state 的形式来描述界面，Redux 通过 action 的形式来发起 state 变化）。React 也不是一定要用 Redux，如果没有很复杂的状态变更，用上 Redux 反而麻烦。如果要将他俩结合使用，通常会使用一个叫 <strong>react-redux</strong> 的库来牵线搭桥，后面会有文章详细介绍。</p>
 <a id="more"></a>
 <h3 id="action、dispatch、reducer"><a href="#action、dispatch、reducer" class="headerlink" title="action、dispatch、reducer"></a>action、dispatch、reducer</h3><p>上面提到了三个单词可能有点懵，下面来分别解释一下。</p>
 <p><strong><code>store</code></strong>：就是一整个数据池，redux 中有且只能有一个 <code>store</code>；</p>
@@ -327,8 +327,10 @@
 <li><strong><code>compose.js</code> </strong>：函数按参数顺序从右到左依次链式调用，其实也是个工具函数</li>
 <li><strong><code>createStore.js</code> </strong>：创建一个 Redux Store</li>
 </ul>
+<blockquote>
 <p><strong>这些代码 + 注释太长了，不想放在博客里，可以自行去我 <a href="https://github.com/ZhuJingSi/redux/blob/develop/src/index.js" target="_blank" rel="noopener">Github</a> 上看</strong>，下面就简单描述一下几个主要方法的概况。</p>
 <p><em>注：这里不贴每个接口的使用示例了，不知道怎么用的可以去网上找</em></p>
+</blockquote>
 <h4 id="createStore-js"><a href="#createStore-js" class="headerlink" title="createStore.js"></a>createStore.js</h4><p><strong>接收参数</strong>：<code>reducer</code>，<code>preloadedState</code>，<code>enhancer</code>。</p>
 <p><code>reducer</code> 不用讲了；<code>preloadedState</code> 是初始 state，一般也不用传； <code>enhancer</code> 是一个高阶函数，返回一个新的强化过的 store creator，可以根据需要传一些 middleware 进来，通常配合 <code>applyMiddleware</code> 使用：<code>createStore(reducer, applyMiddleware(middlewares…))</code>。</p>
 <p><strong>返回接口</strong>：<code>dispatch</code>，<code>subscribe</code>，<code>getState</code>，<code>replaceReducer</code>。</p>
@@ -378,9 +380,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/redux/" rel="tag">#redux</a>
-          
             <a href="/tags/react/" rel="tag">#react</a>
+          
+            <a href="/tags/redux/" rel="tag">#redux</a>
           
         </div>
       
@@ -396,6 +398,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/react-redux/" rel="prev" title="react-redux 详解">
+                react-redux 详解 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -493,7 +499,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -510,7 +516,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
