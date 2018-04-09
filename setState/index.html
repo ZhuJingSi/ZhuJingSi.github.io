@@ -68,7 +68,7 @@
 <meta property="og:image" content="http://cisy.me/setState/setState01.png">
 <meta property="og:image" content="http://cisy.me/setState/setState02.png">
 <meta property="og:image" content="http://cisy.me/setState/setState03.png">
-<meta property="og:updated_time" content="2018-04-09T06:35:04.263Z">
+<meta property="og:updated_time" content="2018-04-09T08:44:31.247Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="setState 源码分析，流程详解">
 <meta name="twitter:description" content="引子setState 方法由父类 Component 提供，是 React 组件修改局部状态的方法，使用起来很简单，向 setState() 中传入一个 对象或函数 就会已有的 state 进行更新并且重新调用 render 方法。 为什么会有两种传参方式呢？举个栗子： 1234567...  handleClickOnLikeButton () &amp;#123;    this.setState(&amp;">
@@ -351,7 +351,6 @@
 <li>如果当前 B 正在创建或更新过程中，则将 A 放入 <code>dirtyComponents</code> 等候，否则调用 <code>batchedUpdates</code> 处理。</li>
 <li><code>batchedUpdates</code> 发起 <code>transaction.perform()</code> 事务。</li>
 <li>wrapper initialize</li>
-<li><em>第一次 <code>perform(anyMethod)</code> 的 anyMethod 还是 <code>enqueueUpdate</code>，这里不太懂</em></li>
 <li>这个事务流程中的 <em>anyMethod</em> 是 <code>runBatchedUpdates</code> ，即更新组件状态并走一遍组件生命周期，在 <code>componentWillMount</code> 时将 A 状态队列里累积的状态都依次处理了。</li>
 <li>wrapper close，循环遍历 <code>dirtyComponents</code>  并执行 <code>transaction.perform(runBatchedUpdates, null, transaction);</code>，于是 A 就被捡起来开始走事务流程，步骤又回到 4。</li>
 <li>直到 <code>dirtyComponents</code>  里最后一个组件跑完流程，组件都被统一更新了一遍。</li>
