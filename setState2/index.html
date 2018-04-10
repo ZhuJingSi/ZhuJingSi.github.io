@@ -66,7 +66,7 @@
 <meta property="og:description" content="之前一篇介绍 setState 的文章最后的参考链接中贴上了 React 源码剖析系列 － 解密 setState 这篇文章，开篇有一个引导例子，但对于执行结果细想起来我还是没能搞懂，这篇文章我们就来做做试验。 先回顾这个例子： 12345678910111213141516171819202122232425262728class Example extends React.Component">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://cisy.me/setState2/setState2.01.png">
-<meta property="og:updated_time" content="2018-04-10T17:21:57.425Z">
+<meta property="og:updated_time" content="2018-04-10T17:23:43.335Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="setState 再发现">
 <meta name="twitter:description" content="之前一篇介绍 setState 的文章最后的参考链接中贴上了 React 源码剖析系列 － 解密 setState 这篇文章，开篇有一个引导例子，但对于执行结果细想起来我还是没能搞懂，这篇文章我们就来做做试验。 先回顾这个例子： 12345678910111213141516171819202122232425262728class Example extends React.Component">
@@ -314,8 +314,7 @@
 <li><code>setTimeOut</code> 里的两个 <code>setState</code>  是写在一起的，却好像没有合并？两次 log 打印出了不同的结果</li>
 </ol>
 <h3 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h3><p>经过询问主管大大，终于弄懂了一点机制。对以上的疑问相应的解答是：</p>
-<p>####在同一个 <code>batchedUpdates</code>  中对同一个属性赋值会被合并，且会被最后一个的计算方式覆盖。</p>
-<ol>
+<h4 id="在同一个-batchedUpdates-中对同一个属性赋值会被合并，且会被最后一个的计算方式覆盖。"><a href="#在同一个-batchedUpdates-中对同一个属性赋值会被合并，且会被最后一个的计算方式覆盖。" class="headerlink" title="在同一个 batchedUpdates  中对同一个属性赋值会被合并，且会被最后一个的计算方式覆盖。"></a>在同一个 <code>batchedUpdates</code>  中对同一个属性赋值会被合并，且会被最后一个的计算方式覆盖。</h4><ol>
 <li>直接在 <code>setTimeout</code> 中打印，可以看到此时的 <code>this.state.val</code> 就是 1，并不是预想中的 2</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val); <span class="comment">// 1</span></span><br><span class="line">  <span class="comment">// this.setState(&#123;val: this.state.val + 1&#125;);</span></span><br><span class="line">  <span class="comment">// this.setState(&#123;val: this.state.val + 1&#125;);</span></span><br><span class="line">&#125;, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
@@ -514,7 +513,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#疑问"><span class="nav-number">1.</span> <span class="nav-text">疑问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解答"><span class="nav-number">2.</span> <span class="nav-text">解答</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在异步回调中的-setState-是同步执行的"><span class="nav-number">2.1.</span> <span class="nav-text">在异步回调中的 setState 是同步执行的</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#疑问"><span class="nav-number">1.</span> <span class="nav-text">疑问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解答"><span class="nav-number">2.</span> <span class="nav-text">解答</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在同一个-batchedUpdates-中对同一个属性赋值会被合并，且会被最后一个的计算方式覆盖。"><span class="nav-number">2.1.</span> <span class="nav-text">在同一个 batchedUpdates  中对同一个属性赋值会被合并，且会被最后一个的计算方式覆盖。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在异步回调中的-setState-是同步执行的"><span class="nav-number">2.2.</span> <span class="nav-text">在异步回调中的 setState 是同步执行的</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
