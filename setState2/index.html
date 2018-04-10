@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Cookie,localStorage,sessionStorage," />
+  <meta name="keywords" content="react," />
 
 
 
@@ -57,18 +57,20 @@
 
 
 
-<meta name="description" content="localStorage 和 sessionStorage 是什么localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。 Cookie 是什么 Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过">
-<meta name="keywords" content="Cookie,localStorage,sessionStorage">
+<meta name="description" content="之前一篇介绍 setState 的文章最后的参考链接中贴上了 React 源码剖析系列 － 解密 setState 这篇文章，开篇有一个引导例子，但对于执行结果细想起来我还是没能搞懂，这篇文章我们就来做做试验。 先回顾这个例子： 12345678910111213141516171819202122232425262728class Example extends React.Component">
+<meta name="keywords" content="react">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Cookie、localStorage、sessionStorage">
-<meta property="og:url" content="http://cisy.me/Cookie&localStorage&sessionStorage/index.html">
+<meta property="og:title" content="setState 再发现">
+<meta property="og:url" content="http://cisy.me/setState2/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
-<meta property="og:description" content="localStorage 和 sessionStorage 是什么localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。 Cookie 是什么 Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过">
+<meta property="og:description" content="之前一篇介绍 setState 的文章最后的参考链接中贴上了 React 源码剖析系列 － 解密 setState 这篇文章，开篇有一个引导例子，但对于执行结果细想起来我还是没能搞懂，这篇文章我们就来做做试验。 先回顾这个例子： 12345678910111213141516171819202122232425262728class Example extends React.Component">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-05-07T03:35:54.000Z">
+<meta property="og:image" content="http://cisy.me/setState2/setState2.01.png">
+<meta property="og:updated_time" content="2018-04-10T17:18:12.312Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cookie、localStorage、sessionStorage">
-<meta name="twitter:description" content="localStorage 和 sessionStorage 是什么localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。 Cookie 是什么 Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过">
+<meta name="twitter:title" content="setState 再发现">
+<meta name="twitter:description" content="之前一篇介绍 setState 的文章最后的参考链接中贴上了 React 源码剖析系列 － 解密 setState 这篇文章，开篇有一个引导例子，但对于执行结果细想起来我还是没能搞懂，这篇文章我们就来做做试验。 先回顾这个例子： 12345678910111213141516171819202122232425262728class Example extends React.Component">
+<meta name="twitter:image" content="http://cisy.me/setState2/setState2.01.png">
 
 
 
@@ -86,7 +88,7 @@
   };
 </script>
 
-  <title> Cookie、localStorage、sessionStorage | Cisy 的博客 </title>
+  <title> setState 再发现 | Cisy 的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +237,7 @@
             
             
               
-                Cookie、localStorage、sessionStorage
+                setState 再发现
               
             
           </h1>
@@ -247,8 +249,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-09T22:44:00+08:00" content="2016-03-09">
-              2016-03-09
+            <time itemprop="dateCreated" datetime="2018-04-11T00:09:09+08:00" content="2018-04-11">
+              2018-04-11
             </time>
           </span>
 
@@ -277,8 +279,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/Cookie&localStorage&sessionStorage/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="Cookie&localStorage&sessionStorage/" itemprop="commentsCount"></span>
+                <a href="/setState2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="setState2/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -300,56 +302,38 @@
       
 
       
-        <h3 id="localStorage-和-sessionStorage-是什么"><a href="#localStorage-和-sessionStorage-是什么" class="headerlink" title="localStorage 和 sessionStorage 是什么"></a>localStorage 和 sessionStorage 是什么</h3><p><strong>localStorage 和 sessionStorage 都是 HTML5 新的两种浏览器端数据存储方式，统称为 Web Storage。</strong></p>
-<h3 id="Cookie-是什么"><a href="#Cookie-是什么" class="headerlink" title="Cookie 是什么"></a>Cookie 是什么</h3><blockquote>
-<p>Cookie（复数形态Cookies），中文名称为“小型文本文件”或“小甜饼”，指某些网站为了辨别用户身份而储存在用户本地终端（Client Side）上的数据（通常经过加密）。</p>
-<p>-wikipedia  </p>
-</blockquote>
+        <p>之前一篇介绍 <code>setState</code> 的文章最后的参考链接中贴上了 <a href="https://zhuanlan.zhihu.com/p/20328570" target="_blank" rel="noopener">React 源码剖析系列 － 解密 setState</a> 这篇文章，开篇有一个引导例子，但对于执行结果细想起来我还是没能搞懂，这篇文章我们就来做做试验。</p>
+<p>先回顾这个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Example</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>();</span><br><span class="line">    <span class="keyword">this</span>.state = &#123;</span><br><span class="line">      val: <span class="number">0</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val);    <span class="comment">// 第 1 次 log</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val);    <span class="comment">// 第 2 次 log</span></span><br><span class="line"></span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val);  <span class="comment">// 第 3 次 log</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;);</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val);  <span class="comment">// 第 4 次 log</span></span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>答案：0、0、2、3</strong></p>
+<p>这里答案不重要，关键是为什么是这样的结果。</p>
 <a id="more"></a>
-<h3 id="Web-Storage-为何产生-Cookie-的缺陷"><a href="#Web-Storage-为何产生-Cookie-的缺陷" class="headerlink" title="Web Storage 为何产生(Cookie 的缺陷)"></a>Web Storage 为何产生(Cookie 的缺陷)</h3><p>Cookie 在 1993 年就有了，那么为什么还要弄出个 Web Storage 来呢？因为 Cookie 在某些情况的使用上并不适用或者说有极大的不便：</p>
+<h3 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h3><p>前一篇文章已经介绍了 <code>setState</code> 的流程，<code>setState</code> 本身是异步的，所以前两个 log 是 0 没有问题。我的疑问有以下几点：</p>
 <ol>
-<li>Cookie 会被附加在每个 HTTP 请求中，所以无形中增加了流量。</li>
-<li>由于在 HTTP 请求中的 Cookie 是明文传递的，所以安全性成问题。（除非用HTTPS）</li>
-<li>Cookie 的大小限制在4KB左右。对于复杂的存储需求来说是不够用的。</li>
+<li>我们都知道，<code>setTimeOut</code> 是异步的，和外面的主线逻辑不会放在同一个 event loop 中执行，所以在进行到 <code>setTimeOut</code> 的回调里的时候前两个 <code>setState</code> 已经结束了他们的回合，此时的 <code>this.state.val</code> 应该是 0+1+1=2 才对，为什么第三个 log 打出来是 2 呢？</li>
+<li><code>setTimeOut</code> 里的两个 <code>setState</code>  是写在一起的，却好像没有合并？两次 log 打印出了不同的结果</li>
 </ol>
-<h3 id="三者区别"><a href="#三者区别" class="headerlink" title="三者区别"></a>三者区别</h3><h4 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h4><p><strong>Cookie</strong>:  分为非持久 Cookie 和持久 Cookie 两种，非持久 Cookie 由浏览器维护，保存在内存中，浏览器关闭后就消失；持久 Cookie 保存在硬盘中，除非到了设置的过期时间或用户手动清除数据，将会一直保存。默认为非持久 Cookie。</p>
-<p><strong>localStorage</strong>:  没有时间限制，直到 js 中调用接口清除或用户手动清除。</p>
-<p><strong>sessionStorage</strong>:  在用户关闭浏览器窗口或关闭浏览器时就会清空。</p>
-<h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><p><strong>Cookie</strong>:  同源。</p>
-<p><strong>localStorage</strong>:  同源。</p>
-<p><strong>sessionStorage</strong>:  只在当前窗口共享，即使是同网址的另一个 tab 中都是不能共享的。</p>
-<h4 id="存储大小"><a href="#存储大小" class="headerlink" title="存储大小"></a>存储大小</h4><p><strong>Cookie</strong>:  4k左右。</p>
-<p><strong>localStorage</strong>:  5MB 或更大。</p>
-<p><strong>sessionStorage</strong>:  5MB 或更大。</p>
-<h4 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h4><p>Web Storage 支持事件通知机制，api 接口使用更方便。</p>
-<p>sessionStorage 与页面 js 数据对象相比：js 数据对象在页面刷新后就不存在了，但 sessionStorage 还在。</p>
-<h3 id="浏览器支持情况"><a href="#浏览器支持情况" class="headerlink" title="浏览器支持情况"></a>浏览器支持情况</h3><p>要判断浏览器是否支持localStorage可以使用下面的代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">window</span>.localStorage) &#123;</span><br><span class="line">    alert(<span class="string">"浏览支持localStorage"</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    alert(<span class="string">"浏览暂不支持localStorage"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">window</span>.localStorage == <span class="string">'undefined'</span>) &#123;</span><br><span class="line">    alert(<span class="string">"浏览暂不支持localStorage"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="localStorage-和sessionStorage-的操作"><a href="#localStorage-和sessionStorage-的操作" class="headerlink" title="localStorage 和sessionStorage 的操作"></a>localStorage 和sessionStorage 的操作</h3><p>localStorage 和sessionStorage 都具有相同的操作方法，例如 setItem、getItem 和 removeItem 等。</p>
-<h4 id="setItem-存储-value"><a href="#setItem-存储-value" class="headerlink" title="setItem 存储 value"></a>setItem 存储 value</h4><p>用途：将 value 存储到 key 字段</p>
-<p>用法：.setItem( key, value)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessionStorage.setItem(<span class="string">"name"</span>, <span class="string">"cisy"</span>);</span><br><span class="line">localStorage.setItem(<span class="string">"sex"</span>, <span class="string">"female"</span>);</span><br></pre></td></tr></table></figure>
-<h4 id="getItem-获取-value"><a href="#getItem-获取-value" class="headerlink" title="getItem 获取 value"></a>getItem 获取 value</h4><p>用途：获取指定 key 本地存储的值</p>
-<p>用法：.getItem(key)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = sessionStorage.getItem(<span class="string">"name"</span>);</span><br><span class="line"><span class="keyword">var</span> sex = localStorage.getItem(<span class="string">"sex"</span>);</span><br></pre></td></tr></table></figure>
-<h4 id="removeItem-删除-key"><a href="#removeItem-删除-key" class="headerlink" title="removeItem 删除 key"></a>removeItem 删除 key</h4><p>用途：删除指定 key 本地存储的值</p>
-<p>用法：.removeItem(key)</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessionStorage.removeItem(<span class="string">"name"</span>);</span><br><span class="line">localStorage.removeItem(<span class="string">"sex"</span>);</span><br></pre></td></tr></table></figure>
-<h4 id="clear-清除所有的-key-value"><a href="#clear-清除所有的-key-value" class="headerlink" title="clear 清除所有的 key/value"></a>clear 清除所有的 key/value</h4><p>用途：清除所有的 key/value</p>
-<p>用法：.clear()</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sessionStorage.clear();</span><br><span class="line">localStorage.clear();</span><br></pre></td></tr></table></figure>
-<h4 id="点操作和"><a href="#点操作和" class="headerlink" title="点操作和[]"></a>点操作和[]</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> storage = <span class="built_in">window</span>.localStorage;</span><br><span class="line">storage.key1 = <span class="string">"hello"</span>;</span><br><span class="line">storage[<span class="string">"key2"</span>] = <span class="string">"world"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(storage.key1); <span class="comment">//hello</span></span><br><span class="line"><span class="built_in">console</span>.log(storage[<span class="string">"key2"</span>]); <span class="comment">//world</span></span><br></pre></td></tr></table></figure>
-<h4 id="storage-事件"><a href="#storage-事件" class="headerlink" title="storage 事件"></a>storage 事件</h4><p>storage 还提供了 storage 事件，当键值改变或者clear 的时候，就可以触发 storage 事件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">window</span>.addEventListener)&#123;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">"storage"</span>,handle_storage,<span class="literal">false</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">window</span>.attachEvent)&#123;</span><br><span class="line">    <span class="built_in">window</span>.attachEvent(<span class="string">"onstorage"</span>,handle_storage);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handle_storage</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!e)&#123;e=<span class="built_in">window</span>.event;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>触发事件的事件对象（e 参数值）有几个属性：</p>
-<ul>
-<li>key : 键值</li>
-<li>oldValue : 被修改前的值</li>
-<li>newValue : 被修改后的值</li>
-<li>url : 页面 url</li>
-<li>storageArea : 被修改的 storage 对象</li>
-</ul>
-<p><strong>注意</strong>：在谷歌浏览器中，需要在不同标签页中修改 storage 才会触发该事件，即 网页A 监听该事件，在 网页B 中修改 localStorage，则 网页A 会触发事件函数。但是在 IE 中，在同个网页修改 localStorage 都会触发该事件。</p>
+<h3 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h3><p>经过询问主管大大，终于弄懂了一点机制。对以上的疑问相应的解答是：</p>
+<p>####在同一个 <code>batchedUpdates</code>  中对同一个属性赋值会被合并，且会被最后一个的计算方式覆盖。</p>
+<ol>
+<li>直接在 <code>setTimeout</code> 中打印，可以看到此时的 <code>this.state.val</code> 就是 1，并不是预想中的 2</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val); <span class="comment">// 1</span></span><br><span class="line">  <span class="comment">// this.setState(&#123;val: this.state.val + 1&#125;);</span></span><br><span class="line">  <span class="comment">// this.setState(&#123;val: this.state.val + 1&#125;);</span></span><br><span class="line">&#125;, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>注意我将第二个 <code>setState</code> 里的计算式改成了 <code>+2</code>，此时 <code>setTimeout</code> 中就打出了 2</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">2</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val); <span class="comment">// 2</span></span><br><span class="line">  <span class="comment">// this.setState(&#123;val: this.state.val + 1&#125;);</span></span><br><span class="line">  <span class="comment">// this.setState(&#123;val: this.state.val + 1&#125;);</span></span><br><span class="line">&#125;, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>为了验证最后一个会覆盖前面的所有 <code>setState</code>，注意我多写了一个  <code>setState</code> 并将最后一个 <code>setState</code> 里的计算式改回了 <code>+1</code>，此时 <code>setTimeout</code> 中就打出了 1，验证成功！</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">2</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">3</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"><span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;); <span class="comment">// 0</span></span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val); <span class="comment">// 1</span></span><br><span class="line">  <span class="comment">// this.setState(&#123;val: this.state.val + 1&#125;);</span></span><br><span class="line">  <span class="comment">// this.setState(&#123;val: this.state.val + 1&#125;);</span></span><br><span class="line">&#125;, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="在异步回调中的-setState-是同步执行的"><a href="#在异步回调中的-setState-是同步执行的" class="headerlink" title="在异步回调中的 setState 是同步执行的"></a>在异步回调中的 <code>setState</code> 是同步执行的</h4><p><code>setState</code> 在主线逻辑上是异步的，但一旦进入类似 <code>setTimeOut</code> 这样的异步回调中，就变成同步执行的了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">componentDidMount() &#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">2</span>&#125;);</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">2</span>&#125;);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val);</span><br><span class="line"></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">val</span>: <span class="keyword">this</span>.state.val + <span class="number">1</span>&#125;);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.state.val);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">render() &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'render'</span>+<span class="keyword">this</span>.state.val); <span class="comment">// 为了查看渲染次数以及顺序</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/setState2/setState2.01.png">
+<p>看结果，可以发现，<code>setTimeout</code> 中每 <code>setState</code> 一次都会触发一次组件重新渲染。</p>
+<blockquote>
+<p>写着写着又发现问题了，比如：为什么最后会多一次 render？以及如果再加上一些生命周期函数，在里面打印，又会有不同的表现，这个容我在问问，未完待续。。。</p>
+</blockquote>
 
       
     </div>
@@ -364,11 +348,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Cookie/" rel="tag">#Cookie</a>
-          
-            <a href="/tags/localStorage/" rel="tag">#localStorage</a>
-          
-            <a href="/tags/sessionStorage/" rel="tag">#sessionStorage</a>
+            <a href="/tags/react/" rel="tag">#react</a>
           
         </div>
       
@@ -377,17 +357,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/rwx/" rel="next" title="关于rwx（读、写、执行）的理解">
-                <i class="fa fa-chevron-left"></i> 关于rwx（读、写、执行）的理解
+              <a href="/setState/" rel="next" title="setState 源码分析，流程详解">
+                <i class="fa fa-chevron-left"></i> setState 源码分析，流程详解
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/componentization/" rel="prev" title="前端组件化及自制UI框架概述">
-                前端组件化及自制UI框架概述 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -536,7 +512,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#localStorage-和-sessionStorage-是什么"><span class="nav-number">1.</span> <span class="nav-text">localStorage 和 sessionStorage 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie-是什么"><span class="nav-number">2.</span> <span class="nav-text">Cookie 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-Storage-为何产生-Cookie-的缺陷"><span class="nav-number">3.</span> <span class="nav-text">Web Storage 为何产生(Cookie 的缺陷)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三者区别"><span class="nav-number">4.</span> <span class="nav-text">三者区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生命周期"><span class="nav-number">4.1.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#作用域"><span class="nav-number">4.2.</span> <span class="nav-text">作用域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#存储大小"><span class="nav-number">4.3.</span> <span class="nav-text">存储大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它"><span class="nav-number">4.4.</span> <span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器支持情况"><span class="nav-number">5.</span> <span class="nav-text">浏览器支持情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#localStorage-和sessionStorage-的操作"><span class="nav-number">6.</span> <span class="nav-text">localStorage 和sessionStorage 的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#setItem-存储-value"><span class="nav-number">6.1.</span> <span class="nav-text">setItem 存储 value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getItem-获取-value"><span class="nav-number">6.2.</span> <span class="nav-text">getItem 获取 value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#removeItem-删除-key"><span class="nav-number">6.3.</span> <span class="nav-text">removeItem 删除 key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#clear-清除所有的-key-value"><span class="nav-number">6.4.</span> <span class="nav-text">clear 清除所有的 key/value</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#点操作和"><span class="nav-number">6.5.</span> <span class="nav-text">点操作和[]</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#storage-事件"><span class="nav-number">6.6.</span> <span class="nav-text">storage 事件</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#疑问"><span class="nav-number">1.</span> <span class="nav-text">疑问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解答"><span class="nav-number">2.</span> <span class="nav-text">解答</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在异步回调中的-setState-是同步执行的"><span class="nav-number">2.1.</span> <span class="nav-text">在异步回调中的 setState 是同步执行的</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -811,9 +787,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'cisy';
-      var disqus_identifier = 'Cookie&localStorage&sessionStorage/';
-      var disqus_title = 'Cookie、localStorage、sessionStorage';
-      var disqus_url = 'http://cisy.me/Cookie&localStorage&sessionStorage/';
+      var disqus_identifier = 'setState2/';
+      var disqus_title = 'setState 再发现';
+      var disqus_url = 'http://cisy.me/setState2/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
