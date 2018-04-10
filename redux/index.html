@@ -69,7 +69,7 @@
 <meta property="og:image" content="http://cisy.me/redux/redux02.png">
 <meta property="og:image" content="http://cisy.me/redux/redux03.png">
 <meta property="og:image" content="http://cisy.me/redux/redux04.png">
-<meta property="og:updated_time" content="2018-04-07T06:29:16.038Z">
+<meta property="og:updated_time" content="2018-04-10T03:27:29.219Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redux 源码分析">
 <meta name="twitter:description" content="Redux 是啥Redux 是对 Flux 应用架构 的一种实现，并且引入了大量函数式编程的实现。 简单来讲，Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 dipatch 分发 action 来触发对应的 reducer 进而更新数据池。这样遵">
@@ -353,7 +353,7 @@
 <p><strong>返回</strong>：可以直接调用触发 <code>dispatch</code> 的函数（集合，key 不变），就是不用自己手动 <code>dispatch</code> 啦～</p>
 <p><em>注：</em>惟一使用 <code>bindActionCreators</code> 的场景是当你需要把 action creator 往下传到一个组件上，却不想让这个组件觉察到 Redux 的存在，而且不希望把 Redux store 或 <code>dispatch</code> 传给它（这在 react-redux 的 connect 方法中常会用到）。</p>
 <h4 id="applyMiddlewar-js"><a href="#applyMiddlewar-js" class="headerlink" title="applyMiddlewar.js"></a>applyMiddlewar.js</h4><p><strong>接收参数</strong>：多个 middleware。</p>
-<p><strong>返回</strong>：一个新的 <code>dispatch</code>。</p>
+<p><strong>返回</strong>：一个新的 Redux Store。</p>
 <p>先上图，一看就明白 applyMiddlewar 是个啥了：</p>
 <img src="/redux/redux03.png">
 <p>这个 applyMiddleware 比较有意思，同样是一个高阶函数（真的是到处都是高阶函数。。。）这块代码不多，我直接贴代码好了，看注释哈。</p>
