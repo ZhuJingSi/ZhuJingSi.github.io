@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="lodash," />
+  <meta name="keywords" content="react," />
 
 
 
@@ -57,18 +57,18 @@
 
 
 
-<meta name="description" content="这篇不是科普帖，只是我自己的学习记录，比较零散，没什么好看的。">
-<meta name="keywords" content="lodash">
+<meta name="description" content="Hooks 在 React v16.7.0-alpha 及以上版本中可用，可以在函数组件中使用类似类函数中的 state(状态) 和其他 React 功能。具体的功能和用法在 官方文档 中有非常详尽的介绍，这里主要是提炼一些我认为值得注意的点以及表述一些自己的思考。 什么是 HooksHooks 是一个 React 函数组件内一类特殊的函数（通常以 “use” 开头，比如 “useState”），">
+<meta name="keywords" content="react">
 <meta property="og:type" content="article">
-<meta property="og:title" content="lodash 零散记录">
-<meta property="og:url" content="http://cisy.me/lodash/index.html">
+<meta property="og:title" content="React Hooks">
+<meta property="og:url" content="http://cisy.me/hooks/index.html">
 <meta property="og:site_name" content="Cisy 的博客">
-<meta property="og:description" content="这篇不是科普帖，只是我自己的学习记录，比较零散，没什么好看的。">
+<meta property="og:description" content="Hooks 在 React v16.7.0-alpha 及以上版本中可用，可以在函数组件中使用类似类函数中的 state(状态) 和其他 React 功能。具体的功能和用法在 官方文档 中有非常详尽的介绍，这里主要是提炼一些我认为值得注意的点以及表述一些自己的思考。 什么是 HooksHooks 是一个 React 函数组件内一类特殊的函数（通常以 “use” 开头，比如 “useState”），">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-14T17:20:48.000Z">
+<meta property="og:updated_time" content="2019-03-05T15:36:17.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lodash 零散记录">
-<meta name="twitter:description" content="这篇不是科普帖，只是我自己的学习记录，比较零散，没什么好看的。">
+<meta name="twitter:title" content="React Hooks">
+<meta name="twitter:description" content="Hooks 在 React v16.7.0-alpha 及以上版本中可用，可以在函数组件中使用类似类函数中的 state(状态) 和其他 React 功能。具体的功能和用法在 官方文档 中有非常详尽的介绍，这里主要是提炼一些我认为值得注意的点以及表述一些自己的思考。 什么是 HooksHooks 是一个 React 函数组件内一类特殊的函数（通常以 “use” 开头，比如 “useState”），">
 
 
 
@@ -86,7 +86,7 @@
   };
 </script>
 
-  <title> lodash 零散记录 | Cisy 的博客 </title>
+  <title> React Hooks | Cisy 的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -235,7 +235,7 @@
             
             
               
-                lodash 零散记录
+                React Hooks
               
             
           </h1>
@@ -247,8 +247,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-04-12T16:46:41+08:00" content="2018-04-12">
-              2018-04-12
+            <time itemprop="dateCreated" datetime="2019-03-05T17:35:34+08:00" content="2019-03-05">
+              2019-03-05
             </time>
           </span>
 
@@ -277,8 +277,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/lodash/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="lodash/" itemprop="commentsCount"></span>
+                <a href="/hooks/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="hooks/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -300,26 +300,62 @@
       
 
       
-        <blockquote>
-<p>这篇不是科普帖，只是我自己的学习记录，比较零散，没什么好看的。</p>
-</blockquote>
+        <p><em>Hooks 在 React v16.7.0-alpha 及以上版本中可用，可以在函数组件中使用类似类函数中的 state(状态) 和其他 React 功能。具体的功能和用法在 <a href="http://react.html.cn/docs/hooks-intro.html" target="_blank" rel="noopener">官方文档</a> 中有非常详尽的介绍，这里主要是提炼一些我认为值得注意的点以及表述一些自己的思考。</em></p>
+<h3 id="什么是-Hooks"><a href="#什么是-Hooks" class="headerlink" title="什么是 Hooks"></a>什么是 Hooks</h3><p><strong>Hooks</strong> 是一个 React 函数组件内一类特殊的函数（通常以 “use” 开头，比如 “useState”），使开发者能够在函数组件里使用 state 和 life-cycles，以及使用自定义 hook 复用业务逻辑。</p>
 <a id="more"></a>
-<h3 id="Hash-amp-amp-ListCache"><a href="#Hash-amp-amp-ListCache" class="headerlink" title="Hash &amp;&amp; ListCache"></a><code>Hash</code> &amp;&amp; <code>ListCache</code></h3><p>lodash 里有两种用来替代 ES6 Map 方法的实现：<code>Hash</code> 和 <code>ListCache</code>。</p>
-<p>这两个方法都在 .intenal 目录下。</p>
-<p><code>Hash</code> 其实是用对象来做缓存，但是对象有一个局限，它的 <code>key</code> 只能是字符串或者 <code>Symbol</code> 类型，但是 <code>Map</code> 是支持各种类型的值来作为 <code>key</code>，因此 <code>Hash</code> 缓存无法完全模拟 <code>Map</code> 的行为，当遇到 <code>key</code> 为数组、对象等类型时，<code>Hash</code> 就无能为力了。</p>
-<p>因此，在不支持 <code>Map</code> 的环境下，<code>lodash</code> 实现了 <code>ListCache</code> 来模拟，<code>ListCache</code> 本质上是使用一个二维数组来储存数据。</p>
-<p>这两种方法暴露出的接口与 <code>Map</code> 相比，除了没有遍历，其它效果都一样。</p>
-<h3 id="Hash-存在的价值"><a href="#Hash-存在的价值" class="headerlink" title="Hash 存在的价值"></a><code>Hash</code> 存在的价值</h3><p>从上面的介绍中可以看出来， <code>ListCache</code> 和 <code>Map</code> 都可以完全替代 <code>Hash</code>，那为什么 lodash 还要保留这个方法呢？</p>
-<p>因为数据量较大时，对象的存取比 <code>Map</code> 或者数组的性能要好。因此，ladash 在能够用 <code>Hash</code> 缓存时，都尽量使用 <code>Hash</code> 缓存，而能否使用 <code>Hash</code> 缓存的关键是 <code>key</code> 的类型。</p>
-<h3 id="lodash-实现和自己实现的不同"><a href="#lodash-实现和自己实现的不同" class="headerlink" title="lodash 实现和自己实现的不同"></a>lodash 实现和自己实现的不同</h3><ol>
-<li>lodash 抽象出了很多工具函数，在不同接口之间共用</li>
-<li>lodash 做了很多类型判断，考虑了很多边界情况</li>
+<h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>原先的 React 拥有两种创建组件的方式：<strong>函数组件</strong> 和 <strong>类组件</strong>。</p>
+<blockquote>
+<p>函数组件就是一个传入参数返回 React 元素的 JS 函数，它没有内部 state 和生命周期，是无状态函数式组件，通常作为没有复杂交互的纯展示组件。</p>
+<p>类组件顾名思义就是用一个 <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">ES6 的 class</a> 来定义的组件，它拥有 state 和完善的生命周期。</p>
+</blockquote>
+<p>日常开发中我们可能更多的会使用类组件，因为很多情况下都不可避免地要使用 state 和生命周期。然而当使用场景越来越复杂的情况下，类组件却暴露出一些问题：</p>
+<h4 id="在组件之间重用有状态逻辑很困难"><a href="#在组件之间重用有状态逻辑很困难" class="headerlink" title="在组件之间重用有状态逻辑很困难"></a>在组件之间重用有状态逻辑很困难</h4><p>在以往，如果想要复用一段逻辑（比如：在所有页面所有组件都需要获取当前用户的身份权限，以此做一些特殊处理时），通常会使用：1. 带有这段复用逻辑的 <a href="http://react.html.cn/docs/higher-order-components.html" target="_blank" rel="noopener">高阶组件</a>  2. 带有这段复用逻辑的普通组件配合上  <a href="http://react.html.cn/docs/render-props.html" target="_blank" rel="noopener">render props(渲染属性)</a>。但这导致的问题就是当我们的应用规模变得越来越大的时候，一些无关 UI 的 wrapper 组件越来越多，React 组件树变得越来越臃肿（在 devtool 中可以甚至看到数十层 wrapper），使开发和调试的效率变得很低。</p>
+<h4 id="按生命周期方法划分逻辑将变得难以理解"><a href="#按生命周期方法划分逻辑将变得难以理解" class="headerlink" title="按生命周期方法划分逻辑将变得难以理解"></a>按生命周期方法划分逻辑将变得难以理解</h4><p>每个生命周期方法通常包含一组不相关的逻辑。例如，组件可能在<code>componentDidMount</code> 和 <code>componentDidUpdate</code>中执行一些数据获取。然而，相同的 <code>componentDidMount</code> 方法可能还包含一些不相关的逻辑，它们设置事件监听器，并在 <code>componentWillUnmount</code> 中执行清理。本应一起更改的相互关联的代码会被分离，完全不相关的代码最终会组合在一个方法中。这很容易引入错误和不一致，比如常常被遗忘的“取消订阅”和“取消轮询”等逻辑。</p>
+<h4 id="性能优化困难"><a href="#性能优化困难" class="headerlink" title="性能优化困难"></a>性能优化困难</h4><p>相比于函数组件，类组件很难获得提前编译带来的好处，同时类不能很好地压缩，并且它们使得热更新加载变得片状和不可靠。</p>
+<p>鉴于以上类函数的种种短板，React 官方顺理成章地进一步拥抱函数式编程思想，于是设计出 Hooks 这样的特殊函数来弥补函数组件相对于类组件缺少的 state 和生命周期功能，并打算让 Hooks 涵盖所有现有的类用例，希望在未来大家更多地去用函数组件而非类组件。</p>
+<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><ol>
+<li>Hooks 命名都以 “use” 开头</li>
+<li>Hooks 只能在 React 函数式组件中或另一个自定义 Hooks 中调用</li>
+<li>Hooks 只能在函数顶层调用，不能在循环、条件或嵌套函数中调用（因为 React 依赖于调用 Hooks 的顺序，在条件语句中可能会打乱顺序）</li>
 </ol>
-<h3 id="看了源码的接口"><a href="#看了源码的接口" class="headerlink" title="看了源码的接口"></a>看了源码的接口</h3><ol>
-<li>difference</li>
-<li>reduce</li>
-</ol>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://juejin.im/post/5a653c676fb9a01c9332c938" target="_blank" rel="noopener">lodash源码分析之缓存方式的选择</a></p>
+<p>安装 <a href="https://www.npmjs.com/package/eslint-plugin-react-hooks" target="_blank" rel="noopener"><code>eslint-plugin-react-hooks</code></a> 插件可以强制执行这些规则。</p>
+<h3 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h3><p>这里简单说一下几个比较核心的：</p>
+<h4 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h4><p>相当于类函数中的一套 state 管理方法，返回长度为 2 的一个数组，包含： stateful(有状态) 值，以及更新这个状态值的函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [state, setState] = useState(initialState);</span><br></pre></td></tr></table></figure>
+<p>可以看出来，这种写法类比到类组件中就相当于 this.state 和 this.setState，只不过这里每次只能处理一个 state。有同学可能会说这样好麻烦，state 如果很多的话写 useState 都要写一长串。但这种写法其实很方便我们将 state 归类处理，即将同类的 state 合并到一个对象中作为 <code>initialState</code>，逻辑更清晰，也方便未来将一些相关逻辑提取到自定义 Hook 中。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> [position, setPosition] = useState(&#123; <span class="attr">left</span>: <span class="number">0</span>, <span class="attr">top</span>: <span class="number">0</span> &#125;);</span><br><span class="line"><span class="keyword">const</span> [size, setSize] = useState(&#123; <span class="attr">width</span>: <span class="number">100</span>, <span class="attr">height</span>: <span class="number">100</span> &#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>另外，<code>setState</code> 和 this.setState 一样，同步写法前面的赋值会被最后一个覆盖，可以看 <a href="https://cisy.me/setState2/">我之前整理的规则</a>，<code>setState</code>也同样能接受一个函数。</p>
+</blockquote>
+<h4 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h4><p>相当于类函数中的生命周期函数的作用，不同的是，传递给 <code>useEffect</code> 的函数会在 layout(布局) 和 paint(绘制) 后触发。这使得它适用于许多常见的 side effects ，例如设置订阅和事件处理程序，因为大多数类型的工作不应阻止浏览器更新屏幕。</p>
+<p>然而当你需要在浏览器绘制之前同步触发一些事件，就需要用到 <a href="http://react.html.cn/docs/hooks-reference.html#uselayouteffect" target="_blank" rel="noopener"><code>useLayoutEffect</code></a>，它和 useEffect 除了触发时间之外没什么不同。</p>
+<p><code>useEffect</code> 接收一个函数，该函数可选地返回一个函数（React 将在清理时运行它，常用于取消订阅等逻辑）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">useEffect(</span><br><span class="line">  () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> subscription = props.source.subscribe();</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      subscription.unsubscribe();</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  [props.source],</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>值得注意的是，<code>useEffect</code> 会在每次组件 rerender 时都触发一次，如果希望在特定条件下触发 effects，就给 <code>useEffect</code> 传入第二个参数： effect 所依赖的值数组，其中任何一个值发生了变化就会触发 <code>useEffect</code> 的第一个函数参数，否则就不会有反应，So 如果传一个 <code>[]</code> 则只有在组件初始化和卸载时才会执行了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第一次渲染：subscribe</span><br><span class="line">第二次渲染：unsubscribe、subscribe // 没有依赖或依赖数组有变化时触发</span><br><span class="line">第三次渲染：unsubscribe、subscribe // 没有依赖或依赖数组有变化时触发</span><br><span class="line">组件卸载：  unsubscribe</span><br></pre></td></tr></table></figure>
+<h4 id="Custom-hooks"><a href="#Custom-hooks" class="headerlink" title="Custom hooks"></a>Custom hooks</h4><p>官方已经内置了一些 hooks，同时为了解决动机中的复用状态逻辑的问题，就需要自定义 Hooks 了。</p>
+<p>当我们想要在两个 JS 函数之间共享逻辑时，我们会将共享逻辑提取到第三个函数。自定义 Hooks 就是多个组件之间可共享的状态逻辑的提取函数，但是每次使用自定义 Hook 时，它内部的所有状态和效果都是完全隔离的。</p>
+<p>具体用法可以看 <a href="http://react.html.cn/docs/hooks-custom.html" target="_blank" rel="noopener">官方文档</a>，在此不赘述。</p>
+<h4 id="其它-API"><a href="#其它-API" class="headerlink" title="其它 API"></a>其它 API</h4><p>其它 API 翻文档就好了。</p>
+<ul>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#basic-hooks" target="_blank" rel="noopener">Basic Hooks</a><ul>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#usestate" target="_blank" rel="noopener"><code>useState</code></a></li>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#useeffect" target="_blank" rel="noopener"><code>useEffect</code></a></li>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#usecontext" target="_blank" rel="noopener"><code>useContext</code></a></li>
+</ul>
+</li>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#additional-hooks" target="_blank" rel="noopener">Additional Hooks</a><ul>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#usereducer" target="_blank" rel="noopener"><code>useReducer</code></a></li>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#usecallback" target="_blank" rel="noopener"><code>useCallback</code></a></li>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#usememo" target="_blank" rel="noopener"><code>useMemo</code></a></li>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#useref" target="_blank" rel="noopener"><code>useRef</code></a></li>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#useimperativemethods" target="_blank" rel="noopener"><code>useImperativeMethods</code></a></li>
+<li><a href="http://react.html.cn/docs/hooks-reference.html#uselayouteffect" target="_blank" rel="noopener"><code>useLayoutEffect</code></a></li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>React <strong>没有从 React 中移除类的计划</strong>，Hooks 时完全向后兼容的，你可以慢慢地在合适的组件尝试或做迁移。</p>
+<p>可以明显地看到，React 越来越趋向于向函数式编程靠拢，未来的前端优化方向也大多基于此。</p>
 
       
     </div>
@@ -334,7 +370,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/lodash/" rel="tag">#lodash</a>
+            <a href="/tags/react/" rel="tag">#react</a>
           
         </div>
       
@@ -343,17 +379,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/setState2/" rel="next" title="setState 再发现">
-                <i class="fa fa-chevron-left"></i> setState 再发现
+              <a href="/fp/" rel="next" title="FP">
+                <i class="fa fa-chevron-left"></i> FP
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/fp/" rel="prev" title="FP">
-                FP <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -502,7 +534,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-amp-amp-ListCache"><span class="nav-number">1.</span> <span class="nav-text">Hash &amp;&amp; ListCache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hash-存在的价值"><span class="nav-number">2.</span> <span class="nav-text">Hash 存在的价值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lodash-实现和自己实现的不同"><span class="nav-number">3.</span> <span class="nav-text">lodash 实现和自己实现的不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#看了源码的接口"><span class="nav-number">4.</span> <span class="nav-text">看了源码的接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是-Hooks"><span class="nav-number">1.</span> <span class="nav-text">什么是 Hooks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动机"><span class="nav-number">2.</span> <span class="nav-text">动机</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在组件之间重用有状态逻辑很困难"><span class="nav-number">2.1.</span> <span class="nav-text">在组件之间重用有状态逻辑很困难</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#按生命周期方法划分逻辑将变得难以理解"><span class="nav-number">2.2.</span> <span class="nav-text">按生命周期方法划分逻辑将变得难以理解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能优化困难"><span class="nav-number">2.3.</span> <span class="nav-text">性能优化困难</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#规则"><span class="nav-number">3.</span> <span class="nav-text">规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法"><span class="nav-number">4.</span> <span class="nav-text">用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useState"><span class="nav-number">4.1.</span> <span class="nav-text">useState</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useEffect"><span class="nav-number">4.2.</span> <span class="nav-text">useEffect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Custom-hooks"><span class="nav-number">4.3.</span> <span class="nav-text">Custom hooks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它-API"><span class="nav-number">4.4.</span> <span class="nav-text">其它 API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -777,9 +809,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'cisy';
-      var disqus_identifier = 'lodash/';
-      var disqus_title = 'lodash 零散记录';
-      var disqus_url = 'http://cisy.me/lodash/';
+      var disqus_identifier = 'hooks/';
+      var disqus_title = 'React Hooks';
+      var disqus_url = 'http://cisy.me/hooks/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
