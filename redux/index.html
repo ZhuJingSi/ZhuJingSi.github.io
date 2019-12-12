@@ -1,0 +1,862 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="react,redux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=0.5.0">
+
+
+
+
+
+
+<meta name="description" content="Redux 是啥Redux 是对 Flux 应用架构 的一种实现，并且引入了大量函数式编程的实现。 简单来讲，Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 dipatch 分发 action 来触发对应的 reducer 进而更新数据池。这样遵">
+<meta name="keywords" content="react,redux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redux 源码分析">
+<meta property="og:url" content="http://cisy.me/redux/index.html">
+<meta property="og:site_name" content="Cisy 的博客">
+<meta property="og:description" content="Redux 是啥Redux 是对 Flux 应用架构 的一种实现，并且引入了大量函数式编程的实现。 简单来讲，Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 dipatch 分发 action 来触发对应的 reducer 进而更新数据池。这样遵">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://cisy.me/redux/redux01.png">
+<meta property="og:image" content="http://cisy.me/redux/redux02.png">
+<meta property="og:image" content="http://cisy.me/redux/redux03.png">
+<meta property="og:image" content="http://cisy.me/redux/redux04.png">
+<meta property="og:updated_time" content="2019-12-12T09:59:02.103Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redux 源码分析">
+<meta name="twitter:description" content="Redux 是啥Redux 是对 Flux 应用架构 的一种实现，并且引入了大量函数式编程的实现。 简单来讲，Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 dipatch 分发 action 来触发对应的 reducer 进而更新数据池。这样遵">
+<meta name="twitter:image" content="http://cisy.me/redux/redux01.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6263785848714561000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> redux 源码分析 | Cisy 的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-75330230-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4c44925b9650a2761404b0055255e615";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cisy 的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                redux 源码分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-04-06T17:36:13+08:00" content="2018-04-06">
+              2018-04-06
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/redux/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="redux/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Redux-是啥"><a href="#Redux-是啥" class="headerlink" title="Redux 是啥"></a>Redux 是啥</h3><p>Redux 是对 <a href="https://www.zhihu.com/question/33864532" target="_blank" rel="noopener">Flux 应用架构</a> 的一种实现，并且引入了大量函数式编程的实现。</p>
+<p>简单来讲，<strong>Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取</strong>。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 <strong><code>dipatch</code></strong> 分发 <strong><code>action</code></strong> 来触发对应的 <strong><code>reducer</code></strong> 进而更新数据池。这样遵循这套规则：1) View 层和 Model 层不会耦合得很紧 2) Store 里可能发生的变化是可预测的（看注册了哪些 <code>action</code>） 3) 所有状态变化都可监控、可回溯。</p>
+<p>这里有一个误区，很多人看到 Redux 就想到 React，觉得它们应该在一起用，甚至觉得 Redux 只能在 React 中用。但其实他俩并没有互相牵扯的关系，Redux 是一种管理数据状态的方法，可以和很多不同框架搭配使用，支持 React、Angular、Ember、jQuery 甚至纯 JavaScript。（当然，Redux 还是和 <a href="http://facebook.github.io/react/" target="_blank" rel="noopener">React</a> 和 <a href="https://github.com/dekujs/deku" target="_blank" rel="noopener">Deku</a> 这类库搭配起来用最好，因为这类库允许你以 state 的形式来描述界面，Redux 通过 action 的形式来发起 state 变化）。React 也不是一定要用 Redux，如果没有很复杂的状态变更，用上 Redux 反而麻烦。如果要将他俩结合使用，通常会使用一个叫 <strong>react-redux</strong> 的库来牵线搭桥，后面会有文章详细介绍。</p>
+<a id="more"></a>
+<h3 id="action、dispatch、reducer"><a href="#action、dispatch、reducer" class="headerlink" title="action、dispatch、reducer"></a>action、dispatch、reducer</h3><p>上面提到了三个单词可能有点懵，下面来分别解释一下。</p>
+<p><strong><code>store</code></strong>：就是一整个数据池，redux 中有且只能有一个 <code>store</code>；</p>
+<p><strong><code>state</code></strong>：某一刻的 <code>store</code> 状态称为 <code>state</code>；</p>
+<p><strong><code>action</code></strong>：View 层因用户操作触发的状态变化通知，是一个简单对象，包含 <code>type</code> （必需）和 <code>payload</code> 两个字段；</p>
+<p><strong><code>dispatch</code></strong>：是分发 <code>action</code> 的唯一方法；</p>
+<p><strong><code>reducer</code></strong> ：是一个纯函数，接收当前 <code>state</code> 并根据 <code>action</code> 信息作出修改，最后返回一个全新的 <code>state</code>；</p>
+<p>所以 Redux 是单向数据流，结合上面介绍的概念，看图就明白了：</p>
+<img src="/redux/redux01.png">
+<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><p>了解了基本概念就可以看源码了。Redux 的源码并不难懂，量也很少</p>
+<img src="/redux/redux02.png">
+<ul>
+<li><strong><code>utils/</code></strong> ：一些工具函数</li>
+<li><strong><code>applyMiddlewar.js</code></strong> ：串联多个 <code>middleware</code> 改造成一个新的 <code>dispatch</code></li>
+<li><strong><code>bindActionCreators.js</code></strong>： 把 <code>action</code> 转为同名 key 的对象，且使用 <code>dispatch</code> 把每个 <code>action</code> 包围起来调用</li>
+<li><strong><code>combineReducers.js</code></strong> ：把多个不同 <code>reducer</code> 函数合并成一个最终的 <code>reducer</code> 函数</li>
+<li><strong><code>compose.js</code></strong> ：函数按参数顺序从右到左依次链式调用，其实也是个工具函数</li>
+<li><strong><code>createStore.js</code></strong> ：创建一个 Redux Store</li>
+</ul>
+<blockquote>
+<p><strong>这些代码 + 注释太长了，不想放在博客里，可以自行去我 Github 上看</strong>，下面就简单描述一下几个主要方法的概况。</p>
+<p><em>注：这里不贴每个接口的使用示例了，不知道怎么用的可以去网上找</em></p>
+</blockquote>
+<h4 id="createStore-js"><a href="#createStore-js" class="headerlink" title="createStore.js"></a>createStore.js</h4><p><strong>接收参数</strong>：<code>reducer</code>，<code>preloadedState</code>，<code>enhancer</code>。</p>
+<p><code>reducer</code> 不用讲了；<code>preloadedState</code> 是初始 state，一般也不用传； <code>enhancer</code> 是一个高阶函数，返回一个新的强化过的 store creator，可以根据需要传一些 middleware 进来，通常配合 <code>applyMiddleware</code> 使用：<code>createStore(reducer, applyMiddleware(middlewares…))</code>。</p>
+<p><strong>返回接口</strong>：<code>dispatch</code>，<code>subscribe</code>，<code>getState</code>，<code>replaceReducer</code>。</p>
+<ul>
+<li><p><code>dispatch</code> 方法是触发 state 变化的唯一途径，其中会调用 reducer 去创建 store，reducer 接收 “当前 state 树” 和 “action”， 并返回一份新的 state 树，并执行所有的监听函数。传入的 action 参数只能是一个普通对象，如果想要传入复杂对象，需要使用相应 enhancer 包裹 createStore 做一些中间操作（因为前面讲过，enhancer 是包裹 createStore 的高阶函数）。<code>dispatch</code> 最后返回与传入 action 一摸一样的对象（同样，如果使用了中间件，它可能会魔改 dispatch，使返回值变成其它东西）。</p>
+</li>
+<li><p>subscribe<code>顾名思义就是“订阅”，它的作用就是维护一个监听函数列表，接收一个参数就是监听函数。</code>dispatch<code>函数中在执行完 reducer 之后会遍历执行每一个监听函数。可以在监听函数中使用</code>getState()<code>获取最新 state，也可以在监听函数内部调用</code>dispatch`。</p>
+<p><em>注意：</em></p>
+<ol>
+<li>订阅器（subscriptions） 会维护两个监听器列表：<code>nextListeners</code> 和 <code>currentListeners</code>，即监听列表变化前后的快照。当你在正在调用监听器的时候订阅 (subscribe) 或者去掉订阅（unsubscribe），对当前的 <code>dispatch</code> 不会有任何影响，但是对于下一次的 <code>dispatch</code>，无论嵌套与否，都会使用订阅列表里最近的一次快照。</li>
+<li>订阅器不应该关注所有 state 的变化，在订阅器被调用之前，往往由于嵌套的 <code>dispatch</code> 导致 state 发生多次的改变。</li>
+<li>reducer 内部不允许做订阅操作，因为会打乱数据流，reducer 也会不纯。</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p><code>getState</code> 没啥好说的，就是获取当前状态。</p>
+</li>
+<li><p><code>replaceReducer</code> 替换当前 reducer。在需要实现代码分离和动态加载 reducer 的时候可能需要用到， 在使用 redux 热加载机制的时候也可能用到。</p>
+</li>
+</ul>
+<h4 id="combineReducers-js"><a href="#combineReducers-js" class="headerlink" title="combineReducers.js"></a>combineReducers.js</h4><p><strong>接收参数</strong>：一个 <code>reducers</code> 集合。</p>
+<p><strong>返回</strong>：把多个不同 <code>reducer</code> 函数合并成一个最终的 <code>reducer</code> 函数。</p>
+<p><em>注意：</em>一个合格的 <code>reducer</code> 不允许返回 undefined，实在不行要么就不做任何修改地返回原来的 state，要么就失去理想地返回一个 null。</p>
+<h4 id="bindActionCreators-js"><a href="#bindActionCreators-js" class="headerlink" title="bindActionCreators.js"></a>bindActionCreators.js</h4><p><strong>接收参数</strong>：<code>actionCreators</code>，<code>dispatch</code>。</p>
+<p><code>actionCreators</code> 是一个“制造 action“ 的函数的集合，也可以传单个函数（这些函数的作用就是返回一个 <code>action</code>）；<code>dispatch</code> 你懂的。</p>
+<p><strong>返回</strong>：可以直接调用触发 <code>dispatch</code> 的函数（集合，key 不变），就是不用自己手动 <code>dispatch</code> 啦～</p>
+<p><em>注：</em>惟一使用 <code>bindActionCreators</code> 的场景是当你需要把 action creator 往下传到一个组件上，却不想让这个组件觉察到 Redux 的存在，而且不希望把 Redux store 或 <code>dispatch</code> 传给它（这在 react-redux 的 connect 方法中常会用到）。</p>
+<h4 id="applyMiddlewar-js"><a href="#applyMiddlewar-js" class="headerlink" title="applyMiddlewar.js"></a>applyMiddlewar.js</h4><p><strong>接收参数</strong>：多个 middleware。</p>
+<p><strong>返回</strong>：一个新的 createStore 方法。</p>
+<p>先上图，一看就明白 applyMiddlewar 是个啥了：</p>
+<img src="/redux/redux03.png">
+<p>这个 applyMiddleware 比较有意思，同样是一个高阶函数（真的是到处都是高阶函数。。。）这块代码不多，我直接贴代码好了，看注释哈。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> compose <span class="keyword">from</span> <span class="string">'./compose'</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 串联多个 middleware 改造成一个新的 dispatch</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">applyMiddleware</span>(<span class="params">...middlewares</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="params">createStore</span> =&gt;</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> store = createStore(...args)</span><br><span class="line">    <span class="keyword">let</span> dispatch = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(</span><br><span class="line">        <span class="string">`Dispatching while constructing your middleware is not allowed. `</span> +</span><br><span class="line">          <span class="string">`Other middleware would not be applied to this dispatch.`</span></span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> chain = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> middlewareAPI = &#123;</span><br><span class="line">      getState: store.getState,</span><br><span class="line">      <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * 这里使用匿名函数的意义是使 middleware 中每次在调用 dispatch 的时候都重新获取一遍，</span></span><br><span class="line"><span class="comment">       * 因为 middleware 的串联，下面会重新赋值 dispatch，这样做能保证 middleware 中始终是最新的</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">      dispatch: <span class="function">(<span class="params">...args</span>) =&gt;</span> dispatch(...args)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 将当前的 getState 和 dispatch 分发到每个 middleware 中执行一遍</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    chain = middlewares.map(<span class="function"><span class="params">middleware</span> =&gt;</span> middleware(middlewareAPI))</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 每个 middleware 处理一个相对独立的业务需求，返回一个经过包装的新的 dispatch 作为下一个 middleware 的参数</span></span><br><span class="line"><span class="comment">     * 这里把它们的处理结果串联起来，生成一个最终的新的 dispatch</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    dispatch = compose(...chain)(store.dispatch)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      ...store,</span><br><span class="line">      dispatch</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再看一下一个经常拿来举例的 middleware：<strong>redux-thunk</strong>，源码巨短。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createThunkMiddleware</span>(<span class="params">extraArgument</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">&#123; dispatch, getState &#125;</span>) =&gt;</span> <span class="function"><span class="params">next</span> =&gt;</span> <span class="function"><span class="params">action</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> action === <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> action(dispatch, getState, extraArgument);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next(action);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> thunk = createThunkMiddleware();</span><br><span class="line">thunk.withExtraArgument = createThunkMiddleware;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> thunk;</span><br></pre></td></tr></table></figure>
+<p>看看 compose 工具函数会发现，这里面的 middleware 其实是一层套一层的：像 <code>middlewareC(middlewareB(middlewareA(dispatch)))</code> 酱紫</p>
+<img src="/redux/redux04.png">
+<p>正常情况下，如图左，当我们 <code>dispatch</code> 一个 <code>action</code> 时，middleware 通过 <code>next(action)</code> 一层一层处理和传递 <code>action</code> 直到 redux 原生的 <code>dispatch</code>。如果某个 middleware 使用 <code>store.dispatch(action)</code> 来分发 action，就发生了右图的情况，相当于从外层重新来一遍，假如这个 middleware 一直简单粗暴地调用 <code>store.dispatch(action)</code>，就会形成无限循环了，所以 <code>store.dispatch(action)</code> 在 middleware 中一般用来处理异步逻辑，在回调里返回普通 <code>action</code> 就不会有问题了。</p>
+<p>终于整理完了，好累好累 ಥ_ಥ</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.ituring.com.cn/book/1898" target="_blank" rel="noopener">深入React技术栈</a></p>
+<p><a href="https://segmentfault.com/a/1190000004485808" target="_blank" rel="noopener">redux middleware 详解</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag">#react</a>
+          
+            <a href="/tags/redux/" rel="tag">#redux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/this/" rel="next" title="this">
+                <i class="fa fa-chevron-left"></i> this
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/react-redux/" rel="prev" title="react-redux 详解">
+                react-redux 详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Cisy">
+          <p class="site-author-name" itemprop="name">Cisy</p>
+          <p class="site-description motion-element" itemprop="description">有感想就记一记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux-是啥"><span class="nav-number">1.</span> <span class="nav-text">Redux 是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#action、dispatch、reducer"><span class="nav-number">2.</span> <span class="nav-text">action、dispatch、reducer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码"><span class="nav-number">3.</span> <span class="nav-text">源码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#createStore-js"><span class="nav-number">3.1.</span> <span class="nav-text">createStore.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#combineReducers-js"><span class="nav-number">3.2.</span> <span class="nav-text">combineReducers.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bindActionCreators-js"><span class="nav-number">3.3.</span> <span class="nav-text">bindActionCreators.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#applyMiddlewar-js"><span class="nav-number">3.4.</span> <span class="nav-text">applyMiddlewar.js</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cisy</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'cisy';
+      var disqus_identifier = 'redux/';
+      var disqus_title = 'redux 源码分析';
+      var disqus_url = 'http://cisy.me/redux/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+  
+
+  
+
+
+</body>
+</html>

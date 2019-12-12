@@ -1,0 +1,882 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="rx,rxjs,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=0.5.0">
+
+
+
+
+
+
+<meta name="description" content="RxJS 是 Reactive Extensions for JavaScript 的缩写，起源于 Reactive Extensions，是一个基于可观测数据流在异步编程应用中的库。RxJS 是 Reactive Extensions 在 JavaScript 上的实现，而其他语言也有相应的实现，如 RxJava、RxAndroid、RxSwift 等。 流是在时间流逝的过程中产生的一系列事件。">
+<meta name="keywords" content="rx,rxjs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJs 理解">
+<meta property="og:url" content="http://cisy.me/rxjs/index.html">
+<meta property="og:site_name" content="Cisy 的博客">
+<meta property="og:description" content="RxJS 是 Reactive Extensions for JavaScript 的缩写，起源于 Reactive Extensions，是一个基于可观测数据流在异步编程应用中的库。RxJS 是 Reactive Extensions 在 JavaScript 上的实现，而其他语言也有相应的实现，如 RxJava、RxAndroid、RxSwift 等。 流是在时间流逝的过程中产生的一系列事件。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://cisy.me/rxjs/rxjs01.png">
+<meta property="og:image" content="http://cisy.me/rxjs/rxjs02.png">
+<meta property="og:image" content="http://cisy.me/rxjs/rxjs03.png">
+<meta property="og:updated_time" content="2019-12-12T11:06:57.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJs 理解">
+<meta name="twitter:description" content="RxJS 是 Reactive Extensions for JavaScript 的缩写，起源于 Reactive Extensions，是一个基于可观测数据流在异步编程应用中的库。RxJS 是 Reactive Extensions 在 JavaScript 上的实现，而其他语言也有相应的实现，如 RxJava、RxAndroid、RxSwift 等。 流是在时间流逝的过程中产生的一系列事件。">
+<meta name="twitter:image" content="http://cisy.me/rxjs/rxjs01.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6263785848714561000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> RxJs 理解 | Cisy 的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-75330230-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4c44925b9650a2761404b0055255e615";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cisy 的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                RxJs 理解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-12-05T17:36:13+08:00" content="2019-12-05">
+              2019-12-05
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/rxjs/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="rxjs/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>RxJS</strong> 是 Reactive Extensions for JavaScript 的缩写，起源于 Reactive Extensions，是一个基于可观测数据流在异步编程应用中的库。<strong>RxJS 是 Reactive Extensions 在 JavaScript 上的实现</strong>，而其他语言也有相应的实现，如 RxJava、RxAndroid、RxSwift 等。</p>
+<p><strong>流</strong>是在时间流逝的过程中产生的一系列事件。它具有时间与事件响应的概念。</p>
+<a id="more"></a>
+<h2 id="基础概念理解"><a href="#基础概念理解" class="headerlink" title="基础概念理解"></a>基础概念理解</h2><p>RxJS 是基于 <strong>观察者模式、迭代器模式和函数式编程</strong> 。因此，首先要对这几个模式有所理解。</p>
+<h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>观察者模式在 Web 中最常见的应该是 DOM 事件的监听和触发。</p>
+<ul>
+<li><strong>订阅</strong>：通过 addEventListener 订阅 document.body 的 click 事件。</li>
+<li><strong>发布</strong>：当 body 节点被点击时，body 节点便会向订阅者发布这个消息。</li>
+</ul>
+<img src="/rxjs/rxjs01.png">
+<h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><p>迭代器模式，提供一种方法顺序访问一个聚合对象中的各种元素，而又不暴露该对象的内部表示。</p>
+<p>迭代器模式可以用 JS 提供的 Iterable Protocol 可迭代协议来表示。Iterable Protocol 不是具体的变量类型，而是一种可实现协议。对应到 ES6 中即为 ：<a href="http://es6.ruanyifeng.com/#docs/iterator" target="_blank" rel="noopener">Iterator</a> ，Array、Map、Set 等都原生具备 Iterator 接口，可以通过 Symbol.iterator 属性来获取一个迭代对象，调用迭代对象的 next 方法将获取一个元素对象，如下示例。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>];</span><br><span class="line"><span class="keyword">let</span> iter = arr[<span class="built_in">Symbol</span>.iterator]();</span><br><span class="line"></span><br><span class="line">iter.next() <span class="comment">// &#123; value: 'a', done: false &#125;</span></span><br><span class="line">iter.next() <span class="comment">// &#123; value: 'b', done: false &#125;</span></span><br><span class="line">iter.next() <span class="comment">// &#123; value: 'c', done: false &#125;</span></span><br><span class="line">iter.next() <span class="comment">// &#123; value: undefined, done: true &#125;</span></span><br></pre></td></tr></table></figure>
+<p>使用迭代器可以实现对三种情况作出不同处理：获取下一个值、无更多值(已完成)、错误处理。</p>
+<h3 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h3><p>函数式编程是声明式编程的体现，首先区分一下命令式编程和声明式编程。</p>
+<p>常见的 for 循环即为命令式编程，而使用 map、reduce 等纯函数对数据进行一系列操作则为声明式编程。命令式就是真正实现结果的步骤，声明式的特点是专注于描述结果本身，不关注到底怎么到达结果。</p>
+<h2 id="RxJs"><a href="#RxJs" class="headerlink" title="RxJs"></a>RxJs</h2><h3 id="观察者模式的表现"><a href="#观察者模式的表现" class="headerlink" title="观察者模式的表现"></a>观察者模式的表现</h3><p>RxJS 中含有两个基本概念：<strong>Observables</strong> 与 <strong>Observer</strong>。Observables 作为被观察者，是一个值或事件的流集合；而 Observer 则作为观察者，根据 Observables 进行处理。Observables 与 Observer 之间的订阅发布关系(观察者模式) 如下：</p>
+<ul>
+<li><strong>订阅</strong>：Observer 通过 Observable 提供的 subscribe() 方法订阅 Observable。</li>
+<li><strong>发布</strong>：Observable 通过回调 next 方法向 Observer 发布事件。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span><br><span class="line"></span><br><span class="line">Rx.Observable.fromEvent(btn, <span class="string">'click'</span>)</span><br><span class="line">.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'click'</span>));</span><br></pre></td></tr></table></figure>
+<p><code>fromEvent</code> 把一个event转成了一个 <code>Observable</code>，然后它就可以被 <code>subscribe</code>订阅了。</p>
+<p>当然，同样可以通过 <code>unsubscribe</code> 方法取消订阅：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> subscription = stream$.subscribe(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Value'</span>, value);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  subscription.unsubscribe();</span><br><span class="line">&#125;, <span class="number">3000</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里注意如果 Observable 中含有 setInterval 之类的轮询操作，需要在 Observable 中 return 一个 clearInterval 的清理函数，再 unsubscribe 的时候 Rx 会自动执行这个函数，从而帮我们取消轮询。</p>
+</blockquote>
+<h3 id="迭代器模式的表现"><a href="#迭代器模式的表现" class="headerlink" title="迭代器模式的表现"></a>迭代器模式的表现</h3><p>Observable 其实就是数据流 stream 在时间流逝的过程中产生的一系列事件，它具有时间与事件响应的概念。 </p>
+<p>把数据管道中每一次数据的流动看成数据中的项，那么数据流就是一个典型的数组，对每一次数据流动的处理就可以映射为数组的迭代器。subscribe 依次接收三种 Observable 的事件，分别为：next（成功）、error（失败）、complete（已完成）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stream$.subscribe(fnValue, fnError, fnComplete)</span><br></pre></td></tr></table></figure>
+<p>相应的，在 Observable 中通过调用 next()、error()、complete() 来触发这三种事件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> stream$ = Rx.Observable.create(<span class="function">(<span class="params">observer</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// observer 是拥有 next、error 和 complete 三个方法的普通对象</span></span><br><span class="line">  observer.next(<span class="number">1</span>); <span class="comment">// 成功</span></span><br><span class="line">  observer.error(<span class="string">'error message'</span>); <span class="comment">// 失败</span></span><br><span class="line">  observer.complete(); <span class="comment">// 已完成</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="函数式编程的表现"><a href="#函数式编程的表现" class="headerlink" title="函数式编程的表现"></a>函数式编程的表现</h3><p>Rx 还有一个非常有趣的概念：Operators（操作符）。操作符提供了非常强大的处理 Observable 以及其中流数据的能力，使用上有点像函数式编程中的 map、reduce 等工具方法。RxJS 中有 60+ 个操作符。</p>
+<p>举几个常用的例子：</p>
+<p><strong>Rx.Observable.of</strong><br>of 可以将普通数据转换成流式数据 Observable，如： Rx.Observable.of(2)。</p>
+<p><strong>Rx.Observable.fromEvent</strong><br>除了数值外，RxJS 还提供了关于事件的操作，fromEvent 可以用来监听事件。当事件触发时，将事件 event 转成可流动的 Observable 进行传输。下面示例表示：监听文本框的 keyup 事件，触发 keyup 可以产生一系列的 event Observable。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> text = <span class="built_in">document</span>.querySelector(<span class="string">'#text'</span>);</span><br><span class="line">Rx.Observable.fromEvent(text, <span class="string">'keyup'</span>)</span><br><span class="line">             .subscribe(<span class="function"><span class="params">e</span> =&gt;</span> <span class="built_in">console</span>.log(e));</span><br></pre></td></tr></table></figure>
+<p><strong>Rx.Observable.prototype.map</strong><br>map 方法跟我们平常使用的方式是一样的，不同的只是这里是将流进行改变，然后将新的流传出去。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Rx.Observable.of(<span class="number">2</span>)</span><br><span class="line">             .map(<span class="function"><span class="params">v</span> =&gt;</span> <span class="number">10</span> * v)</span><br><span class="line">             .subscribe(<span class="function"><span class="params">v</span> =&gt;</span> <span class="built_in">console</span>.log(v));</span><br></pre></td></tr></table></figure>
+<p><strong>Rx.Observable.prototype.mergeMap</strong><br>mergeMap 的作用则是将分支流调整回主干上，最终分支上的数据流都经过主干的其他操作，其实也是将流中流进行扁平化。</p>
+<p><strong>Rx.Observable.prototype.switchMap</strong><br>switchMap 与 mergeMap 都是将分支流疏通到主干上，而不同的地方在于 switchMap 只会保留最后的流，而取消抛弃之前的流。</p>
+<p><strong>Rx.Observable.prototype.debounceTime</strong><br>debounceTime 操作可以操作一个时间戳 TIMES，表示经过 TIMES 毫秒后，没有流入新值，那么才将值转入下一个操作。</p>
+<blockquote>
+<p>Rx 提供了许多的操作，为了更好的理解各个操作的作用，我们可以通过一个可视化的工具 <a href="http://rxmarbles.com/" target="_blank" rel="noopener">marbles 图</a> 来辅助理解。</p>
+</blockquote>
+<h3 id="Rx-能解决什么问题"><a href="#Rx-能解决什么问题" class="headerlink" title="Rx 能解决什么问题"></a>Rx 能解决什么问题</h3><h4 id="1-统一数据来源"><a href="#1-统一数据来源" class="headerlink" title="1. 统一数据来源"></a>1. 统一数据来源</h4><p>常见的数据来源有：ajax 请求、WebSocket、localStorage、用户操作。</p>
+<p><strong>数据来源多就导致了获取数据的接口形式不统一，接口形式不统一又导致了逻辑分散难以整合</strong>。比如 WebSocket 的编程方式跟 AJAX 是不一样的，WebSocket是一种订阅，跟主流程很难整合起来，而AJAX相对来说，可以组织得包含在主流程中。有多个数据源影响同一个数据时，对每一个数据源都要分别写一套对应的逻辑，十分啰嗦和不清晰。</p>
+<h4 id="2-统一同步与异步"><a href="#2-统一同步与异步" class="headerlink" title="2. 统一同步与异步"></a>2. 统一同步与异步</h4><p>在前端，经常会碰到同步、异步代码的统一。假设我们要实现一个方法：当有某个值的时候，就返回这个值，否则去服务端获取这个值。当然，可以通过 if/else 来做，但 RxJs 的 BehaviorSubject 显然更加优雅。</p>
+<p><code>BehaviorSubject</code> 是一种特殊的 Observable，BehaviorSubject 是 Subject 的变体之一。<strong>BehaviorSubject 的特性就是它会存储“当前”的值。这意味着你始终可以直接拿到 BehaviorSubject 最后一次发出的值。</strong>比起使用一个全局变量或属性来缓存数据，BehaviorSubject 的好处在于它本身也是 Observable，所以异步逻辑对于它来说根本不是问题。</p>
+<p>对于这种数据缓存和处理，是 Rx 的拿手好戏，它还有很多功能各异的 Observable/Subject，比如 ReplaySubject 可以用来 “重播”、AsyncSubject 可以在 subject 完成时再给订阅者最终值等等。</p>
+<h4 id="3-统一现在与未来"><a href="#3-统一现在与未来" class="headerlink" title="3. 统一现在与未来"></a>3. 统一现在与未来</h4><p>在业务开发中，我们时常遇到这么一种场景：已过滤排序的列表中加入一条新数据，要重新按照这条规则走一遍。”已过滤排序的列表”是”现在”，”新数据按照这条规则走一遍”是”未来”。</p>
+<p>当然你可以将处理的逻辑和数据的获取拼接逻辑解耦：获取数据的逻辑写一套、数据更新的逻辑写一套、数据格式化的逻辑写一套，然后在不同的地方将这三套逻辑自由组合。但这就需要我们在写业务逻辑的时候去考虑数据怎么拼、怎么处理，甚至还要考虑有哪些依赖，比如迁移了这个列表中的一行是不是导航栏括号里的总数也要变一下？另外一个列表是不是要多出一行？。。。太繁琐了。甚至更复杂一些，格式化的过程又依赖了其它 api 的返回，那就更混乱了。</p>
+<p>但如果用 Rx 来管理数据流，彻底从数据源处理掉这些依赖和格式化的问题，view 层就只需要单纯地拿到数据展示就行了，以下为伪代码示意：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> final$ = start$.merge(patch$) <span class="comment">// 合并未来的操作</span></span><br><span class="line">							.map(filterA).map(sorterA) <span class="comment">// 格式化逻辑</span></span><br></pre></td></tr></table></figure>
+<h3 id="Rx-数据流如何应用到视图层"><a href="#Rx-数据流如何应用到视图层" class="headerlink" title="Rx 数据流如何应用到视图层"></a>Rx 数据流如何应用到视图层</h3><p>现在主流的MV*框架都基于一个共同的理念：MDV（模型驱动视图），在这个理念下，一切对于视图的变更，首先都应当是模型的变更，然后通过模型和视图的映射关系，自动同步过去。</p>
+<p>在这个过程中，我们可能会需要通过一些方式定义这种关系，比如 Angular 和 Vue 中的模板，React 中的 JSX 等等。</p>
+<p>在这些体系中，如果要使用 RxJS 的 Observable，都非常简单：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data$.subscribe(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 这里根据所使用的视图库，用不同的方式响应数据</span></span><br><span class="line">  <span class="comment">// 如果是 React 或者 Vue，手动把这个往 state 或者 data 设置</span></span><br><span class="line">  <span class="comment">// 如果是 Angular 2，可以不用这步，直接把 Observable 用 async pipe 绑定到视图</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Rx-与-Flux"><a href="#Rx-与-Flux" class="headerlink" title="Rx 与 Flux"></a>Rx 与 Flux</h3><p>记得刚开始了解 Rx 的时候，概念还不清晰，问过一个问题：”在 Vue 中用了 Rx 是不是就不用用 Vuex 了？”。现在想来其实这个问题是错的，它们不是一个概念，解决的是不同的问题，不能互相替代。</p>
+<img src="/rxjs/rxjs02.png">
+<p>Redux 和 Vuex 都是对 Flux 架构思维的实现，简单来说就是用来管理项目数据状态的，是顺应数据与视图解偶的趋势、为了中心化控制数据而诞生，通过它可使应用变得可预测、可调式，他们的重点在”管控”。</p>
+<p>Rx 是用来管理数据流的，它的着重点在”处理”，虽然它也能实现数据缓存，但无法做到 Flux 那样专业严格的控制整个状态树。</p>
+<p>它们可以放在一起用，也可以独立使用，这完全取决于你的需求。如果你的应用数据流很复杂那就用 Rx；如果你的应用规模不小且需要考虑如何更好地在组件外部管理状态，那就用 Flux；如果你的应用足够小也很简单，那么啥都可以不用。</p>
+<h3 id="与-Promise-的区别"><a href="#与-Promise-的区别" class="headerlink" title="与 Promise 的区别"></a>与 Promise 的区别</h3><p>从上面的介绍可以看到，Observable 是一个异步的概念，与 Promise 非常相似，一旦数据达到就可以触发监听，又同样是避免 callback hell、同样是链式调用。然而事实上 Promise 和 Rx 是两种截然不同的模式，不能混为一谈。</p>
+<img src="/rxjs/rxjs03.png">
+<ol>
+<li><p>Promise 顾名思义，提供的是一个允诺，这个允诺就是在调用 then 之后，它会在未来某个时间段把异步得到的result/error 传给 then 里的函数。</p>
+<p>Rx 不是允诺，它本质上还是由订阅/发布模式引出来的，它的核心思想就是数据响应式，源头是数据产生者，经过一系列的变换/过滤/合并的操作，被数据消费者所使用，数据消费者何时响应，完全取决于数据流何时能流下来。</p>
+</li>
+<li><p>Promise 需要调用 then 或者 catch 才能够执行，catch 是另一种形式的 then，调用 then 或者 catch 之后，它返回一个新的 Promise，这样新的 Promise 也可以同样被调用，所以可以做成无限的 then 链。</p>
+<p>Rx 的数据是否流出不取决于是否 subscribe，也就是说一个 observable 在未被订阅的时候也可以流出数据，在之后它被订阅过后，先前的数据是是否被数据消费者所查知是可设置的，但是数据是否流出还是并不依赖 subscribe。</p>
+<p>Rx 的 observable 被 subscribe 之后，并不是继续返回一个新的 observable，而是返回一个 subscriber，这样用来取消订阅，但是这也导致了链式断裂，所以它不能像 Promise 那样组成无限 then 链。</p>
+</li>
+<li><p>Promise 的数据是一次性流出的，因为 Promise 内部维持着状态，初始化的 pending，转成 resolved 或者 rejected 之后，状态就不可逆转了。</p>
+<p>举例说 promise().then(A).then(B).then(C).catch(D)，数据是顺着链以此传播，但是只有一次，数据从 A 到 B 之后，A 这个 promise 的状态发生了改变，从 pedding 转成了 resolved，那么它就不可能再产生内容了，所以这个 promise 已经不是活动性的了。</p>
+<p>而 Rx 则不同，我们从 Rx 的接口就可以知道，它有 next、error 和 complete，next 可以响应无数次，这也是符合我们对数据响应式的理解，数据在源头被隔三差五的发出，只要源头认为没有流尽（complete）或者出了问题（error），那么数据就可以不断的流到响应者那边。</p>
+</li>
+<li><p>Promise 用 then 链来处理数据，包括对数据进行过滤、合并、变换等操作，它没有真正意义上的数据消费者，then 链的每一个都是数据消费者，所以它非常适合组装流程式，也就是说 A 完成之后做 B，然后 B 完成后去完成 C 这种流程，这些流程可以无穷无尽，没有底的。</p>
+<p>Rx 有数据产生的源头和严格意义的数据消费者，数据可以在中间的操作符里被处理，比如说做过滤，做合并，做节流，变换成新的数据源头等等，可以把它想象成一个完整的数据链，有头也有尾，到了最终消费者那边这个数据流就算到底。</p>
+</li>
+<li><p>Promise 的状态发生改变后，我们如果再想重新从源头开始的话，就需要在后续 then 链递归最开始的那一步，因为后续者是新的 Promise，无法感知源头的那个 Promise。</p>
+<p>而 Rx 的 Observable 可以感知源头，它有类似于 retry、repeat 这种重新开始的运算符，我们可以很方便的链式调用它，而不需要封装成函数再递归。</p>
+</li>
+<li><p>Promise 的 then 链里面，每一行都是同样的角色，也就是 Promise，所以它既可以是源头，也可以是数据处理者。</p>
+<p>Rx 这边的 Observable 还有一些变种，比如说常用的 subject，它可以充当双面角色，可以订阅也可以发消息，这样的话我们还可以用它来做很多封装的工作。</p>
+</li>
+</ol>
+<p>总结来说，<strong>Promise 和 Rx 一个是流程式，一个是数据响应式</strong> 。Promise 可以用来贯串一连串单一的流程，而且这个流程是可以无限的，而 Rx 是用一个数据流来贯串所有操作符，它有一个或多个真正意义上的数据消费者。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/34357403" target="_blank" rel="noopener">RxJS基础教程</a></p>
+<p><a href="https://github.com/joeyguo/blog/issues/11" target="_blank" rel="noopener">构建流式应用—RxJS详解</a></p>
+<p><a href="https://github.com/xufei/blog/issues/38" target="_blank" rel="noopener">流动的数据——使用 RxJS 构造复杂单页应用的数据逻辑</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/28958042" target="_blank" rel="noopener">DaoCloud 基于 RxJS 的前端数据层实践</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rx/" rel="tag">#rx</a>
+          
+            <a href="/tags/rxjs/" rel="tag">#rxjs</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hooks/" rel="next" title="React Hooks">
+                <i class="fa fa-chevron-left"></i> React Hooks
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Cisy">
+          <p class="site-author-name" itemprop="name">Cisy</p>
+          <p class="site-description motion-element" itemprop="description">有感想就记一记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础概念理解"><span class="nav-number">1.</span> <span class="nav-text">基础概念理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者模式"><span class="nav-number">1.1.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器模式"><span class="nav-number">1.2.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式编程"><span class="nav-number">1.3.</span> <span class="nav-text">函数式编程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJs"><span class="nav-number">2.</span> <span class="nav-text">RxJs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#观察者模式的表现"><span class="nav-number">2.1.</span> <span class="nav-text">观察者模式的表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迭代器模式的表现"><span class="nav-number">2.2.</span> <span class="nav-text">迭代器模式的表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式编程的表现"><span class="nav-number">2.3.</span> <span class="nav-text">函数式编程的表现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rx-能解决什么问题"><span class="nav-number">2.4.</span> <span class="nav-text">Rx 能解决什么问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-统一数据来源"><span class="nav-number">2.4.1.</span> <span class="nav-text">1. 统一数据来源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-统一同步与异步"><span class="nav-number">2.4.2.</span> <span class="nav-text">2. 统一同步与异步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-统一现在与未来"><span class="nav-number">2.4.3.</span> <span class="nav-text">3. 统一现在与未来</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rx-数据流如何应用到视图层"><span class="nav-number">2.5.</span> <span class="nav-text">Rx 数据流如何应用到视图层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rx-与-Flux"><span class="nav-number">2.6.</span> <span class="nav-text">Rx 与 Flux</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#与-Promise-的区别"><span class="nav-number">2.7.</span> <span class="nav-text">与 Promise 的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cisy</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'cisy';
+      var disqus_identifier = 'rxjs/';
+      var disqus_title = 'RxJs 理解';
+      var disqus_url = 'http://cisy.me/rxjs/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+  
+
+  
+
+
+</body>
+</html>

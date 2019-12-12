@@ -1,0 +1,854 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="基础概念,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=0.5.0">
+
+
+
+
+
+
+<meta name="description" content="在使用 Angular 开发的过程中经常会遇到框架层面操作和我们代码逻辑上的执行顺序问题，往往一个 setTimeout 就能解决问题，但 setTimeout 到底做了什么呢？ 经常听说并行、并发等概念，它们和异步又有什么关系呢？ 我们先从进程、线程、协程是什么说起～">
+<meta name="keywords" content="基础概念">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS 中与异步相关的概念整理">
+<meta property="og:url" content="http://cisy.me/async/index.html">
+<meta property="og:site_name" content="Cisy 的博客">
+<meta property="og:description" content="在使用 Angular 开发的过程中经常会遇到框架层面操作和我们代码逻辑上的执行顺序问题，往往一个 setTimeout 就能解决问题，但 setTimeout 到底做了什么呢？ 经常听说并行、并发等概念，它们和异步又有什么关系呢？ 我们先从进程、线程、协程是什么说起～">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://cisy.me/async/async.jpg">
+<meta property="og:updated_time" content="2019-12-12T09:42:31.484Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS 中与异步相关的概念整理">
+<meta name="twitter:description" content="在使用 Angular 开发的过程中经常会遇到框架层面操作和我们代码逻辑上的执行顺序问题，往往一个 setTimeout 就能解决问题，但 setTimeout 到底做了什么呢？ 经常听说并行、并发等概念，它们和异步又有什么关系呢？ 我们先从进程、线程、协程是什么说起～">
+<meta name="twitter:image" content="http://cisy.me/async/async.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6263785848714561000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> JS 中与异步相关的概念整理 | Cisy 的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-75330230-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4c44925b9650a2761404b0055255e615";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cisy 的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JS 中与异步相关的概念整理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-09T08:07:34+08:00" content="2016-11-09">
+              2016-11-09
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/async/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="async/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在使用 Angular 开发的过程中经常会遇到框架层面操作和我们代码逻辑上的执行顺序问题，往往一个 setTimeout 就能解决问题，但 setTimeout 到底做了什么呢？</p>
+<p>经常听说并行、并发等概念，它们和异步又有什么关系呢？</p>
+<p>我们先从进程、线程、协程是什么说起～</p>
+<a id="more"></a>
+<h3 id="进程-amp-线程-amp-协程"><a href="#进程-amp-线程-amp-协程" class="headerlink" title="进程&amp;线程&amp;协程"></a>进程&amp;线程&amp;协程</h3><h4 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h4><p>操作系统分配资源的最小单位。</p>
+<h4 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h4><p>操作系统分配 CPU 资源的最小单位。</p>
+<blockquote>
+<p>进程和线程，它们都属于系统级别的任务调度。</p>
+<p>程序在运行的时候，需要操作系统分配内存和其他硬件资源，所以将运行的程序抽象为进程。一开始操作系统只能执行单一进程，后来使用分时间片来运行多个进程产生了多任务系统。</p>
+<p>而线程的出现，是由于进程开销比较大，还有就是进程之间的资源隔离，导致数据沟通复杂。</p>
+<p>进程和进程之间的资源都是相互隔离的，所以一个进程的崩溃不会影响到其他进程。但是由于线程是包含在进程之内的，线程的崩溃就会引发进程的崩溃，而在同一进程内的线程也会继而崩溃。</p>
+</blockquote>
+<h5 id="JavaScript-是单线程的"><a href="#JavaScript-是单线程的" class="headerlink" title="JavaScript 是单线程的"></a>JavaScript 是单线程的</h5><p>所谓单线程，是指在JS引擎中负责解释和执行 JavaScript 代码的线程只有一个。</p>
+<p>但是实际上还存在其他的线程。例如：处理AJAX请求的线程、处理DOM事件的线程、定时器线程、读写文件的线程(例如在Node.js中)等等。这些线程可能存在于JS引擎之内，也可能存在于JS引擎之外。详情看<a href="#engine&amp;runtime">JS 引擎(engine)&amp;JS 运行时(runtime)</a></p>
+<h4 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h4><p>协程与操作系统没有关系，是程序内部的逻辑流调度。目标是在该程序分配到的时间片内能够充分利用 CPU 资源。</p>
+<blockquote>
+<h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator 函数是 ECMAScript 6 对协程的实现，但属于不完全实现，只做到了暂停执行和转移执行权，有一些特性没有实现，比如不支持所调用的函数之中的 yield 语句（即递归执行yield语句）。</p>
+<p>如果将 Generator 函数看作多任务运行的方式，存在多个进入点和退出点。那么，一方面，并发的多任务可以写成多个 Generator 函数；另一方面，继发的任务则可以按照发生顺序，写在一个 Generator 函数之中，然后用一个任务管理函数执行。</p>
+</blockquote>
+<h3 id="并发-amp-并行"><a href="#并发-amp-并行" class="headerlink" title="并发&amp;并行"></a>并发&amp;并行</h3><h4 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h4><p>看似同时在处理，实际可能每个任务在<strong>轮流</strong>利用极小的时间片。</p>
+<img src="/async/async.jpg">
+<p>例如：在单核处理器上的处理多线程就是并发——每个线程都处于执行过程中的某个状态。</p>
+<h4 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h4><p>并行是真正的<strong>同时执行</strong>。</p>
+<p>并行一定是发生在多核处理器上，线程在不同的处理器上同时运行。</p>
+<h3 id="同步-amp-异步"><a href="#同步-amp-异步" class="headerlink" title="同步&amp;异步"></a>同步&amp;异步</h3><h4 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h4><p>同步就是程序一个语句一个语句顺序执行，很符合人得思维，是线性执行。</p>
+<h4 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h4><p>异步是非阻塞的，异步逻辑与主逻辑相互独立，主逻辑不需要等待异步逻辑完成，而是可以立刻继续下去。</p>
+<blockquote>
+<p>异步和多线程并不是一个同等关系，异步是最终目的，多线程只是我们实现异步的一种手段。</p>
+<p>实现异步可以采用多线程技术或交给另外的进程来处理。</p>
+</blockquote>
+<h3 id="异步的实现"><a href="#异步的实现" class="headerlink" title="异步的实现"></a>异步的实现</h3><h4 id="AJAX"><a href="#AJAX" class="headerlink" title="AJAX"></a>AJAX</h4><p> AJAX 的全称是异步的 Javascript 和 XML ，通过在后台与服务器进行少量数据交互，实现网页的异步更新，在不重新加载整个界面的情况下，做到网页的部分刷新。</p>
+<p>交互过程：</p>
+<ol>
+<li>用户发出异步请求</li>
+<li>创建 XMLHttpRequest 对象</li>
+<li>告诉 XMLHttpRequest 对象哪个函数会处理 XMLHttpRequest 对象状态的改变，为此要把对象的 onReadyStateChange 属性设置为响应该事件的 JavaScript 函数的引用</li>
+<li>创建请求，设置参数（用 open 方法指定是 get 还是 post 、是否异步、url  地址等） </li>
+<li>发送请求， send 方法</li>
+<li>接收结果并分析</li>
+<li>实现刷新</li>
+</ol>
+<p><strong>注意：</strong><a href="http://www.w3school.com.cn/xmldom/dom_http.asp" target="_blank" rel="noopener">XMLHttpRequest 对象</a>不是 JavaScript  语言本身的对象，是浏览器提供的。所有现代浏览器 (IE7+、Firefox、Chrome、Safari 以及 Opera) 都内建了 XMLHttpRequest 对象。</p>
+<h4 id="setTimeout"><a href="#setTimeout" class="headerlink" title="setTimeout"></a>setTimeout</h4><p>js 中的 <code>setTimeout()</code> 函数是异步的，<code>setTimeout()</code> 中的代码将被顺次插入到事件队列中，等待主逻辑运行完毕才会执行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(i);</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 结果是打印10次10</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> t = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    t = <span class="literal">false</span>;</span><br><span class="line">&#125;,<span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (t)&#123;&#125;</span><br><span class="line"></span><br><span class="line">alert(<span class="string">'end'</span>);</span><br><span class="line"><span class="comment">// setTimeout 中的函数和 alert 都不会执行</span></span><br></pre></td></tr></table></figure>
+<h3 id="消息队列-amp-事件循环"><a href="#消息队列-amp-事件循环" class="headerlink" title="消息队列&amp;事件循环"></a>消息队列&amp;事件循环</h3><p>异步过程中，工作线程在异步操作完成后需要通知主线程。那么这个<strong>通知机制</strong>是怎样实现的呢？答案是利用消息队列和事件循环。</p>
+<h4 id="消息队列"><a href="#消息队列" class="headerlink" title="消息队列"></a>消息队列</h4><p>消息队列是一个先进先出的队列，它里面存放着各种消息。</p>
+<h4 id="事件循环"><a href="#事件循环" class="headerlink" title="事件循环"></a>事件循环</h4><p>事件循环是指主线程重复从消息队列中取消息、执行的过程。</p>
+<blockquote>
+<p>工作线程将消息放到消息队列，主线程通过事件循环过程去取消息。</p>
+</blockquote>
+<h3 id="异步-amp-事件"><a href="#异步-amp-事件" class="headerlink" title="异步&amp;事件"></a>异步&amp;事件</h3><blockquote>
+<p>消息队列中的每条消息实际上都对应着一个事件。</p>
+</blockquote>
+<p><strong>DOM事件</strong>也会触发一个异步流程，<code>addEventListener</code> 函数就是异步过程的发起函数，事件监听器函数就是异步过程的回调函数。事件触发时，表示异步任务完成，会将事件监听器函数封装成一条消息放到消息队列中，等待主线程执行。</p>
+<p>另一方面，所有的异步过程也都可以用事件来描述。例如：<code>setTimeout</code> 可以看成对应一个 <code>时间到了！</code>的事件。前文的 <code>setTimeout(fn, 1000)</code> 可以看成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timer.addEventListener(&apos;timeout&apos;, 1000, fn);</span><br></pre></td></tr></table></figure>
+<p>至于为什么一些事件在绑定之后可以一直存在并多次触发？</p>
+<p>这一点跟 <code>setInterval</code> 有点类似，可以这样认为，异步过程不一定是一次性的，在发起后可以分多次得到多个结果，即说收到多次通知。对于这种类型的异步过程，工作线程必须是一个一直存在的线程。</p>
+<h3 id="engine&runtime">JS 引擎(engine)&amp;JS 运行时(runtime)</h3>
+
+<h4 id="JS-引擎"><a href="#JS-引擎" class="headerlink" title="JS 引擎"></a>JS 引擎</h4><p>js 引擎始终只有一个线程，它维护一个消息队列，当前函数栈执行完成之后就去不断地取消息队列中的消息（回调），取到了就执行。但是js引擎<strong>只负责取消息，不负责生产消息</strong>。</p>
+<h4 id="JS-运行时"><a href="#JS-运行时" class="headerlink" title="JS 运行时"></a>JS 运行时</h4><p>js运行时，就负责给 js 引擎线程发送消息。</p>
+<p>比如浏览器 DOM 事件发送一条鼠标点击的消息（浏览器子线程和 JS 引擎线程的 IPC 通信），那么 js 引擎在执行完函数栈之后就会取到这条鼠标点击信息，执行消息（即回调）；</p>
+<p>比如node运行时读取文件，执行系统调用，完成后发送读取文件完成的消息，之后的过程同上。js 运行时<strong>只负责生产消息，不负责取消息</strong>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础概念/" rel="tag">#基础概念</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/webpack/" rel="next" title="浅谈 Webpack 实践">
+                <i class="fa fa-chevron-left"></i> 浅谈 Webpack 实践
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/zero-width-assertions/" rel="prev" title="零宽断言">
+                零宽断言 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Cisy">
+          <p class="site-author-name" itemprop="name">Cisy</p>
+          <p class="site-description motion-element" itemprop="description">有感想就记一记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程-amp-线程-amp-协程"><span class="nav-number">1.</span> <span class="nav-text">进程&amp;线程&amp;协程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进程"><span class="nav-number">1.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程"><span class="nav-number">1.2.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JavaScript-是单线程的"><span class="nav-number">1.2.1.</span> <span class="nav-text">JavaScript 是单线程的</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协程"><span class="nav-number">1.3.</span> <span class="nav-text">协程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Generator"><span class="nav-number">1.4.</span> <span class="nav-text">Generator</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发-amp-并行"><span class="nav-number">2.</span> <span class="nav-text">并发&amp;并行</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#并发"><span class="nav-number">2.1.</span> <span class="nav-text">并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并行"><span class="nav-number">2.2.</span> <span class="nav-text">并行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步-amp-异步"><span class="nav-number">3.</span> <span class="nav-text">同步&amp;异步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同步"><span class="nav-number">3.1.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异步"><span class="nav-number">3.2.</span> <span class="nav-text">异步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步的实现"><span class="nav-number">4.</span> <span class="nav-text">异步的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AJAX"><span class="nav-number">4.1.</span> <span class="nav-text">AJAX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setTimeout"><span class="nav-number">4.2.</span> <span class="nav-text">setTimeout</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#消息队列-amp-事件循环"><span class="nav-number">5.</span> <span class="nav-text">消息队列&amp;事件循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#消息队列"><span class="nav-number">5.1.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件循环"><span class="nav-number">5.2.</span> <span class="nav-text">事件循环</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步-amp-事件"><span class="nav-number">6.</span> <span class="nav-text">异步&amp;事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#engine&runtime"><span class="nav-number">7.</span> <span class="nav-text">JS 引擎(engine)&amp;JS 运行时(runtime)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JS-引擎"><span class="nav-number">7.1.</span> <span class="nav-text">JS 引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JS-运行时"><span class="nav-number">7.2.</span> <span class="nav-text">JS 运行时</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cisy</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'cisy';
+      var disqus_identifier = 'async/';
+      var disqus_title = 'JS 中与异步相关的概念整理';
+      var disqus_url = 'http://cisy.me/async/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+  
+
+  
+
+
+</body>
+</html>
