@@ -1,0 +1,835 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="树莓派,wifi,NetworkManager,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=0.5.0">
+
+
+
+
+
+
+<meta name="description" content="依然是在研究树莓派，带着到处插网线实在有点蠢，在家里和公司都把 wifi 配置好，开机自动连接网络就很省心了，再配合上一篇文章讲的内网穿透，更是 ssh ip 都不用费心找。 家里的 wifi 很好配置，因为就是普通的 WPA 个人级 wifi，而公司的 wifi 是 WPA2 企业级加密的 WIFI，费了一番功夫才找到正确的配置方法，记录在下面。">
+<meta name="keywords" content="树莓派,wifi,NetworkManager">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 配置普通 wifi 和企业级加密 wifi">
+<meta property="og:url" content="http://cisy.me/linux-wifi/index.html">
+<meta property="og:site_name" content="Cisy 的博客">
+<meta property="og:description" content="依然是在研究树莓派，带着到处插网线实在有点蠢，在家里和公司都把 wifi 配置好，开机自动连接网络就很省心了，再配合上一篇文章讲的内网穿透，更是 ssh ip 都不用费心找。 家里的 wifi 很好配置，因为就是普通的 WPA 个人级 wifi，而公司的 wifi 是 WPA2 企业级加密的 WIFI，费了一番功夫才找到正确的配置方法，记录在下面。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-10T05:38:59.804Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 配置普通 wifi 和企业级加密 wifi">
+<meta name="twitter:description" content="依然是在研究树莓派，带着到处插网线实在有点蠢，在家里和公司都把 wifi 配置好，开机自动连接网络就很省心了，再配合上一篇文章讲的内网穿透，更是 ssh ip 都不用费心找。 家里的 wifi 很好配置，因为就是普通的 WPA 个人级 wifi，而公司的 wifi 是 WPA2 企业级加密的 WIFI，费了一番功夫才找到正确的配置方法，记录在下面。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6263785848714561000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> linux 配置普通 wifi 和企业级加密 wifi | Cisy 的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-75330230-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4c44925b9650a2761404b0055255e615";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Cisy 的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux 配置普通 wifi 和企业级加密 wifi
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-12-21T18:51:09+08:00" content="2019-12-21">
+              2019-12-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/linux-wifi/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="linux-wifi/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>依然是在研究树莓派，带着到处插网线实在有点蠢，在家里和公司都把 wifi 配置好，开机自动连接网络就很省心了，再配合上一篇文章讲的内网穿透，更是 ssh ip 都不用费心找。</p>
+<p>家里的 wifi 很好配置，因为就是普通的 WPA 个人级 wifi，而公司的 wifi 是 WPA2 企业级加密的 WIFI，费了一番功夫才找到正确的配置方法，记录在下面。</p>
+<a id="more"></a>
+<p>虽然 ubuntu-18.04 使用 netplan 来管理网络，但是我们仍然可以用 NetworkManager 来管理网络，其在命令行下对应的命令是 nmcli。</p>
+<h2 id="启用-NetworkManager"><a href="#启用-NetworkManager" class="headerlink" title="启用 NetworkManager"></a>启用 NetworkManager</h2><p>NetworkManager 通过<code>NetworkManager.service</code><a href="https://wiki.archlinux.org/index.php/Systemd" target="_blank" rel="noopener">systemd</a> 单元来 <a href="https://wiki.archlinux.org/index.php/Systemd_(简体中文" target="_blank" rel="noopener">控制</a>#使用单元)。 NetworkManager 守护进程启动后，会自动连接到任何可用的已经配置的<strong>系统连接</strong>。<strong>用户连接</strong>或未配置的连接需要通过<code>nmcli</code>或 applet 进行配置和连接。</p>
+<p>NetworkManager 的全局配置文件位于<code>/etc/NetworkManager/NetworkManager.conf</code>。额外的配置文件可以放进 <code>/etc/NetworkManager/conf.d/</code> 文件夹。通常全局的默认配置不需要改动。</p>
+<p><strong>开机自动启动 NetworkManager：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> NetworkManager</span><br></pre></td></tr></table></figure>
+<p><strong>立即启动 NetworkManager：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start NetworkManager</span><br></pre></td></tr></table></figure>
+<h2 id="连接普通-WIFI"><a href="#连接普通-WIFI" class="headerlink" title="连接普通 WIFI"></a>连接普通 WIFI</h2><p><strong>查看网络设备列表</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli d</span><br></pre></td></tr></table></figure>
+<p>注意，如果列出的设备状态是 unmanaged 的，说明网络设备不受 NetworkManager 管理，你需要清空 /etc/network/interfaces下的网络设置，然后重启。</p>
+<p><strong>开启 WiFi</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli r wifi on</span><br></pre></td></tr></table></figure>
+<p><strong>扫描附近的 WiFi 热点</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli d wifi</span><br></pre></td></tr></table></figure>
+<p><strong>连接到指定的 WiFi 热点</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli d wifi connect <span class="string">"SSID"</span> password <span class="string">"PASSWORD"</span></span><br></pre></td></tr></table></figure>
+<p><em>请将 SSID 和 PASSWORD 替换成实际的 WiFi名称和密码</em></p>
+<p>连接成功后，下次开机，WiFi 也会自动连接。</p>
+<h2 id="添加-802-1x-认证-wifi"><a href="#添加-802-1x-认证-wifi" class="headerlink" title="添加 802.1x 认证 wifi"></a>添加 802.1x 认证 wifi</h2><p>WPA2 企业级加密的 WIFI 是通过 802.1x 认证的，通过 nmcli 需要特殊的配置。</p>
+<ol>
+<li><p><strong>扫描附近的 WiFi 热点，找到那个你想连接的</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli d wifi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>添加一个新连接</strong></p>
+<p>其实是添加了一个配置文件到 /etc/NetworkManager/system-connections，NetworkManager 从这个目录下读取网络配置，每个 wifi 配置都会有独立的配置文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli con add <span class="built_in">type</span> wifi ifname &lt;YOUR_WLAN&gt; con-nam &lt;CUSTOM_CONNECTION_NAME&gt; ssid &lt;YOUR_SSID&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>YOUR_WLAN：网卡名（如：wlan0）</p>
+<p>CUSTOM_CONNECTION_NAME：配置文件名，后面要编辑的时候以此为 id 指定要编辑的配置文件（建议与 wifi 的 SSID 同名就好）</p>
+<p>YOUR_SSID：wifi 的 SSID</p>
+</blockquote>
+<p>或者直接执行 <code>sudo nmcli con edit</code> 后根据提示一步步走，最后保存也是一样的。</p>
+</li>
+<li><p><strong>编辑这个刚创建出来的配置文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli con edit id &lt;CUSTOM_CONNECTION_NAME&gt;</span><br><span class="line"></span><br><span class="line">-&gt; `<span class="built_in">set</span> ip4.method auto`</span><br><span class="line">-&gt; `<span class="built_in">set</span> 802-1x.eap peap`</span><br><span class="line">-&gt; `<span class="built_in">set</span> 802-1x.phase2-auth mschapv2`</span><br><span class="line">-&gt; `<span class="built_in">set</span> 802-1x.identity &lt;YOUR_USERNAME&gt;`</span><br><span class="line">-&gt; `<span class="built_in">set</span> 802-1x.password &lt;YOUR_PASSWORD&gt;`</span><br><span class="line">-&gt; `<span class="built_in">set</span> wifi-sec.key-mgmt wpa-eap`</span><br><span class="line">-&gt; `<span class="built_in">set</span> connection.autoconnect <span class="literal">true</span>`</span><br><span class="line">-&gt; `save`</span><br><span class="line">-&gt; `activate`</span><br></pre></td></tr></table></figure>
+<p>执行 <code>activate</code> 之后，应该就能连接上指定的 WPA2 (802.1X) 网络了</p>
+</li>
+<li><p><strong>查看已保存的连接</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli c</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/树莓派/" rel="tag">#树莓派</a>
+          
+            <a href="/tags/wifi/" rel="tag">#wifi</a>
+          
+            <a href="/tags/NetworkManager/" rel="tag">#NetworkManager</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/frp/" rel="next" title="使用 frp 做内网穿透">
+                <i class="fa fa-chevron-left"></i> 使用 frp 做内网穿透
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/auto-start/" rel="prev" title="配置开机自启动脚本">
+                配置开机自启动脚本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Cisy">
+          <p class="site-author-name" itemprop="name">Cisy</p>
+          <p class="site-description motion-element" itemprop="description">有感想就记一记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#启用-NetworkManager"><span class="nav-number">1.</span> <span class="nav-text">启用 NetworkManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接普通-WIFI"><span class="nav-number">2.</span> <span class="nav-text">连接普通 WIFI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加-802-1x-认证-wifi"><span class="nav-number">3.</span> <span class="nav-text">添加 802.1x 认证 wifi</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cisy</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'cisy';
+      var disqus_identifier = 'linux-wifi/';
+      var disqus_title = 'linux 配置普通 wifi 和企业级加密 wifi';
+      var disqus_url = 'http://cisy.me/linux-wifi/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+  
+
+  
+
+
+</body>
+</html>

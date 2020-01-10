@@ -236,6 +236,361 @@
             
               
                 
+                <a class="post-title-link" href="/auto-start/" itemprop="url">
+                  配置开机自启动脚本
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-12-23T14:51:09+08:00" content="2019-12-23">
+              2019-12-23
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/auto-start/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="auto-start/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我的树莓派现在 wifi 能自动连上了，frp 配置也做好了，阿里云服务器上的 frps 已经启动等待着客户端接入了，我的树莓派上的 frpc 也随时可以手动启动，内网穿透已经可以正常进行，但是每次都要开机联网之后找到树莓派的 ip ssh 上去<strong>手动启动</strong> frpc，太蠢了。所以这篇要讲的就是如何做到让树莓派开机网络之后自动启动 frpc，彻底解决我随时随地方便登陆的需求。</p>
+<p>linux 开机自启动方案有很多，我采用的是在 <strong>/etc/init.d</strong> 目录下进行一系列操作将启动脚本作为一个服务来管理。</p>
+<p>利用 /etc/network/if-up.d 网卡启动执行脚本的方式也尝试过，但因为网卡不止一张，所以脚本会被重复执行多次，是有点问题的，这里就不多说了。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/auto-start/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/linux-wifi/" itemprop="url">
+                  linux 配置普通 wifi 和企业级加密 wifi
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-12-21T18:51:09+08:00" content="2019-12-21">
+              2019-12-21
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/linux-wifi/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="linux-wifi/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>依然是在研究树莓派，带着到处插网线实在有点蠢，在家里和公司都把 wifi 配置好，开机自动连接网络就很省心了，再配合上一篇文章讲的内网穿透，更是 ssh ip 都不用费心找。</p>
+<p>家里的 wifi 很好配置，因为就是普通的 WPA 个人级 wifi，而公司的 wifi 是 WPA2 企业级加密的 WIFI，费了一番功夫才找到正确的配置方法，记录在下面。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/linux-wifi/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/frp/" itemprop="url">
+                  使用 frp 做内网穿透
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2019-12-16T18:38:34+08:00" content="2019-12-16">
+              2019-12-16
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/frp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="frp/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近在捣鼓树莓派，首先想达到的目标是：无论树莓派放在哪儿，只要能联网我就能 ssh 连上它。这首先就需要配置内网穿透了。</p>
+<p>市面上有很多内网穿透方法，我选择了性能更好，配置更简单的 <a href="https://link.zhihu.com/?target=https%3A//github.com/fatedier/frp" target="_blank" rel="noopener">Frp</a> 。Frp 结构很简单，分为 frps/frpc 两个可执行程序，在有公网地址的 VPS 上运行 frps 然后在家中内网运行 frpc 就行。我有自己的阿里云 ecs，可以作为”桥梁”，frps 服务端配置就放在上面。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/frp/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/rxjs/" itemprop="url">
                   RxJs 理解
                 </a>
@@ -1051,367 +1406,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/redux/" itemprop="url">
-                  redux 源码分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-04-06T17:36:13+08:00" content="2018-04-06">
-              2018-04-06
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/redux/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="redux/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="Redux-是啥"><a href="#Redux-是啥" class="headerlink" title="Redux 是啥"></a>Redux 是啥</h3><p>Redux 是对 <a href="https://www.zhihu.com/question/33864532" target="_blank" rel="noopener">Flux 应用架构</a> 的一种实现，并且引入了大量函数式编程的实现。</p>
-<p>简单来讲，<strong>Redux 帮助我们去维护一个数据池，所有组件的部分共享状态都从这个池子里存取</strong>。那有的同学就想了，这不就是个全局变量的概念嘛？是很像，但组件是不能直接操作 Redux Store 里的数据的，必须使用 <strong><code>dipatch</code></strong> 分发 <strong><code>action</code></strong> 来触发对应的 <strong><code>reducer</code></strong> 进而更新数据池。这样遵循这套规则：1) View 层和 Model 层不会耦合得很紧 2) Store 里可能发生的变化是可预测的（看注册了哪些 <code>action</code>） 3) 所有状态变化都可监控、可回溯。</p>
-<p>这里有一个误区，很多人看到 Redux 就想到 React，觉得它们应该在一起用，甚至觉得 Redux 只能在 React 中用。但其实他俩并没有互相牵扯的关系，Redux 是一种管理数据状态的方法，可以和很多不同框架搭配使用，支持 React、Angular、Ember、jQuery 甚至纯 JavaScript。（当然，Redux 还是和 <a href="http://facebook.github.io/react/" target="_blank" rel="noopener">React</a> 和 <a href="https://github.com/dekujs/deku" target="_blank" rel="noopener">Deku</a> 这类库搭配起来用最好，因为这类库允许你以 state 的形式来描述界面，Redux 通过 action 的形式来发起 state 变化）。React 也不是一定要用 Redux，如果没有很复杂的状态变更，用上 Redux 反而麻烦。如果要将他俩结合使用，通常会使用一个叫 <strong>react-redux</strong> 的库来牵线搭桥，后面会有文章详细介绍。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/redux/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/this/" itemprop="url">
-                  this
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-01-28T14:29:35+08:00" content="2018-01-28">
-              2018-01-28
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/this/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="this/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="试错式编程"><a href="#试错式编程" class="headerlink" title="!试错式编程"></a>!试错式编程</h3><p>js 中的 <code>this</code> 是前端开发永远的话题，最近也被问了很多次，干脆这里整理一下好了。</p>
-<p><strong>大道理时间</strong>：我发现做了这么多年的前端，很多人急吼吼地去搞各种框架、构建工具、流程规范、团队管理，如果最终很多基础概念都拎不清，写代码的过程一直是试错的过程，那可能只能算是“一个能干活儿的人”，因为不能从底层出发就不能迸发出更多有趣的想法，世界对你来说也是模糊的。</p>
-<p>“试错”是用来帮助你搞清概念的，前端开发方式绝不是“试错式编程”。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/this/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/thought/" itemprop="url">
-                  想法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-12-20T14:57:58+08:00" content="2017-12-20">
-              2017-12-20
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/项目管理/" itemprop="url" rel="index">
-                    <span itemprop="name">项目管理</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/thought/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="thought/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>近一年没写博客了，原因一个是懒，还有就是确实写代码少了，跑去做项目管理了。</p>
-<p>我的职位从 <strong>“Web 前端开发工程师”</strong> 到 <strong>”前端负责人“</strong> 再到 <strong>“高级产品经理”</strong>，其实并不高级也不是产品经理，准确讲应该是 <strong>项目经理</strong> 或 <strong>版本经理</strong>，主要管理整个项目的成员工作、版本进度、与其它团队沟通以及其它各种杂七杂八的事儿。看起来是个 “中层干部”，但实际上特别累，在我自己看来可能主要是心累吧，毕竟与人打交道难度更大。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/thought/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1450,7 +1449,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1467,7 +1466,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1506,7 +1505,7 @@
         <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
