@@ -42,7 +42,7 @@ linux 开机自启动方案有很多，我采用的是在 **/etc/init.d** 目录
 
 5. 使用 `sudo service xxx status` 可以查看该服务的状态
 
-![image-20191221180131518](/Users/cisy/Library/Application%20Support/typora-user-images/image-20191221180131518.png)
+ {% asset_img auto-start01.png %}
 
 ### 可访问外网后再自动执行脚本
 
@@ -87,7 +87,7 @@ done
 
 /etc/network/ 目录下的子目录都与网络配置相关。
 
-![image-20191220142319979](/Users/cisy/Library/Application%20Support/typora-user-images/image-20191220142319979.png)
+ {% asset_img auto-start02.png %}
 
 | 目录名（/etc/network/ 下） |        说明        |
 | :------------------------: | :----------------: |
