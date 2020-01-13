@@ -65,13 +65,13 @@
 <meta property="og:site_name" content="Cisy 的博客">
 <meta property="og:description" content="我的树莓派现在 wifi 能自动连上了，frp 配置也做好了，阿里云服务器上的 frps 已经启动等待着客户端接入了，我的树莓派上的 frpc 也随时可以手动启动，内网穿透已经可以正常进行，但是每次都要开机联网之后找到树莓派的 ip ssh 上去手动启动 frpc，太蠢了。所以这篇要讲的就是如何做到让树莓派开机网络之后自动启动 frpc，彻底解决我随时随地方便登陆的需求。 linux 开机自启动方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://cisy.me/Users/cisy/Library/Application%20Support/typora-user-images/image-20191221180131518.png">
-<meta property="og:image" content="http://cisy.me/Users/cisy/Library/Application%20Support/typora-user-images/image-20191220142319979.png">
-<meta property="og:updated_time" content="2020-01-10T05:57:02.060Z">
+<meta property="og:image" content="http://cisy.me/auto-start/auto-start01.png">
+<meta property="og:image" content="http://cisy.me/auto-start/auto-start02.png">
+<meta property="og:updated_time" content="2020-01-13T11:54:03.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置开机自启动脚本">
 <meta name="twitter:description" content="我的树莓派现在 wifi 能自动连上了，frp 配置也做好了，阿里云服务器上的 frps 已经启动等待着客户端接入了，我的树莓派上的 frpc 也随时可以手动启动，内网穿透已经可以正常进行，但是每次都要开机联网之后找到树莓派的 ip ssh 上去手动启动 frpc，太蠢了。所以这篇要讲的就是如何做到让树莓派开机网络之后自动启动 frpc，彻底解决我随时随地方便登陆的需求。 linux 开机自启动方">
-<meta name="twitter:image" content="http://cisy.me/Users/cisy/Library/Application%20Support/typora-user-images/image-20191221180131518.png">
+<meta name="twitter:image" content="http://cisy.me/auto-start/auto-start01.png">
 
 
 
@@ -318,13 +318,13 @@
 <li><p>执行命令：<code>update-rc.d /etc/init.d/xxx enable</code>，开启服务</p>
 </li>
 <li><p>使用 <code>sudo service xxx status</code> 可以查看该服务的状态</p>
+<img src="/auto-start/auto-start01.png">
 </li>
 </ol>
-<p><img src="/Users/cisy/Library/Application%20Support/typora-user-images/image-20191221180131518.png" alt="image-20191221180131518"></p>
 <h3 id="可访问外网后再自动执行脚本"><a href="#可访问外网后再自动执行脚本" class="headerlink" title="可访问外网后再自动执行脚本"></a>可访问外网后再自动执行脚本</h3><p>可以通过配置 systemd 来完成，但也可以在脚本里自己写条件判断。这里我需要在可访问外网后再做内网穿透，脚本如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># Start/stop the frp-setup daemon.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">### BEGIN INIT INFO</span></span><br><span class="line"><span class="comment"># Provides:          frp-setup</span></span><br><span class="line"><span class="comment"># Required-Start:    $all</span></span><br><span class="line"><span class="comment"># Required-Stop:</span></span><br><span class="line"><span class="comment"># Default-Start:     2 3 4 5</span></span><br><span class="line"><span class="comment"># Default-Stop:</span></span><br><span class="line"><span class="comment"># Short-Description: 用于内网穿透</span></span><br><span class="line"><span class="comment">### END INIT INFO</span></span><br><span class="line"></span><br><span class="line">ip=<span class="string">"xx.xx.xx.xx"</span></span><br><span class="line">port=123</span><br><span class="line">frpPath=<span class="string">"/usr/local/frp/frp_0.30.0_linux_arm64"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> :</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	/bin/nc <span class="variable">$ip</span> <span class="variable">$port</span> -w 1 -z</span><br><span class="line">	res=$?</span><br><span class="line">	<span class="comment"># 这里注意不能用 [[]] 双方括号，因为在 sh 中会有问题，实验结果是会永远走到 else 逻辑</span></span><br><span class="line">	<span class="comment"># 有些脚本系统在执行时可能会强制使用 sh 而非 bash，所以尽量用在 sh 中兼容的语法，同样还可能会有问题的是单/双/三等号的用法</span></span><br><span class="line">	<span class="keyword">if</span> [ <span class="variable">$res</span> -ne 0 ];<span class="keyword">then</span></span><br><span class="line">		sleep 5</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">    <span class="comment"># 重定向 nohup 生成的日志到 /var/log/frp.log</span></span><br><span class="line">		nohup <span class="variable">$frpPath</span>/frpc -c <span class="variable">$frpPath</span>/frpc.ini &gt; /var/<span class="built_in">log</span>/frp.log 2&gt;&amp;1 &amp;</span><br><span class="line">		<span class="built_in">break</span></span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <h2 id="etc-network-if-up-d"><a href="#etc-network-if-up-d" class="headerlink" title="/etc/network/if-up.d"></a>/etc/network/if-up.d</h2><p>/etc/network/ 目录下的子目录都与网络配置相关。</p>
-<p><img src="/Users/cisy/Library/Application%20Support/typora-user-images/image-20191220142319979.png" alt="image-20191220142319979"></p>
+ <img src="/auto-start/auto-start02.png">
 <table>
 <thead>
 <tr>
