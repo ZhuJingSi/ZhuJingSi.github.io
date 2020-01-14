@@ -65,7 +65,7 @@
 <meta property="og:site_name" content="Cisy 的博客">
 <meta property="og:description" content="依然是在研究树莓派，带着到处插网线实在有点蠢，在家里和公司都把 wifi 配置好，开机自动连接网络就很省心了，再配合上一篇文章讲的内网穿透，更是 ssh ip 都不用费心找。 家里的 wifi 很好配置，因为就是普通的 WPA 个人级 wifi，而公司的 wifi 是 WPA2 企业级加密的 WIFI，费了一番功夫才找到正确的配置方法，记录在下面。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-10T05:38:59.804Z">
+<meta property="og:updated_time" content="2020-01-14T04:09:29.454Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux 配置普通 wifi 和企业级加密 wifi">
 <meta name="twitter:description" content="依然是在研究树莓派，带着到处插网线实在有点蠢，在家里和公司都把 wifi 配置好，开机自动连接网络就很省心了，再配合上一篇文章讲的内网穿透，更是 ssh ip 都不用费心找。 家里的 wifi 很好配置，因为就是普通的 WPA 个人级 wifi，而公司的 wifi 是 WPA2 企业级加密的 WIFI，费了一番功夫才找到正确的配置方法，记录在下面。">
@@ -328,7 +328,7 @@
 </li>
 <li><p><strong>添加一个新连接</strong></p>
 <p>其实是添加了一个配置文件到 /etc/NetworkManager/system-connections，NetworkManager 从这个目录下读取网络配置，每个 wifi 配置都会有独立的配置文件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli con add <span class="built_in">type</span> wifi ifname &lt;YOUR_WLAN&gt; con-nam &lt;CUSTOM_CONNECTION_NAME&gt; ssid &lt;YOUR_SSID&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli con add <span class="built_in">type</span> wifi ifname &lt;YOUR_WLAN&gt; con-name &lt;CUSTOM_CONNECTION_NAME&gt; ssid &lt;YOUR_SSID&gt;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>YOUR_WLAN：网卡名（如：wlan0）</p>
 <p>CUSTOM_CONNECTION_NAME：配置文件名，后面要编辑的时候以此为 id 指定要编辑的配置文件（建议与 wifi 的 SSID 同名就好）</p>
@@ -337,7 +337,7 @@
 <p>或者直接执行 <code>sudo nmcli con edit</code> 后根据提示一步步走，最后保存也是一样的。</p>
 </li>
 <li><p><strong>编辑这个刚创建出来的配置文件</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli con edit id &lt;CUSTOM_CONNECTION_NAME&gt;</span><br><span class="line"></span><br><span class="line">-&gt; `<span class="built_in">set</span> ip4.method auto`</span><br><span class="line">-&gt; `<span class="built_in">set</span> 802-1x.eap peap`</span><br><span class="line">-&gt; `<span class="built_in">set</span> 802-1x.phase2-auth mschapv2`</span><br><span class="line">-&gt; `<span class="built_in">set</span> 802-1x.identity &lt;YOUR_USERNAME&gt;`</span><br><span class="line">-&gt; `<span class="built_in">set</span> 802-1x.password &lt;YOUR_PASSWORD&gt;`</span><br><span class="line">-&gt; `<span class="built_in">set</span> wifi-sec.key-mgmt wpa-eap`</span><br><span class="line">-&gt; `<span class="built_in">set</span> connection.autoconnect <span class="literal">true</span>`</span><br><span class="line">-&gt; `save`</span><br><span class="line">-&gt; `activate`</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli con edit id &lt;CUSTOM_CONNECTION_NAME&gt;</span><br><span class="line"></span><br><span class="line">-&gt; <span class="built_in">set</span> ipv4.method auto</span><br><span class="line">-&gt; <span class="built_in">set</span> 802-1x.eap peap</span><br><span class="line">-&gt; <span class="built_in">set</span> 802-1x.phase2-auth mschapv2</span><br><span class="line">-&gt; <span class="built_in">set</span> 802-1x.identity &lt;YOUR_USERNAME&gt;</span><br><span class="line">-&gt; <span class="built_in">set</span> 802-1x.password &lt;YOUR_PASSWORD&gt;</span><br><span class="line">-&gt; <span class="built_in">set</span> wifi-sec.key-mgmt wpa-eap</span><br><span class="line">-&gt; <span class="built_in">set</span> connection.autoconnect <span class="literal">true</span></span><br><span class="line">-&gt; save</span><br><span class="line">-&gt; activate</span><br></pre></td></tr></table></figure>
 <p>执行 <code>activate</code> 之后，应该就能连接上指定的 WPA2 (802.1X) 网络了</p>
 </li>
 <li><p><strong>查看已保存的连接</strong></p>
