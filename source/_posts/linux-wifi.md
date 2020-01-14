@@ -82,7 +82,7 @@ WPA2 企业级加密的 WIFI 是通过 802.1x 认证的，通过 nmcli 需要特
    其实是添加了一个配置文件到 /etc/NetworkManager/system-connections，NetworkManager 从这个目录下读取网络配置，每个 wifi 配置都会有独立的配置文件。
 
    ```bash
-   sudo nmcli con add type wifi ifname <YOUR_WLAN> con-nam <CUSTOM_CONNECTION_NAME> ssid <YOUR_SSID>
+   sudo nmcli con add type wifi ifname <YOUR_WLAN> con-name <CUSTOM_CONNECTION_NAME> ssid <YOUR_SSID>
    ```
 
    > YOUR_WLAN：网卡名（如：wlan0）
@@ -98,15 +98,15 @@ WPA2 企业级加密的 WIFI 是通过 802.1x 认证的，通过 nmcli 需要特
    ```bash
    sudo nmcli con edit id <CUSTOM_CONNECTION_NAME>
    
-   -> `set ip4.method auto`
-   -> `set 802-1x.eap peap`
-   -> `set 802-1x.phase2-auth mschapv2`
-   -> `set 802-1x.identity <YOUR_USERNAME>`
-   -> `set 802-1x.password <YOUR_PASSWORD>`
-   -> `set wifi-sec.key-mgmt wpa-eap`
-   -> `set connection.autoconnect true`
-   -> `save`
-   -> `activate`
+   -> set ipv4.method auto
+   -> set 802-1x.eap peap
+   -> set 802-1x.phase2-auth mschapv2
+   -> set 802-1x.identity <YOUR_USERNAME>
+   -> set 802-1x.password <YOUR_PASSWORD>
+   -> set wifi-sec.key-mgmt wpa-eap
+   -> set connection.autoconnect true
+   -> save
+   -> activate
    ```
 
    执行 `activate` 之后，应该就能连接上指定的 WPA2 (802.1X) 网络了
